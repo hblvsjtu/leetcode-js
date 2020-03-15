@@ -58,6 +58,9 @@
     - [10.1 基本模板](#101-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-6)
       - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-6)
+    - [10.2 题目](#102-%e9%a2%98%e7%9b%ae)
+      - [简单](#%e7%ae%80%e5%8d%95)
+      - [中等](#%e4%b8%ad%e7%ad%89)
   - [十一、贪心](#%e5%8d%81%e4%b8%80%e8%b4%aa%e5%bf%83)
     - [11.1 基本模板](#111-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-7)
@@ -613,9 +616,73 @@ void exec(int a[], int size) {
             return;
         }
 ```
+> - 自下而上
+
+### 10.2 题目
+#### 简单
+#### 中等
+> - [103 二叉树的锯齿形层次遍历](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/)
+```js
+        var zigzagLevelOrder = function(root) {
+            if(!root) return [];
+            const queue = [root];
+            let i = queue.length;
+            let isPositive = false;
+            const res = [];
+            while(i) {
+                isPositive = !isPositive;
+                let temp = [];
+                while(i--) {
+                    const front = queue.shift();
+                    if(!front) continue;
+                    isPositive ? temp.push(front.val) : temp.unshift(front.val);
+                    queue.push(front.left, front.right);
+                }
+                temp.length && res.push(temp);
+                i = queue.length;
+            }
+            return res;
+        };
+```
+> - [127 单词接龙](https://leetcode-cn.com/problems/word-ladder/)
+```js
+        var ladderLength = function(beginWord, endWord, wordList) {
+            if(!wordList.includes(endWord)) return 0;
+            let queue = [beginWord];
+            let i = queue.length;
+            let level = 0;
+            while (i) {
+                level++;
+                while(i--) {
+                    const front = queue.shift();
+                    if(!front) continue;
+                    if(front === endWord) return level;
+                    for(let j = 0; j < wordList.length; j++) {
+                        if(isOnlyOneDiff(front, wordList[j])) {
+                            queue.push(wordList[j]);
+                            wordList.splice(j, 1);
+                            j--;
+                        }
+                    }
+                }
+                i = queue.length;
+            }
+            return 0;
+
+            function isOnlyOneDiff(str1, str2) {
+                if(str1 === str2) return false;
+                let i = str1.length;
+                let diff = 0;
+                while(i--) {
+                    if(str1[i] !== str2[i]) diff++;
+                    if(diff > 1) return false;
+                }
+                return true;
+            }
+        };
 
 ```
-> - 自下而上
+
 
 
 ## 十一、贪心
