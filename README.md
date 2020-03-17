@@ -73,7 +73,7 @@
     - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
       - [1) 相同之处](#1-%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84)
       - [2) 不同之处](#2-%e4%b8%8d%e5%90%8c%e4%b9%8b%e5%a4%84)
-        
+       
 ## 一、分治问题
 ### 1.1 归并排序
         
@@ -620,8 +620,7 @@ void exec(int a[], int size) {
 
 ### 10.2 题目
 #### 简单
-#### 中等
-> - [103 二叉树的锯齿形层次遍历](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/)
+#### [103 二叉树的锯齿形层次遍历](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/)
 ```js
         var zigzagLevelOrder = function(root) {
             if(!root) return [];
@@ -644,7 +643,7 @@ void exec(int a[], int size) {
             return res;
         };
 ```
-> - [127 单词接龙](https://leetcode-cn.com/problems/word-ladder/)
+#### [127 单词接龙](https://leetcode-cn.com/problems/word-ladder/)
 ```js
         var ladderLength = function(beginWord, endWord, wordList) {
             if(!wordList.includes(endWord)) return 0;
@@ -682,9 +681,91 @@ void exec(int a[], int size) {
         };
 
 ```
+#### [130. 被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/)
+```js
+        var solve = function(board) {
+            const row = board.length;
+            if(!row) return [];
+            const col = board[0].length;
+            for(let i = 0; i < row; i++) {
+                dfs(board, i, 0);
+                dfs(board, i, col - 1);
+            }
+            for(let i = 0; i < col; i++) {
+                dfs(board, 0, i);
+                dfs(board, row - 1, i);
+            }
+            for(let i = 0; i < row; i++) {
+                for(let j = 0; j < col; j++) {
+                    if(board[i][j] === 'O') {
+                        board[i][j] = 'X';
+                    }
+                    else if(board[i][j] === '1') {
+                        board[i][j] = 'O';
+                    }
+                }
+            }
+            function dfs(board, i, j) {
+                if(i < 0 || i >= row || j < 0 || j >= col || board[i][j] === '1') return;
+                if(board[i][j] === 'O') {
+                    board[i][j] = '1';
+                    dfs(board, i - 1, j);
+                    dfs(board, i + 1, j);
+                    dfs(board, i, j - 1);
+                    dfs(board, i, j + 1);
+                }
+            }
+        };
+```
+#### [199.二叉树的右视图](https://leetcode-cn.com/problems/binary-tree-right-side-view)
+```js
+        var rightSideView = function(root) {
+            const queue = [root];
+            let i = queue.length;
+            const res = [];
+            while(i) {
+                let right;
+                while(i--) {
+                    const front = queue.shift();
+                    if(!front) continue;
+                    right = front.val;
+                    queue.push(front.left, front.right)
+                }
+                right && res.push(right);
+                i = queue.length;
+            }
+            return res;
+        };
+```
 
-
-
+#### [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)
+```js
+        var numIslands = function(grid) {
+            const row = grid.length;
+            if(!row) return 0;
+            const col = grid[0].length;
+            let res = 0;
+            for(let i = 0; i < row; i++) {
+                for(let j = 0; j < col; j++) {
+                    if(grid[i][j] === '1') {
+                        res++;
+                        dfs(grid, i, j);
+                    }
+                }
+            }
+            function dfs(grid, i, j) {
+                if(i < 0 || i >= row || j < 0 || j >= col) return;
+                if(grid[i][j] === '1') {
+                    grid[i][j] = '0';
+                    dfs(grid, i - 1, j);
+                    dfs(grid, i + 1, j);
+                    dfs(grid, i, j - 1);
+                    dfs(grid, i, j + 1);
+                }
+            }
+            return res;
+        };
+```
 ## 十一、贪心
 ### 11.1 基本模板 
         
@@ -713,3 +794,4 @@ void exec(int a[], int size) {
 > - 分治方法将问题划分为互不相交的子问题，递归地求解子问题，再将它们的解组合起来，求出原问题的解
 > - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
 > - 
+
