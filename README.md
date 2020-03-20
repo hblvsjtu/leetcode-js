@@ -793,5 +793,68 @@ void exec(int a[], int size) {
 #### 2) 不同之处
 > - 分治方法将问题划分为互不相交的子问题，递归地求解子问题，再将它们的解组合起来，求出原问题的解
 > - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
-> - 
+
+
+## 十四、图论
+### 14.1 基本模板
+        
+#### 1) 有向图是否存在环
+> - 拓扑排序
+```js
+        function topology(N, arr) {
+            const indegree = new Array(N).fill(0);
+            const record = {};
+            arr.forEach(([pre, next]) => {
+                if(!record[pre]) record[pre] = [];
+                record[pre].push(next); // 构建有向图
+                indegree[next]++; // 入度计算
+            })
+            const queue = indegree.reduce((t, i, index) => {
+                !i && t.push(index);
+                return t;
+            }, []); // 寻找起点
+            const res = [];
+            while(queue.length) {
+                const front = queue.shift();
+                res.push(front);
+                record[front] && record[front].forEach(child => {
+                    indegree[child]--;
+                    if(!indegree[child]) queue.push(child);
+                })
+            }
+            return res.length === N;
+        }
+```
+### 10.2 题目
+#### [207. 课程表](https://leetcode-cn.com/problems/course-schedule/submissions/)
+```js
+        /**
+         - @param {number} numCourses
+         - @param {number[][]} prerequisites
+         - @return {boolean}
+         */
+        var canFinish = function(numCourses, prerequisites) {
+            const indegree = new Array(numCourses).fill(0);
+            const record = {};
+            prerequisites.forEach(([pre, next]) => {
+                if(!record[pre]) record[pre] = [];
+                record[pre].push(next); // 构建有向图
+                indegree[next]++; // 入度计算
+            })
+            const queue = indegree.reduce((t, i, index) => {
+                !i && t.push(index);
+                return t;
+            }, []);
+            const res = [];
+            while(queue.length) {
+                const front = queue.shift();
+                res.push(front);
+                record[front] && record[front].forEach(child => {
+                    indegree[child]--;
+                    if(!indegree[child]) queue.push(child);
+                })
+            }
+            return res.length === numCourses;
+        };
+```
 
