@@ -80,8 +80,10 @@
   - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
     - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 有向图是否存在环](#1-%e6%9c%89%e5%90%91%e5%9b%be%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8%e7%8e%af)
+      - [2) 构造无向图](#2-%e6%9e%84%e9%80%a0%e6%97%a0%e5%90%91%e5%9b%be)
     - [14.2 题目](#142-%e9%a2%98%e7%9b%ae)
       - [207. 课程表](#207-%e8%af%be%e7%a8%8b%e8%a1%a8)
+      - [310. 最小高度树](#310-%e6%9c%80%e5%b0%8f%e9%ab%98%e5%ba%a6%e6%a0%91)
   - [十五、数学问题](#%e5%8d%81%e4%ba%94%e6%95%b0%e5%ad%a6%e9%97%ae%e9%a2%98)
     - [15.1 基本模板](#151-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 最大公约数](#1-%e6%9c%80%e5%a4%a7%e5%85%ac%e7%ba%a6%e6%95%b0)
@@ -869,6 +871,65 @@ void exec(int a[], int size) {
             return true;
         };
 ```
+#### 2) 构造无向图
+> - 暴力
+```js
+        var findMinHeightTrees = function(n, edges) {
+            const record = {};
+            for(let i = 0; i < n; i++) record[i] = new Set();
+            edges.forEach(([a, b]) => {
+                record[a].add(b);
+                record[b].add(a);
+            })
+            let items = Object.keys(record).map(i => +i);
+            let queues = items.filter(key => record[key].size === 1);
+            let res;
+            while(queues.length) {
+                res = queues;
+                items = Object.keys(record).map(i => +i);
+                queues = items.filter(key => record[key].size === 1); // 筛选size === 1的节点和删除节点两个动作需要分开
+                queues.forEach(key => {
+                    const next = record[Array.from(record[key])[0]];
+                    if(next) next.delete(key);
+                    delete record[key];
+                })
+            }
+            return items.length ? items : res;
+        };
+```
+> - BFS出度
+```js
+        var findMinHeightTrees = function(n, edges) {
+            const record = {};
+            for(let i = 0; i < n; i++) record[i] = new Set();
+            edges.forEach(([a, b]) => {
+                record[a].add(b);
+                record[b].add(a);
+            })
+            const outDegree = [];
+            for(let i = 0; i < n; i++) outDegree[i] = record[i].size;
+            let queues = outDegree.reduce((t, i, index) => {
+                i === 1 && t.push(index);
+                return t;
+            }, [])
+            let res = [0];
+            let i = queues.length;
+            while(i) {
+                res = queues.slice(0); // 记录倒数第2个结果
+                while(i--) {
+                    const front = queues.shift();
+                    outDegree[front]--;
+                    const next = [...record[front]][0];
+                    if(next !== undefined) {
+                        record[next].delete(front);
+                        if(--outDegree[next] === 1) queues.push(next);
+                    }
+                }
+                i = queues.length;
+            }
+            return res;
+        };
+```
 ### 14.2 题目
 #### [207. 课程表](https://leetcode-cn.com/problems/course-schedule/submissions/)
 ```js
@@ -899,6 +960,76 @@ void exec(int a[], int size) {
                 })
             }
             return res.length === numCourses;
+        };
+```
+
+#### [310. 最小高度树](https://leetcode-cn.com/problems/minimum-height-trees/)
+> - js 一层层剥开暴力解
+```js
+        /**
+        * @param {number} n
+        * @param {number[][]} edges
+        * @return {number[]}
+        */
+        var findMinHeightTrees = function(n, edges) {
+            const record = {};
+            for(let i = 0; i < n; i++) record[i] = new Set();
+            edges.forEach(([a, b]) => {
+                record[a].add(b);
+                record[b].add(a);
+            })
+            let items = Object.keys(record).map(i => +i);
+            let queues = items.filter(key => record[key].size === 1);
+            let res;
+            while(queues.length) {
+                res = queues;
+                items = Object.keys(record).map(i => +i);
+                queues = items.filter(key => record[key].size === 1);
+                queues.forEach(key => {
+                    const next = record[Array.from(record[key])[0]];
+                    if(next) next.delete(key);
+                    delete record[key];
+                })
+            }
+            return items.length ? items : res;
+        };
+```
+> - BFS出度
+```js
+        /**
+        * @param {number} n
+        * @param {number[][]} edges
+        * @return {number[]}
+        */
+        var findMinHeightTrees = function(n, edges) {
+            const record = {};
+            for(let i = 0; i < n; i++) record[i] = new Set();
+            edges.forEach(([a, b]) => {
+                record[a].add(b);
+                record[b].add(a);
+            })
+            const outDegree = [];
+            for(let i = 0; i < n; i++) outDegree[i] = record[i].size;
+            let queues = outDegree.reduce((t, i, index) => {
+                i === 1 && t.push(index);
+                return t;
+            }, [])
+            let res = [0];
+            let i = queues.length;
+            while(i) {
+                res = queues.slice(0); // 记录倒数第2个结果
+                while(i--) {
+                    const front = queues.shift();
+                    outDegree[front]--;
+                    const next = [...record[front]][0];
+                    if(next !== undefined) {
+                        record[next].delete(front);
+                        if(--outDegree[next] === 1) queues.push(next);
+                    }
+                }
+                i = queues.length;
+            }
+            return res;
         };
 ```
 
