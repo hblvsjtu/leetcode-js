@@ -60,7 +60,11 @@
       - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-6)
     - [10.2 题目](#102-%e9%a2%98%e7%9b%ae)
       - [简单](#%e7%ae%80%e5%8d%95)
-      - [中等](#%e4%b8%ad%e7%ad%89)
+      - [103 二叉树的锯齿形层次遍历](#103-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%94%af%e9%bd%bf%e5%bd%a2%e5%b1%82%e6%ac%a1%e9%81%8d%e5%8e%86)
+      - [127 单词接龙](#127-%e5%8d%95%e8%af%8d%e6%8e%a5%e9%be%99)
+      - [130. 被围绕的区域](#130-%e8%a2%ab%e5%9b%b4%e7%bb%95%e7%9a%84%e5%8c%ba%e5%9f%9f)
+      - [199.二叉树的右视图](#199%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e5%8f%b3%e8%a7%86%e5%9b%be)
+      - [200. 岛屿数量](#200-%e5%b2%9b%e5%b1%bf%e6%95%b0%e9%87%8f)
   - [十一、贪心](#%e5%8d%81%e4%b8%80%e8%b4%aa%e5%bf%83)
     - [11.1 基本模板](#111-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-7)
@@ -73,6 +77,16 @@
     - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
       - [1) 相同之处](#1-%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84)
       - [2) 不同之处](#2-%e4%b8%8d%e5%90%8c%e4%b9%8b%e5%a4%84)
+  - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
+    - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
+      - [1) 有向图是否存在环](#1-%e6%9c%89%e5%90%91%e5%9b%be%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8%e7%8e%af)
+    - [14.2 题目](#142-%e9%a2%98%e7%9b%ae)
+      - [207. 课程表](#207-%e8%af%be%e7%a8%8b%e8%a1%a8)
+  - [十五、数学问题](#%e5%8d%81%e4%ba%94%e6%95%b0%e5%ad%a6%e9%97%ae%e9%a2%98)
+    - [15.1 基本模板](#151-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
+      - [1) 最大公约数](#1-%e6%9c%80%e5%a4%a7%e5%85%ac%e7%ba%a6%e6%95%b0)
+    - [15.2 题目](#152-%e9%a2%98%e7%9b%ae)
+      - [365. 水壶问题](#365-%e6%b0%b4%e5%a3%b6%e9%97%ae%e9%a2%98)
        
 ## 一、分治问题
 ### 1.1 归并排序
@@ -825,7 +839,37 @@ void exec(int a[], int size) {
             return res.length === N;
         }
 ```
-### 10.2 题目
+> - DFS
+```js
+        /**
+        * @param {number} numCourses
+        * @param {number[][]} prerequisites
+        * @return {boolean}
+        */
+        var canFinish = function(numCourses, prerequisites) {
+            const record = {};
+            prerequisites.forEach(([pre, next]) => {
+                if(!record[pre]) record[pre] = [];
+                record[pre].push(next); // 构建有向图
+            })
+            let flag = []; // 标志位表示该课程是否被遍历 -1: 上一个DFS被遍历；0: 没有被遍历；1:本轮已被遍历
+            for(let i = 0; i < numCourses; i++) {
+                if(isCircle(i)) return false;
+            }
+            function isCircle(course) {
+                if(flag[course] === 1) return true;
+                if(flag[course] === -1) return false;
+                flag[course] = 1;
+                if(record[course] && 
+                    record[course].some(child => isCircle(child)))
+                    return true;
+                flag[course] = -1;
+                return false;
+            }
+            return true;
+        };
+```
+### 14.2 题目
 #### [207. 课程表](https://leetcode-cn.com/problems/course-schedule/submissions/)
 ```js
         /**
@@ -858,3 +902,23 @@ void exec(int a[], int size) {
         };
 ```
 
+## 十五、数学问题
+### 15.1 基本模板
+        
+#### 1) 最大公约数
+> - 
+```js
+        function(x, y) {
+            while(y) [x, y] = [y, x % y];
+            return x;
+        }
+```
+### 15.2 题目
+#### [365. 水壶问题](https://leetcode-cn.com/problems/water-and-jug-problem/)
+```js
+        var canMeasureWater = function(x, y, z) {
+            if(x + y < z) return false;
+            while(y) [x, y] = [y, x % y];
+            return !(z % x);
+        };
+```
