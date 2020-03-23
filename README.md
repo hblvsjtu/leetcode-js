@@ -511,11 +511,43 @@ void exec(int a[], int size) {
 ## 七、链表
 ### 7.1 基本模板 
         
-#### 1) 递归法
-> - 先序遍历()
-#### 2) 迭代法
-> - 分治方法将问题划分为互不相交的子问题，递归地求解子问题，再将它们的解组合起来，求出原问题的解
-> - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
+#### 1) 快慢指针
+> - 双指针
+```js
+        var middleNode = function(head) {
+            slow = fast = head;
+            while (fast && fast.next) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            return slow;
+        };
+```
+### 7.2 题目
+#### [876. 链表的中间结点](https://leetcode-cn.com/problems/middle-of-the-linked-list/solution/lian-biao-de-zhong-jian-jie-dian-by-leetcode-solut/)
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param {ListNode} head
+         * @return {ListNode}
+         */
+        var middleNode = function(head) {
+            if(!head) return null;
+            let slow = head;
+            let quick = head.next;
+            while(quick && quick.next) {
+                slow = slow.next;
+                quick = quick.next.next;
+            }
+            return quick ? slow.next : slow;
+        };
+```
 
 ## 八、树
 ### 8.1 基本模板 
@@ -635,7 +667,6 @@ void exec(int a[], int size) {
 > - 自下而上
 
 ### 10.2 题目
-#### 简单
 #### [103 二叉树的锯齿形层次遍历](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/)
 ```js
         var zigzagLevelOrder = function(root) {
