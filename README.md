@@ -44,22 +44,22 @@
       - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-2)
   - [七、链表](#%e4%b8%83%e9%93%be%e8%a1%a8)
     - [7.1 基本模板](#71-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-3)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-3)
+      - [1) 快慢指针](#1-%e5%bf%ab%e6%85%a2%e6%8c%87%e9%92%88)
+    - [7.2 题目](#72-%e9%a2%98%e7%9b%ae)
+      - [876. 链表的中间结点](#876-%e9%93%be%e8%a1%a8%e7%9a%84%e4%b8%ad%e9%97%b4%e7%bb%93%e7%82%b9)
   - [八、树](#%e5%85%ab%e6%a0%91)
     - [8.1 基本模板](#81-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-4)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-4)
+      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-3)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-3)
   - [九、DFS深度优先搜索](#%e4%b9%9ddfs%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [9.1 基本模板](#91-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-5)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-5)
+      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-4)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-4)
   - [十、BFS广度优先搜索](#%e5%8d%81bfs%e5%b9%bf%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [10.1 基本模板](#101-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-6)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-6)
+      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-5)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-5)
     - [10.2 题目](#102-%e9%a2%98%e7%9b%ae)
-      - [简单](#%e7%ae%80%e5%8d%95)
       - [103 二叉树的锯齿形层次遍历](#103-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%94%af%e9%bd%bf%e5%bd%a2%e5%b1%82%e6%ac%a1%e9%81%8d%e5%8e%86)
       - [127 单词接龙](#127-%e5%8d%95%e8%af%8d%e6%8e%a5%e9%be%99)
       - [130. 被围绕的区域](#130-%e8%a2%ab%e5%9b%b4%e7%bb%95%e7%9a%84%e5%8c%ba%e5%9f%9f)
@@ -67,18 +67,19 @@
       - [200. 岛屿数量](#200-%e5%b2%9b%e5%b1%bf%e6%95%b0%e9%87%8f)
   - [十一、贪心](#%e5%8d%81%e4%b8%80%e8%b4%aa%e5%bf%83)
     - [11.1 基本模板](#111-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-7)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-7)
+      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-6)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-6)
   - [十二、回溯法](#%e5%8d%81%e4%ba%8c%e5%9b%9e%e6%ba%af%e6%b3%95)
     - [12.1 基本模板](#121-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-8)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-8)
+      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-7)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-7)
   - [十三、动态规划](#%e5%8d%81%e4%b8%89%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92)
     - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
       - [1) 相同之处](#1-%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84)
       - [2) 不同之处](#2-%e4%b8%8d%e5%90%8c%e4%b9%8b%e5%a4%84)
   - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
     - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
+      - [1) 图的遍历](#1-%e5%9b%be%e7%9a%84%e9%81%8d%e5%8e%86)
       - [1) 有向图是否存在环](#1-%e6%9c%89%e5%90%91%e5%9b%be%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8%e7%8e%af)
       - [2) 构造无向图](#2-%e6%9e%84%e9%80%a0%e6%97%a0%e5%90%91%e5%9b%be)
     - [14.2 题目](#142-%e9%a2%98%e7%9b%ae)
@@ -89,6 +90,7 @@
       - [1) 最大公约数](#1-%e6%9c%80%e5%a4%a7%e5%85%ac%e7%ba%a6%e6%95%b0)
     - [15.2 题目](#152-%e9%a2%98%e7%9b%ae)
       - [365. 水壶问题](#365-%e6%b0%b4%e5%a3%b6%e9%97%ae%e9%a2%98)
+      - [264. 丑数 II](#264-%e4%b8%91%e6%95%b0-ii)
        
 ## 一、分治问题
 ### 1.1 归并排序
@@ -844,7 +846,102 @@ void exec(int a[], int size) {
 
 ## 十四、图论
 ### 14.1 基本模板
-        
+
+#### 1) 图的遍历
+> - BFS
+```js
+        var BFS = function(n, edges) {
+            const record = {};
+            for(let i = 0; i < n; i++) record[i] = [];
+            edges.forEach(([a, b]) => { // 记录相邻节点
+                record[a].push(b);
+                record[b].push(a);
+            })
+            const flag = [];
+            const pre = {}; // 记录父节点
+            const deep = {}; // 记录深度
+            const root = 1;
+            const queue = [root];
+            deep[root] = 1;7
+            pre[root] = null;
+            let i = queue.length;
+            const res = []; // 记录遍历结果
+            while(i) {
+                while(i--) {
+                    const front = queue.shift();
+                    if(front === undefined) continue;
+                    flag[front] = 1;
+                    res.push(front);
+                    const children = record[front];
+                    children.forEach(child => {
+                        if(!flag[child]) {
+                            flag[child] = 1;
+                            deep[child] = deep[front] + 1;
+                            pre[child] = front;
+                            queue.push(child);
+                        }
+                    })
+                    flag[front] = -1;
+                }
+                i = queue.length;
+            }
+            const paths = {}; // 记录路径
+            for(let i = 0; i < n; i++) {
+                paths[i] = [];
+                let j = i;
+                while(j !== root) {
+                    paths[i].unshift(j);
+                    j = pre[j];
+                }
+                paths[i].unshift(root);
+            }
+            console.log(res, paths);
+        };
+```
+> - DFS
+```js
+        var DFS = function(n, edges) {
+            const record = {};
+            for(let i = 0; i < n; i++) record[i] = [];
+            edges.forEach(([a, b]) => {
+                record[a].push(b);
+                record[b].push(a);
+            })
+            console.log(record);
+            const flag = [];
+            const pre = {}; // 记录父节点
+            const deep = {}; // 记录深度
+            const res = []; // 记录遍历结果
+            const root = 0;
+            for(let i = root; i < n; i++) {
+                if(flag[i] === undefined) dfsVisit(i, null, 0);
+            }
+            function dfsVisit(root, pai, d) {
+                if(flag[root] === -1) return;
+                flag[root] = 1;
+                res.push(root);
+                pre[root] = pai;
+                deep[root] = d + 1;
+                record[root].forEach(child => {
+                    if(!flag[child]) {
+                        dfsVisit(child, root, deep[root]);
+                    }
+                })
+                flag[root] = -1;
+            }
+            const paths = {}; // 记录
+            for(let i = 0; i < n; i++) {
+                paths[i] = [];
+                let j = i;
+                while(j !== root) {
+                    paths[i].unshift(j);
+                    j = pre[j];
+                }
+                paths[i].unshift(root);
+            }
+            console.log(res, paths);
+        };
+```
 #### 1) 有向图是否存在环
 > - 拓扑排序
 ```js
@@ -872,7 +969,7 @@ void exec(int a[], int size) {
             return res.length === N;
         }
 ```
-> - DFS
+> - DFS递归版本
 ```js
         /**
         * @param {number} numCourses
@@ -901,6 +998,40 @@ void exec(int a[], int size) {
             }
             return true;
         };
+```
+> - DFS非递归版本
+```js
+        function canFinish(N, arr) {
+            const indegree = new Array(N).fill(0);
+            const record = {};
+            arr.forEach(([pre, next]) => {
+                if(!record[pre]) record[pre] = [];
+                record[pre].push(next); // 构建有向图
+                indegree[next]++; // 入度计算
+            })
+            const stack = indegree.reduce((t, i, index) => {
+                !i && t.push(index);
+                return t;
+            }, []); // 寻找起点
+            const res = [];
+            const flag = [];
+            while(stack.length) {
+                const front = stack.pop();
+                res.push(front);
+                flag[front] = 1;
+                const nexts = record[front];
+                if(nexts) {
+                    const len = nexts.length;
+                    for(let j = 0; j < len; j++) {
+                        if(flag[nexts[j]] === 1) return false;
+                        if(flag[nexts[j]] === -1) continue;
+                        if(!--indegree[nexts[j]]) stack.push(nexts[j]);
+                    }
+                }
+                flag[front] = -1;
+            }
+            return res.length === N;
+        }
 ```
 #### 2) 构造无向图
 > - 暴力
@@ -1077,6 +1208,14 @@ void exec(int a[], int size) {
 ```
 ### 15.2 题目
 #### [365. 水壶问题](https://leetcode-cn.com/problems/water-and-jug-problem/)
+```js
+        var canMeasureWater = function(x, y, z) {
+            if(x + y < z) return false;
+            while(y) [x, y] = [y, x % y];
+            return !(z % x);
+        };
+```
+#### [264. 丑数 II](https://leetcode-cn.com/problems/ugly-number-ii/)
 ```js
         var canMeasureWater = function(x, y, z) {
             if(x + y < z) return false;
