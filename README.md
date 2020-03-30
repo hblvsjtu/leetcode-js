@@ -41,7 +41,8 @@
   - [六、栈和队列](#%e5%85%ad%e6%a0%88%e5%92%8c%e9%98%9f%e5%88%97)
     - [6.1 基本模板](#61-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-2)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-2)
+    - [6.2 题目](#62-%e9%a2%98%e7%9b%ae)
+      - [946. 验证栈序列](#946-%e9%aa%8c%e8%af%81%e6%a0%88%e5%ba%8f%e5%88%97)
   - [七、链表](#%e4%b8%83%e9%93%be%e8%a1%a8)
     - [7.1 基本模板](#71-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 快慢指针](#1-%e5%bf%ab%e6%85%a2%e6%8c%87%e9%92%88)
@@ -50,29 +51,33 @@
   - [八、树](#%e5%85%ab%e6%a0%91)
     - [8.1 基本模板](#81-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-3)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-3)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-2)
   - [九、DFS深度优先搜索](#%e4%b9%9ddfs%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [9.1 基本模板](#91-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-4)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-4)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-3)
   - [十、BFS广度优先搜索](#%e5%8d%81bfs%e5%b9%bf%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [10.1 基本模板](#101-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-5)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-5)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-4)
     - [10.2 题目](#102-%e9%a2%98%e7%9b%ae)
       - [103 二叉树的锯齿形层次遍历](#103-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%94%af%e9%bd%bf%e5%bd%a2%e5%b1%82%e6%ac%a1%e9%81%8d%e5%8e%86)
       - [127 单词接龙](#127-%e5%8d%95%e8%af%8d%e6%8e%a5%e9%be%99)
       - [130. 被围绕的区域](#130-%e8%a2%ab%e5%9b%b4%e7%bb%95%e7%9a%84%e5%8c%ba%e5%9f%9f)
       - [199.二叉树的右视图](#199%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e5%8f%b3%e8%a7%86%e5%9b%be)
       - [200. 岛屿数量](#200-%e5%b2%9b%e5%b1%bf%e6%95%b0%e9%87%8f)
+      - [面试题13. 机器人的运动范围](#%e9%9d%a2%e8%af%95%e9%a2%9813-%e6%9c%ba%e5%99%a8%e4%ba%ba%e7%9a%84%e8%bf%90%e5%8a%a8%e8%8c%83%e5%9b%b4)
   - [十一、贪心](#%e5%8d%81%e4%b8%80%e8%b4%aa%e5%bf%83)
     - [11.1 基本模板](#111-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-6)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-6)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-5)
   - [十二、回溯法](#%e5%8d%81%e4%ba%8c%e5%9b%9e%e6%ba%af%e6%b3%95)
     - [12.1 基本模板](#121-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-7)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-7)
+      - [1) 递归](#1-%e9%80%92%e5%bd%92)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-6)
+    - [12.2 题目](#122-%e9%a2%98%e7%9b%ae)
+      - [79. 单词搜索](#79-%e5%8d%95%e8%af%8d%e6%90%9c%e7%b4%a2)
+      - [212. 单词搜索 II](#212-%e5%8d%95%e8%af%8d%e6%90%9c%e7%b4%a2-ii)
   - [十三、动态规划](#%e5%8d%81%e4%b8%89%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92)
     - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
       - [1) 相同之处](#1-%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84)
@@ -506,9 +511,30 @@ void exec(int a[], int size) {
         
 #### 1) 递归法
 > - 先序遍历()
-#### 2) 迭代法
-> - 分治方法将问题划分为互不相交的子问题，递归地求解子问题，再将它们的解组合起来，求出原问题的解
-> - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
+### 6.2 题目
+#### [946. 验证栈序列](https://leetcode-cn.com/problems/validate-stack-sequences/submissions/)
+```js
+        /**
+        * @param {number[]} pushed
+        * @param {number[]} popped
+        * @return {boolean}
+        */
+        var validateStackSequences = function(pushed, popped) {
+            const stask = [];
+            let popHead = 0, j;
+            for(let i = 0; i < pushed.length; i++) {
+                if(pushed[i] !== popped[popHead]) stask.push(pushed[i]);
+                else popHead++;
+                j = stask.length - 1;
+                while(j >=0 && stask[j] === popped[popHead]) {
+                    j--;
+                    popHead++;
+                }
+                stask.splice(j + 1);
+            }
+            return popHead === pushed.length;
+        };
+```
 
 ## 七、链表
 ### 7.1 基本模板 
@@ -815,6 +841,45 @@ void exec(int a[], int size) {
             return res;
         };
 ```
+#### [面试题13. 机器人的运动范围](https://leetcode-cn.com/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof/)
+```js
+        /**
+        * @param {number} m
+        * @param {number} n
+        * @param {number} k
+        * @return {number}
+        */
+        var movingCount = function(m, n, k) {
+            const dir = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+            function numDFS(i, j, isVisited) {
+                const key = i + '-' + j;
+                if (i < 0 || i >= m || j < 0 || j >= n || isVisited[key]) return 0;
+                if (('' + i + j).split('').reduce((t, i) => t + +i, 0) > k) return 0;
+                isVisited[key] = true;
+                return dir.reduce((t, [offsetX, offsetY]) => t + numDFS(i + offsetX, j + offsetY, isVisited), 0) + 1;
+            }
+            return numDFS(0, 0, {});
+        };
+
+        // BFS 版本，只需要走两个方向
+        var movingCount = function(m, n, k) {
+        const queue = [[0, 0]];
+        let res = 0, i = 1;
+        const isVisited = {};
+        while(i) {
+            while(i--) {
+                const [i, j] = queue.shift();
+                const key = i + '-' + j;
+                if (i >= m || j >= n || isVisited[key] || ('' + i + j).split('').reduce((t, i) => t + +i, 0) > k) continue;
+                res++;
+                isVisited[key] = true;
+                queue.push([i + 1, j], [i, j + 1])
+            }
+            i = queue.length;
+        }
+        return res;
+    };
+```
 ## 十一、贪心
 ### 11.1 基本模板 
         
@@ -827,12 +892,101 @@ void exec(int a[], int size) {
 ## 十二、回溯法
 ### 12.1 基本模板 
         
-#### 1) 递归法
-> - 先序遍历()
+#### 1) 递归
+```js
+        var exist = function(board, word) {
+            const row = board.length;
+            if(!row) return false;
+            const col = board[0].length;
+            const dir = [[-1,0], [1, 0], [0, -1], [0, 1]]; // 四个方向
+            for(let i = 0; i < row; i++) {
+            for(let j = 0; j < col; j++) {
+                if(board[i][j] === word[0]) {
+                    if(isExist(i, j, 0)) return true;
+                } 
+                } 
+            }
+            function isExist(i, j, num) {
+                if (i < 0 || i >= row || j < 0 || j >= col // 边界条件
+                    || board[i][j] !== word[num]) return false;
+                if (word.length - 1 === num) return true; // 成功条件
+                board[i][j] = '*';
+                num++;
+                const res = dir.some(([x, y]) => isExist(i + x, j + y, num));
+                board[i][j] = res ? '*' : word[num - 1]; // 回溯
+                return res;
+            }
+            return false;
+        };
+```
 #### 2) 迭代法
 > - 分治方法将问题划分为互不相交的子问题，递归地求解子问题，再将它们的解组合起来，求出原问题的解
 > - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
-
+### 12.2 题目
+#### [79. 单词搜索](https://leetcode-cn.com/problems/word-search/submissions/)
+```js
+        /**
+        * @param {character[][]} board
+        * @param {string} word
+        * @return {boolean}
+        */
+        var exist = function(board, word) {
+            const row = board.length;
+            if(!row) return false;
+            const col = board[0].length;
+            const dir = [[-1,0], [1, 0], [0, -1], [0, 1]]; // 四个方向
+            for(let i = 0; i < row; i++) {
+            for(let j = 0; j < col; j++) {
+                if(board[i][j] === word[0]) {
+                    if(isExist(i, j, 0)) return true;
+                } 
+                } 
+            }
+            function isExist(i, j, num) {
+                if (i < 0 || i >= row || j < 0 || j >= col // 边界条件
+                    || board[i][j] !== word[num]) return false;
+                if (word.length - 1 === num) return true; // 成功条件
+                board[i][j] = '*';
+                num++;
+                const res = dir.some(([x, y]) => isExist(i + x, j + y, num));
+                board[i][j] = res ? '*' : word[num - 1]; // 回溯
+                return res;
+            }
+            return false;
+        };
+```
+#### [212. 单词搜索 II](https://leetcode-cn.com/problems/word-search-ii/solution/js-dfsbao-sou-by-hblvsjtu/)
+```js
+        /**
+        * @param {character[][]} board
+        * @param {string[]} words
+        * @return {string[]}
+        */
+        var findWords = function(board, words) {
+            const row = board.length;
+            if(!row) return [];
+            const col = board[0].length;
+            const dir = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+            function dfs(i, j, num, word, copyBoard) {
+                if(i < 0 || i >= row || j < 0 || j >= col || copyBoard[i][j] !== word[num]) return false;
+                if(num === word.length - 1) return true;
+                copyBoard[i][j] = '*';
+                const res = dir.some(a => dfs(i + a[0], j + a[1], num + 1, word, copyBoard));
+                copyBoard[i][j] = res ? '*' : word[num];
+                return res;
+            }
+            function isExist(word, copyBoard) {
+                for(let i = 0; i < row; i++) {
+                    for(let j = 0; j < col; j++) {
+                        if(board[i][j] === word[0])
+                            if(dfs(i, j, 0, word, copyBoard)) return true;
+                    }
+                }
+                return false;
+            }
+            return words.filter(i => isExist(i, JSON.parse(JSON.stringify(board))));
+        };
+```
 
 ## 十三、动态规划
 ### 13.1 与分治思想的异同
