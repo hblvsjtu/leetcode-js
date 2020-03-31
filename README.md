@@ -36,8 +36,10 @@
       - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95)
   - [五、哈希表](#%e4%ba%94%e5%93%88%e5%b8%8c%e8%a1%a8)
     - [5.1 基本模板](#51-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-1)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-1)
+      - [1) 统计频率](#1-%e7%bb%9f%e8%ae%a1%e9%a2%91%e7%8e%87)
+      - [1) 过滤重复数字](#1-%e8%bf%87%e6%bb%a4%e9%87%8d%e5%a4%8d%e6%95%b0%e5%ad%97)
+      - [2) 题目](#2-%e9%a2%98%e7%9b%ae)
+      - [347. 前 K 个高频元素](#347-%e5%89%8d-k-%e4%b8%aa%e9%ab%98%e9%a2%91%e5%85%83%e7%b4%a0)
   - [六、栈和队列](#%e5%85%ad%e6%a0%88%e5%92%8c%e9%98%9f%e5%88%97)
     - [6.1 基本模板](#61-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-2)
@@ -96,6 +98,7 @@
     - [15.2 题目](#152-%e9%a2%98%e7%9b%ae)
       - [365. 水壶问题](#365-%e6%b0%b4%e5%a3%b6%e9%97%ae%e9%a2%98)
       - [264. 丑数 II](#264-%e4%b8%91%e6%95%b0-ii)
+      - [313. 超级丑数](#313-%e8%b6%85%e7%ba%a7%e4%b8%91%e6%95%b0)
        
 ## 一、分治问题
 ### 1.1 归并排序
@@ -500,11 +503,43 @@ void exec(int a[], int size) {
 ## 五、哈希表
 ### 5.1 基本模板 
         
-#### 1) 递归法
-> - 先序遍历()
-#### 2) 迭代法
-> - 分治方法将问题划分为互不相交的子问题，递归地求解子问题，再将它们的解组合起来，求出原问题的解
-> - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
+#### 1) 统计频率
+```js
+        const res = nums.reduce((t, i) => {
+            t[i] = t[i] ? t[i] + 1 : 1;
+            return t;
+        }, {});
+```
+#### 1) 过滤重复数字
+```js
+        const record = {};
+        const res = nums.reduce((t, i) => {
+            if(!record[i]) {
+                record[i] = true;
+                t.push(i);
+            }
+            return t;
+        }, []);
+```
+#### 2) 题目
+#### [347. 前 K 个高频元素](https://leetcode-cn.com/problems/top-k-frequent-elements/)
+```js
+       /**
+        * @param {number[]} nums
+        * @param {number} k
+        * @return {number[]}
+        */
+       var topKFrequent = function(nums, k) {
+           const record = nums.reduce((t, i) => {
+               t[i] = t[i] ? t[i] + 1 : 1;
+               return t;
+           }, {});
+           return Object.entries(record)
+               .sort((a, b) => b[1] - a[1])
+               .slice(0, k)
+               .map(entry => +entry[0]);
+       };
+```
 
 ## 六、栈和队列
 ### 6.1 基本模板 
@@ -580,11 +615,43 @@ void exec(int a[], int size) {
 ## 八、树
 ### 8.1 基本模板 
         
-#### 1) 递归法
-> - 先序遍历()
-#### 2) 迭代法
-> - 分治方法将问题划分为互不相交的子问题，递归地求解子问题，再将它们的解组合起来，求出原问题的解
-> - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
+### 8.2 题目
+#### [面试题26. 树的子结构](https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/submissions/)
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} A
+         * @param {TreeNode} B
+         * @return {boolean}
+         */
+        var isSubStructure = function(A, B) {
+            if (!B) return false;
+            function isEqual(A, B) {
+                if (!B) return true;
+                if (!A) return false;
+                if (A.val !== B.val) return false;
+                return isEqual(A.left, B.left) && isEqual(A.right, B.right);
+            }
+            const queue = [A];
+            let i = queue.length;
+            while(i) {
+                while(i--) {
+                    const front = queue.shift();
+                    if(!front) continue;
+                    if(front.val === B.val && isEqual(front, B)) return true;
+                    front.push(front.left, front.right);
+                }
+                i = queue.length;
+            }
+            return false;
+        };
+```
 
 ## 九、DFS深度优先搜索
 ### 9.1 基本模板 
@@ -1369,11 +1436,61 @@ void exec(int a[], int size) {
             return !(z % x);
         };
 ```
-#### [264. 丑数 II](https://leetcode-cn.com/problems/ugly-number-ii/)
+#### [264. 丑数 II](https://leetcode-cn.com/problems/ugly-number-ii/submissions/)
 ```js
-        var canMeasureWater = function(x, y, z) {
-            if(x + y < z) return false;
-            while(y) [x, y] = [y, x % y];
-            return !(z % x);
+        var nthUglyNumber = function(n) {
+            let i2 = 0,
+                i3 = 0,
+                i5 = 0;
+            let dp = [1];
+            for (let i = 1; i < n; i++) {
+                let min = Math.min(dp[i2] * 2, dp[i3] * 3, dp[i5] * 5);
+                if (min === dp[i2] * 2) i2++;
+                if (min === dp[i3] * 3) i3++;
+                if (min === dp[i5] * 5) i5++;
+                dp.push(min);
+            }
+            return dp[n-1];
         };
 ```
+#### [313. 超级丑数](https://leetcode-cn.com/problems/super-ugly-number/submissions/)
+```js
+        /**
+         * @param {number} n
+         * @param {number[]} primes
+         * @return {number}
+         */
+        var nthSuperUglyNumber = function(n, primes) {
+            const res = [1];
+            const points = new Array(primes.length).fill(0);
+            let min;
+            for(let i = 1; i < n; i++) {
+                const map = primes.map((prime, index) => res[points[index]] * prime);
+                min = Math.min(...map);
+                primes.forEach((prime, index) => {
+                    if(map[index] === min) points[index]++;
+                })
+                res.push(min);
+            }
+            return res[n - 1];
+        };
+```
+#### [面试题62. 圆圈中最后剩下的数字](https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/)
+```js
+        /**
+         - @param {number} n
+         - @param {number} m
+         - @return {number}
+         */
+        var lastRemaining = function(n, m) {
+            const arr = [];
+            for(let i = 0; i < n; i++) arr.push(i);
+            let head = 0;
+            while(arr.length > 1) {
+                head = (head + m - 1) % arr.length;
+                arr.splice(head, 1);
+            }
+            return arr[0];
+        };
+```
+
