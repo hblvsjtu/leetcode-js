@@ -548,6 +548,7 @@ void exec(int a[], int size) {
 > - 先序遍历()
 ### 6.2 题目
 #### [946. 验证栈序列](https://leetcode-cn.com/problems/validate-stack-sequences/submissions/)
+
 ```js
         /**
         * @param {number[]} pushed
@@ -576,6 +577,7 @@ void exec(int a[], int size) {
         
 #### 1) 快慢指针
 > - 双指针
+
 ```js
         var middleNode = function(head) {
             slow = fast = head;
@@ -588,6 +590,7 @@ void exec(int a[], int size) {
 ```
 ### 7.2 题目
 #### [876. 链表的中间结点](https://leetcode-cn.com/problems/middle-of-the-linked-list/solution/lian-biao-de-zhong-jian-jie-dian-by-leetcode-solut/)
+
 ```js
         /**
          * Definition for singly-linked list.
@@ -609,6 +612,45 @@ void exec(int a[], int size) {
                 quick = quick.next.next;
             }
             return quick ? slow.next : slow;
+        };
+```
+
+#### [138. 复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/submissions/)
+```js
+/**
+         - // Definition for a Node.
+         - function Node(val, next, random) {
+         -    this.val = val;
+         -    this.next = next;
+         -    this.random = random;
+         - };
+         */
+
+        /**
+         - @param {Node} head
+         - @return {Node}
+         */
+        var copyRandomList = function(head) {
+            if(!head) return null;
+            const res = new Node(head.val);
+            const record = new Map();
+            record.set(head, res);
+            let child = res;
+            let h = head;
+            while (h.next) {
+                child.next = new Node(h.next.val);
+                record.set(h.next, child.next);
+                h = h.next;
+                child = child.next;
+            }
+            h = head;
+            child = res;
+            while (h) {
+                child.random = record.get(h.random);
+                h = h.next;
+                child = child.next;
+            }
+            return res;
         };
 ```
 
@@ -657,6 +699,7 @@ void exec(int a[], int size) {
 ### 9.1 基本模板 
 #### 1) 递归法
 > - 先序遍历
+
 ```js
         var preOrderDFS = function(root, arg1, arg2, ...) {
             if(!root) return;
@@ -668,6 +711,7 @@ void exec(int a[], int size) {
         }
 ```
 > - 中序遍历
+
 ```js
         var inOrderDFS = function(root, arg1, arg2, ...) {
             if(!root) return;
@@ -679,6 +723,7 @@ void exec(int a[], int size) {
         }
 ```
 > - 后序遍历
+
 ```js
         var postOrderDFS = function(root, arg1, arg2, ...) {
             if(!root) return;
@@ -691,6 +736,7 @@ void exec(int a[], int size) {
 ```
 #### 2) 迭代法
 > - 先序遍历
+
 ```js
         var preOrderDFS = function(root) {
             if(!root) return;
@@ -710,6 +756,7 @@ void exec(int a[], int size) {
         }
 ```
 > - 中序遍历
+
 ```js
         var inOrderDFS = function(root) {
             if(!root) return;
@@ -728,10 +775,6 @@ void exec(int a[], int size) {
         }
 ```
 > - 后序遍历
-```js
-        
-```
-
 
 ## 十、BFS广度优先搜索
 ### 10.1 基本模板 
@@ -741,6 +784,7 @@ void exec(int a[], int size) {
 > - 自下而上
 #### 2) 迭代法
 > - 自上而下
+
 ```js
         var Up2BottomBFS = function(root) {
             if(!root) return;
@@ -991,6 +1035,7 @@ void exec(int a[], int size) {
 > - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
 ### 12.2 题目
 #### [79. 单词搜索](https://leetcode-cn.com/problems/word-search/submissions/)
+
 ```js
         /**
         * @param {character[][]} board
@@ -1054,6 +1099,124 @@ void exec(int a[], int size) {
             return words.filter(i => isExist(i, JSON.parse(JSON.stringify(board))));
         };
 ```
+#### [面试题38. 字符串的排列](https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/solution/javascriptpai-xu-di-gui-jie-fa-ji-bai-100-by-lewag/)
+```js
+        /**
+         - @param {string} s
+         - @return {string[]}
+         */
+        var permutation = function(s) {
+            const res = new Set();
+            function dfs(s, i, len) {
+                if (i === s.length) {
+                    res.add(s);
+                    return;
+                }
+                for(let j = i; j < s.length; j++) {
+                    s = swap(s, i, j);
+                    dfs(s, i + 1, s.length);
+                    s = swap(s, i, j);
+                }
+            }
+            function swap(str, i, j) {
+                if (i === j) return str;
+                return str.substring(0, i) + str[j] + str.substring(i + 1, j) + str[i] + str.substring(j + 1);
+            }
+            dfs(s, 0, s.length);
+            return Array.from(res);
+        };
+```
+#### [面试题34. 二叉树中和为某一值的路径](https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)
+```js
+        // 回溯法
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @param {number} sum
+         * @return {number[][]}
+         */
+        var pathSum = function(root, sum) {
+            if (!root) return [];
+            const res = [];
+            const children = ['left', 'right'];
+            function dfs(parent, path) {
+                path.push(parent.val);
+                if (!parent.left && !parent.right) {
+                    if(parent.sum === sum) res.push(path.slice(0));
+                    path.pop(parent.val);
+                    return;
+                }
+                children.forEach(child => {
+                    if(parent[child]) {
+                        parent[child].sum = parent.sum + parent[child].val;
+                        dfs(parent[child], path);
+                    }
+                })
+                path.pop(parent.val);
+            }
+            root.sum = root.val;
+            dfs(root, [])
+            return res;
+        }
+
+        // 暴力法
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @param {number} sum
+         * @return {number[][]}
+         */
+        var pathSum = function(root, sum) {
+            if(!root) return [];
+            const pre = {};
+            const idMap = {};
+            let id = 1;
+            root.sum = root.val;
+            root.id = id++;
+            idMap[root.id] = root.val;
+            const stack = [root];
+            let i = stack.length;
+            const target = [];
+            const children = ['left', 'right'];
+            while(i) {
+                while(i--) {
+                    const front = stack.pop();
+                    if (!front.left && !front.right && front.sum === sum) target.push(front.id);
+                    children.forEach(child => {
+                        if(front[child]) {
+                            front[child].id = id++;
+                            front[child].sum = front.sum + front[child].val;
+                            idMap[front[child].id] = front[child].val;
+                            stack.push(front[child]);
+                            pre[front[child].id] = front.id;
+                        }
+                    })
+                }
+                i = stack.length;
+            }
+            return target.map(tail => {
+                const res = [];
+                let front = tail;
+                while(front) {
+                    res.unshift(idMap[front]);
+                    front = pre[front];
+                }
+                return res;
+            })
+        };
+```
 
 ## 十三、动态规划
 ### 13.1 与分治思想的异同
@@ -1070,6 +1233,7 @@ void exec(int a[], int size) {
 
 #### 1) 图的遍历
 > - BFS
+
 ```js
         var BFS = function(n, edges) {
             const record = {};
@@ -1120,6 +1284,7 @@ void exec(int a[], int size) {
         };
 ```
 > - DFS
+
 ```js
         var DFS = function(n, edges) {
             const record = {};
@@ -1165,6 +1330,7 @@ void exec(int a[], int size) {
 ```
 #### 1) 有向图是否存在环
 > - 拓扑排序
+
 ```js
         function topology(N, arr) {
             const indegree = new Array(N).fill(0);
@@ -1191,6 +1357,7 @@ void exec(int a[], int size) {
         }
 ```
 > - DFS递归版本
+
 ```js
         /**
         * @param {number} numCourses
@@ -1221,6 +1388,7 @@ void exec(int a[], int size) {
         };
 ```
 > - DFS非递归版本
+
 ```js
         function canFinish(N, arr) {
             const indegree = new Array(N).fill(0);
@@ -1256,6 +1424,7 @@ void exec(int a[], int size) {
 ```
 #### 2) 构造无向图
 > - 暴力
+
 ```js
         var findMinHeightTrees = function(n, edges) {
             const record = {};
@@ -1281,6 +1450,7 @@ void exec(int a[], int size) {
         };
 ```
 > - BFS出度
+
 ```js
         var findMinHeightTrees = function(n, edges) {
             const record = {};
@@ -1348,6 +1518,7 @@ void exec(int a[], int size) {
 
 #### [310. 最小高度树](https://leetcode-cn.com/problems/minimum-height-trees/)
 > - js 一层层剥开暴力解
+
 ```js
         /**
         * @param {number} n
@@ -1378,6 +1549,7 @@ void exec(int a[], int size) {
         };
 ```
 > - BFS出度
+
 ```js
         /**
         * @param {number} n
@@ -1421,6 +1593,7 @@ void exec(int a[], int size) {
         
 #### 1) 最大公约数
 > - 
+
 ```js
         function(x, y) {
             while(y) [x, y] = [y, x % y];
@@ -1493,4 +1666,3 @@ void exec(int a[], int size) {
             return arr[0];
         };
 ```
-
