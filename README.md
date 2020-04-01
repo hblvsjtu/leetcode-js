@@ -33,13 +33,18 @@
   - [四、字符串问题](#%e5%9b%9b%e5%ad%97%e7%ac%a6%e4%b8%b2%e9%97%ae%e9%a2%98)
     - [4.1 基本模板](#41-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95)
+    - [4.2 题目](#42-%e9%a2%98%e7%9b%ae)
+      - [面试题48. 最长不含重复字符的子字符串](#%e9%9d%a2%e8%af%95%e9%a2%9848-%e6%9c%80%e9%95%bf%e4%b8%8d%e5%90%ab%e9%87%8d%e5%a4%8d%e5%ad%97%e7%ac%a6%e7%9a%84%e5%ad%90%e5%ad%97%e7%ac%a6%e4%b8%b2)
+      - [面试题67. 把字符串转换成整数](#%e9%9d%a2%e8%af%95%e9%a2%9867-%e6%8a%8a%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b4%e6%95%b0)
+      - [面试题46. 把数字翻译成字符串](#%e9%9d%a2%e8%af%95%e9%a2%9846-%e6%8a%8a%e6%95%b0%e5%ad%97%e7%bf%bb%e8%af%91%e6%88%90%e5%ad%97%e7%ac%a6%e4%b8%b2)
   - [五、哈希表](#%e4%ba%94%e5%93%88%e5%b8%8c%e8%a1%a8)
     - [5.1 基本模板](#51-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 统计频率](#1-%e7%bb%9f%e8%ae%a1%e9%a2%91%e7%8e%87)
       - [2) 过滤重复数字](#2-%e8%bf%87%e6%bb%a4%e9%87%8d%e5%a4%8d%e6%95%b0%e5%ad%97)
     - [5.2 题目](#52-%e9%a2%98%e7%9b%ae)
       - [347. 前 K 个高频元素](#347-%e5%89%8d-k-%e4%b8%aa%e9%ab%98%e9%a2%91%e5%85%83%e7%b4%a0)
+      - [面试题56 - I. 数组中数字出现的次数](#%e9%9d%a2%e8%af%95%e9%a2%9856---i-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0)
+      - [面试题56 - II. 数组中数字出现的次数 II](#%e9%9d%a2%e8%af%95%e9%a2%9856---ii-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0-ii)
   - [六、栈和队列](#%e5%85%ad%e6%a0%88%e5%92%8c%e9%98%9f%e5%88%97)
     - [6.1 基本模板](#61-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-1)
@@ -58,11 +63,11 @@
   - [九、DFS深度优先搜索](#%e4%b9%9ddfs%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [9.1 基本模板](#91-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-2)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-1)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95)
   - [十、BFS广度优先搜索](#%e5%8d%81bfs%e5%b9%bf%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [10.1 基本模板](#101-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-3)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-2)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-1)
     - [10.2 题目](#102-%e9%a2%98%e7%9b%ae)
       - [103 二叉树的锯齿形层次遍历](#103-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%94%af%e9%bd%bf%e5%bd%a2%e5%b1%82%e6%ac%a1%e9%81%8d%e5%8e%86)
       - [127 单词接龙](#127-%e5%8d%95%e8%af%8d%e6%8e%a5%e9%be%99)
@@ -73,11 +78,11 @@
   - [十一、贪心](#%e5%8d%81%e4%b8%80%e8%b4%aa%e5%bf%83)
     - [11.1 基本模板](#111-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-4)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-3)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-2)
   - [十二、回溯法](#%e5%8d%81%e4%ba%8c%e5%9b%9e%e6%ba%af%e6%b3%95)
     - [12.1 基本模板](#121-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归](#1-%e9%80%92%e5%bd%92)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-4)
+      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-3)
     - [12.2 题目](#122-%e9%a2%98%e7%9b%ae)
       - [79. 单词搜索](#79-%e5%8d%95%e8%af%8d%e6%90%9c%e7%b4%a2)
       - [212. 单词搜索 II](#212-%e5%8d%95%e8%af%8d%e6%90%9c%e7%b4%a2-ii)
@@ -103,6 +108,7 @@
       - [264. 丑数 II](#264-%e4%b8%91%e6%95%b0-ii)
       - [313. 超级丑数](#313-%e8%b6%85%e7%ba%a7%e4%b8%91%e6%95%b0)
       - [面试题62. 圆圈中最后剩下的数字](#%e9%9d%a2%e8%af%95%e9%a2%9862-%e5%9c%86%e5%9c%88%e4%b8%ad%e6%9c%80%e5%90%8e%e5%89%a9%e4%b8%8b%e7%9a%84%e6%95%b0%e5%ad%97)
+      - [面试题44. 数字序列中某一位的数字](#%e9%9d%a2%e8%af%95%e9%a2%9844-%e6%95%b0%e5%ad%97%e5%ba%8f%e5%88%97%e4%b8%ad%e6%9f%90%e4%b8%80%e4%bd%8d%e7%9a%84%e6%95%b0%e5%ad%97)
        
 ## 一、分治问题
 ### 1.1 归并排序
@@ -500,9 +506,58 @@ void exec(int a[], int size) {
         
 #### 1) 递归法
 > - 先序遍历()
-#### 2) 迭代法
-> - 分治方法将问题划分为互不相交的子问题，递归地求解子问题，再将它们的解组合起来，求出原问题的解
-> - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
+### 4.2 题目
+#### [面试题48. 最长不含重复字符的子字符串](https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/solution/jsdong-tai-gui-hua-by-heronwan-3/)
+
+```js
+        var lengthOfLongestSubstring = function(s) {
+            let record = '', max = 0, index;
+            for(let i = 0; i < s.length; i++) {
+                index = record.indexOf(s[i]);
+                record += s[i];
+                if (index >= 0) record = record.substring(index + 1);
+                else max = Math.max(max, record.length);
+            }
+            return max;
+        };
+```
+#### [面试题67. 把字符串转换成整数](https://leetcode-cn.com/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/)
+
+```js
+        /**
+         * @param {string} str
+         * @return {number}
+         */
+        var strToInt = function(str) {
+            let res = str.trim().match(/^([+-]?\d+).*$/);
+            if (!res) return 0;
+            if (res[1] < -2147483648) return -2147483648;
+            else if (res[1] > 2147483647) return 2147483647;
+            return res[1];
+        };
+```
+
+#### [面试题46. 把数字翻译成字符串](https://leetcode-cn.com/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof/)
+
+```js
+        /**
+         * @param {number} num
+         * @return {number}
+         */
+        var translateNum = function(num) {
+            let str = '' + num;
+            let res = 0;
+            function dfs(i) {
+                if (i >= str.length) res++;
+                else {
+                    dfs(i + 1);
+                    if (+str[i] && +(str[i] + str[i + 1]) < 26) dfs(i + 2);
+                }
+            }
+            dfs(0);
+            return res;
+        };
+```
 
 ## 五、哈希表
 ### 5.1 基本模板 
@@ -543,6 +598,33 @@ void exec(int a[], int size) {
                .slice(0, k)
                .map(entry => +entry[0]);
        };
+```
+#### [面试题56 - I. 数组中数字出现的次数](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/)
+```js
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var singleNumbers = function(nums) {
+            return Array.from(nums.reduce((t, num) => {
+                t.has(num) ? t.delete(num) : t.add(num);
+                return t;
+            }, new Set()));
+        };
+```
+#### [面试题56 - II. 数组中数字出现的次数 II](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/)
+```js
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var singleNumbers = function(nums) {
+            const temp = new Set();
+            return Array.from(nums.reduce((t, num) => {
+                !t.has(num) ? t.add(num) :(temp.has(num) ? t.delete(num) : temp.add(num))
+                return t;
+            }, new Set()));
+        };
 ```
 
 ## 六、栈和队列
@@ -1670,3 +1752,21 @@ void exec(int a[], int size) {
             return arr[0];
         };
 ```
+#### [面试题44. 数字序列中某一位的数字](https://leetcode-cn.com/problems/shu-zi-xu-lie-zhong-mou-yi-wei-de-shu-zi-lcof/)
+```js
+        /**
+         * @param {number} n
+         * @return {number}
+         */
+        var findNthDigit = function(n) {
+            if (n < 10) return n;
+            let sum = 10, i = 1;
+            while(n > sum) {
+                n -= sum;
+                sum = 9 * Math.pow(10, i) * ++i;
+            }
+            return (sum / 9 / i + parseInt(n / i) + '')[n % i];
+        }
+```
+
+ 
