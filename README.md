@@ -129,6 +129,7 @@
         }
 ```
 > - 有一个缺点，如果采用原址排序的话，需要在合并的时候采用二阶循环，如果不采用原址排序的话，需要开辟多一倍的空间
+
 ```c
         /* ***************************************************************
         *      Filename: DividedSort.c
@@ -272,6 +273,7 @@
 > - 分解：将一个数组分为三部分，首先以最后一个元素为基准，比它大的放在右边，比它小的放在左边，然后将最后一个元素放在中间，采取原址排序的方法，最后返回基准元素的下标
 > - 解决：通过递归调用快速排序，分别为array\[p...q-1\] array\[p...q+1\]，至于为什么没有array\[q\]元素，原因在于原址排序它的位置就是正确的位置，所以不需要动
 > - 合并：由于是原址排序，所以没有必要合并
+
 ```c
         /* ***************************************************************
         *      Filename: QuickSort.c
@@ -499,6 +501,39 @@ void exec(int a[], int size) {
                 printf("a[%d]=%d ",j,a[j]);
             }
         }
+```
+#### [289. 生命游戏
+](https://leetcode-cn.com/problems/game-of-life/solution/ce-wai-kong-jian-jie-fa-ji-yuan-di-jie-fa-by-theow/)
+```js
+        /**
+         * @param {number[][]} board
+         * @return {void} Do not return anything, modify board in-place instead.
+         */
+        var gameOfLife = function(board) {
+            const dir = [[0, -1], [0, 1], [-1, -1], [-1, 0], [-1, 1], [1, -1], [1, 0], [1, 1]];
+            const res = [];
+            let liveNum;
+            for(let i = 0; i < board.length; i++) {
+                res[i] = [];
+                for(let j = 0; j < board[0].length; j++) {
+                    liveNum = dir.reduce((t, [offsetX, offsetY]) => {
+                        const [x, y] = [offsetX + i, offsetY + j];
+                        if (x >= 0 && x < board.length && y >=0 && y < board[0].length)
+                            t += board[x][y];
+                        return t;
+                    }, 0)
+                    if (liveNum === 3) res[i][j] = 1;
+                    else if (liveNum === 2) res[i][j] = board[i][j];
+                    else res[i][j] = 0;
+                }
+            }
+            for(let i = 0; i < board.length; i++) {
+                for(let j = 0; j < board[0].length; j++) {
+                    board[i][j] = res[i][j];
+                }
+            }
+            return board;
+        };
 ```
 
 ## 四、字符串问题
@@ -1091,29 +1126,19 @@ void exec(int a[], int size) {
         
 #### 1) 递归
 ```js
-        var exist = function(board, word) {
-            const row = board.length;
-            if(!row) return false;
-            const col = board[0].length;
-            const dir = [[-1,0], [1, 0], [0, -1], [0, 1]]; // 四个方向
-            for(let i = 0; i < row; i++) {
-            for(let j = 0; j < col; j++) {
-                if(board[i][j] === word[0]) {
-                    if(isExist(i, j, 0)) return true;
-                } 
-                } 
+        var huisu = function(nums) {
+            const res = [];
+            function backtrack(path, i) {
+                // 终末条件操作...
+
+                for(let j = i; j < nums.length; j++) {
+                    path.push(nums[j]);
+                    backtrack(path.slice(), j + 1);
+                    path.pop(); // 回溯过程
+                }
             }
-            function isExist(i, j, num) {
-                if (i < 0 || i >= row || j < 0 || j >= col // 边界条件
-                    || board[i][j] !== word[num]) return false;
-                if (word.length - 1 === num) return true; // 成功条件
-                board[i][j] = '*';
-                num++;
-                const res = dir.some(([x, y]) => isExist(i + x, j + y, num));
-                board[i][j] = res ? '*' : word[num - 1]; // 回溯
-                return res;
-            }
-            return false;
+            backtrack([], 0);
+            return res;
         };
 ```
 #### 2) 迭代法
@@ -1193,14 +1218,14 @@ void exec(int a[], int size) {
          */
         var permutation = function(s) {
             const res = new Set();
-            function dfs(s, i, len) {
+            function dfs(s, i) {
                 if (i === s.length) {
                     res.add(s);
                     return;
                 }
                 for(let j = i; j < s.length; j++) {
                     s = swap(s, i, j);
-                    dfs(s, i + 1, s.length);
+                    dfs(s, i + 1);
                     s = swap(s, i, j);
                 }
             }
@@ -1208,8 +1233,79 @@ void exec(int a[], int size) {
                 if (i === j) return str;
                 return str.substring(0, i) + str[j] + str.substring(i + 1, j) + str[i] + str.substring(j + 1);
             }
-            dfs(s, 0, s.length);
+            dfs(s, 0);
             return Array.from(res);
+        };
+```
+#### [78. 子集](https://leetcode-cn.com/problems/subsets/)
+```js
+        /** 
+         * @param {number[]} nums
+         * @return {number[][]}
+         */
+        var subsets = function(nums) {
+            const res = [];
+            function backtrack(path, i) {
+                res.push(path);
+                // 回溯过程
+                for(let j = i; j < nums.length; j++) {
+                    path.push(nums[j]);
+                    backtrack(path.slice(), j + 1);
+                    path.pop();
+                }
+            }
+            backtrack([], 0);
+            return res;
+        };
+
+        // 暴力dfs
+        var subsets = function(nums) {
+            const res = [[]];
+            function dfs(i, path) {
+                if(i === nums.length) path && res.push(path.split(',').map(i => +i));
+                else {
+                    dfs(i + 1, path);
+                    dfs(i + 1, path ? path + ',' + nums[i] : '' + nums[i]);
+                }
+            }
+            dfs(0, '');
+            return res;
+        };
+```
+#### [90. 子集 II](https://leetcode-cn.com/problems/subsets-ii/)
+```js
+        /**
+         * @param {number[]} nums
+         * @return {number[][]}
+         */
+        var subsetsWithDup = function(nums) {
+            nums.sort((a, b) => a - b);
+            const res = [];
+            function backTrace(path, i) {
+                res.push(path);
+                for(let j = i; j < nums.length; j++) {
+                    if(j > i && nums[j] === nums[j - 1]) continue;
+                    backTrace(path.concat([nums[j]]), j + 1);
+                }
+            }
+            backTrace([], 0);
+            return res;
+        };
+
+        // 暴力求解是否存在相同数组
+        var subsetsWithDup = function(nums) {
+            nums.sort((a, b) => a - b);
+            const res = [];
+            function isExist(arr, target) {
+                return arr.some(item => item.length === target.length && target.join('') === item.join('');
+            }
+            function backTrace(path, i) {
+                !isExist(res, path) && res.push(path);
+                for(let j = i; i < nums.length; j++)
+                    backTrace(path.concat([nums[j]]), j++);
+            }
+            backTrace([], 0);
+            return res;
         };
 ```
 #### [面试题34. 二叉树中和为某一值的路径](https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)
@@ -1769,4 +1865,3 @@ void exec(int a[], int size) {
         }
 ```
 
- 
