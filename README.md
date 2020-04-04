@@ -48,6 +48,7 @@
       - [347. 前 K 个高频元素](#347-%e5%89%8d-k-%e4%b8%aa%e9%ab%98%e9%a2%91%e5%85%83%e7%b4%a0)
       - [面试题56 - I. 数组中数字出现的次数](#%e9%9d%a2%e8%af%95%e9%a2%9856---i-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0)
       - [面试题56 - II. 数组中数字出现的次数 II](#%e9%9d%a2%e8%af%95%e9%a2%9856---ii-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0-ii)
+      - [面试题51. 数组中的逆序对](#%e9%9d%a2%e8%af%95%e9%a2%9851-%e6%95%b0%e7%bb%84%e4%b8%ad%e7%9a%84%e9%80%86%e5%ba%8f%e5%af%b9)
   - [六、栈和队列](#%e5%85%ad%e6%a0%88%e5%92%8c%e9%98%9f%e5%88%97)
     - [6.1 基本模板](#61-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-1)
@@ -378,6 +379,7 @@
         }
 
 ``` 
+
 ### 1.2 题目
 #### 1.3 子数组和为定值
 > -  sum = x\[0\]a\[0\] + x\[1\]a\[1\] + x\[2\]a\[2\] + x\[3\]a\[3\] +... 
@@ -692,6 +694,39 @@ void exec(int a[], int size) {
                 !t.has(num) ? t.add(num) :(temp.has(num) ? t.delete(num) : temp.add(num))
                 return t;
             }, new Set()));
+        };
+```
+
+#### [面试题51. 数组中的逆序对](https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/)
+```js
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var reversePairs = function(nums) {
+            let res = 0, temp, j;
+            const record = [0];
+            const repeat = {};
+            repeat[nums[0]] = 0;
+            for(let i = 1; i < nums.length; i++) {
+                repeat[nums[i]] = repeat[nums[i]] !== undefined ? repeat[nums[i]] + 1 : 0;
+                temp = 0;
+                j = i;
+                while(j--) {
+                    if (nums[j] === nums[i]) {
+                        temp += record[j];
+                        break;
+                    }
+                    if (nums[j] === nums[i] + 1) {
+                        temp += (record[j] + 1) + repeat[nums[j]];
+                        break;
+                    }
+                    if (nums[i] < nums[j]) temp++;
+                }
+                record[i] = temp;
+                res += temp;
+            }
+            return res;
         };
 ```
 
