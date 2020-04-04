@@ -23,13 +23,16 @@
     - [参考源：leetcode：https://www.nowcoder.com/ta/leetcode](#%e5%8f%82%e8%80%83%e6%ba%90leetcodehttpswwwnowcodercomtaleetcode)
   - [目录](#%e7%9b%ae%e5%bd%95)
   - [一、分治问题](#%e4%b8%80%e5%88%86%e6%b2%bb%e9%97%ae%e9%a2%98)
-    - [1.1 归并排序](#11-%e5%bd%92%e5%b9%b6%e6%8e%92%e5%ba%8f)
-      - [1) 总体思路](#1-%e6%80%bb%e4%bd%93%e6%80%9d%e8%b7%af)
-      - [1) 总体思路](#1-%e6%80%bb%e4%bd%93%e6%80%9d%e8%b7%af-1)
-      - [1) 总体思路](#1-%e6%80%bb%e4%bd%93%e6%80%9d%e8%b7%af-2)
+    - [1.1 模板](#11-%e6%a8%a1%e6%9d%bf)
+      - [归并排序](#%e5%bd%92%e5%b9%b6%e6%8e%92%e5%ba%8f)
+      - [快速排序](#%e5%bf%ab%e9%80%9f%e6%8e%92%e5%ba%8f)
+    - [1.2 题目](#12-%e9%a2%98%e7%9b%ae)
+      - [1.3 子数组和为定值](#13-%e5%ad%90%e6%95%b0%e7%bb%84%e5%92%8c%e4%b8%ba%e5%ae%9a%e5%80%bc)
+      - [42. 接雨水](#42-%e6%8e%a5%e9%9b%a8%e6%b0%b4)
   - [三、数组问题](#%e4%b8%89%e6%95%b0%e7%bb%84%e9%97%ae%e9%a2%98)
     - [3.1、荷兰国旗问题](#31%e8%8d%b7%e5%85%b0%e5%9b%bd%e6%97%97%e9%97%ae%e9%a2%98)
-      - [1) 总体思路](#1-%e6%80%bb%e4%bd%93%e6%80%9d%e8%b7%af-3)
+      - [1) 总体思路](#1-%e6%80%bb%e4%bd%93%e6%80%9d%e8%b7%af)
+      - [289. 生命游戏](#289-%e7%94%9f%e5%91%bd%e6%b8%b8%e6%88%8f)
   - [四、字符串问题](#%e5%9b%9b%e5%ad%97%e7%ac%a6%e4%b8%b2%e9%97%ae%e9%a2%98)
     - [4.1 基本模板](#41-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95)
@@ -87,6 +90,8 @@
       - [79. 单词搜索](#79-%e5%8d%95%e8%af%8d%e6%90%9c%e7%b4%a2)
       - [212. 单词搜索 II](#212-%e5%8d%95%e8%af%8d%e6%90%9c%e7%b4%a2-ii)
       - [面试题38. 字符串的排列](#%e9%9d%a2%e8%af%95%e9%a2%9838-%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%9a%84%e6%8e%92%e5%88%97)
+      - [78. 子集](#78-%e5%ad%90%e9%9b%86)
+      - [90. 子集 II](#90-%e5%ad%90%e9%9b%86-ii)
       - [面试题34. 二叉树中和为某一值的路径](#%e9%9d%a2%e8%af%95%e9%a2%9834-%e4%ba%8c%e5%8f%89%e6%a0%91%e4%b8%ad%e5%92%8c%e4%b8%ba%e6%9f%90%e4%b8%80%e5%80%bc%e7%9a%84%e8%b7%af%e5%be%84)
   - [十三、动态规划](#%e5%8d%81%e4%b8%89%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92)
     - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
@@ -109,12 +114,14 @@
       - [313. 超级丑数](#313-%e8%b6%85%e7%ba%a7%e4%b8%91%e6%95%b0)
       - [面试题62. 圆圈中最后剩下的数字](#%e9%9d%a2%e8%af%95%e9%a2%9862-%e5%9c%86%e5%9c%88%e4%b8%ad%e6%9c%80%e5%90%8e%e5%89%a9%e4%b8%8b%e7%9a%84%e6%95%b0%e5%ad%97)
       - [面试题44. 数字序列中某一位的数字](#%e9%9d%a2%e8%af%95%e9%a2%9844-%e6%95%b0%e5%ad%97%e5%ba%8f%e5%88%97%e4%b8%ad%e6%9f%90%e4%b8%80%e4%bd%8d%e7%9a%84%e6%95%b0%e5%ad%97)
+      - [190. 颠倒二进制位](#190-%e9%a2%a0%e5%80%92%e4%ba%8c%e8%bf%9b%e5%88%b6%e4%bd%8d)
+      - [201. 数字范围按位与](#201-%e6%95%b0%e5%ad%97%e8%8c%83%e5%9b%b4%e6%8c%89%e4%bd%8d%e4%b8%8e)
+      - [231. 2的幂](#231-2%e7%9a%84%e5%b9%82)
        
 ## 一、分治问题
-### 1.1 归并排序
-        
-#### 1) 总体思路
-> - 模版
+### 1.1 模板        
+#### 归并排序
+
 ```c
         int DivideStrategy(char *a, int left, int right){
             if(left==right){
@@ -267,9 +274,7 @@
         }
 ```
 
-<h3 id='1.2'>1.2 快速排序</h3>  
-        
-#### 1) 总体思路
+#### 快速排序
 > - 分解：将一个数组分为三部分，首先以最后一个元素为基准，比它大的放在右边，比它小的放在左边，然后将最后一个元素放在中间，采取原址排序的方法，最后返回基准元素的下标
 > - 解决：通过递归调用快速排序，分别为array\[p...q-1\] array\[p...q+1\]，至于为什么没有array\[q\]元素，原因在于原址排序它的位置就是正确的位置，所以不需要动
 > - 合并：由于是原址排序，所以没有必要合并
@@ -372,10 +377,9 @@
             return DividePoint;
         }
 
-```
-<h3 id='1.3'>1.3 子数组和为定值</h3>  
-        
-#### 1) 总体思路
+``` 
+### 1.2 题目
+#### 1.3 子数组和为定值
 > -  sum = x\[0\]a\[0\] + x\[1\]a\[1\] + x\[2\]a\[2\] + x\[3\]a\[3\] +... 
 > -  x数组表示该项的数是否存在，共有2^n种情况
 > -  如果迭代的时候需要i的同步更新，则在迭代的时候传入i+1的值;
@@ -454,7 +458,37 @@ void Sum(int x[], int a[], int size, int i, int sum, int res, int targer) {
             Sum(x, a, size, 0, 0, res, 40);
         }
 ```
-        
+
+#### [42. 接雨水](https://leetcode-cn.com/problems/trapping-rain-water/)
+```js
+        var trap = function(height) {
+            function findMaxHeight(i, j, isLast) {
+                if (j < 0) return 0;
+                if (i >= j) return j;
+                let index = i, max = height[i];
+                for(let k = i + 1; k <= j; k++) {
+                    if (height[k] >= max) {
+                        max = height[k];
+                        index = k;
+                    }
+                }
+                return index;
+            }
+            function half(i, j) {
+                if(j - i < 2) return 0;
+                const b = findMaxHeight(i, j);
+                const a = findMaxHeight(i, b - 1);
+                const c = findMaxHeight(b + 1, j, true);
+                let sum = 0;
+                for(let k = a; k <= c; k++) {
+                    if (k === b) continue;
+                    sum += (k < b ? height[a] : height[c]) - height[k];
+                }
+                return half(i, a) + half(c, j) + sum;
+            }
+            return half(0, height.length - 1);
+        };
+```
 ## 三、数组问题
 ### 3.1、荷兰国旗问题
         
@@ -502,8 +536,7 @@ void exec(int a[], int size) {
             }
         }
 ```
-#### [289. 生命游戏
-](https://leetcode-cn.com/problems/game-of-life/solution/ce-wai-kong-jian-jie-fa-ji-yuan-di-jie-fa-by-theow/)
+#### [289. 生命游戏](https://leetcode-cn.com/problems/game-of-life/solution/ce-wai-kong-jian-jie-fa-ji-yuan-di-jie-fa-by-theow/)
 ```js
         /**
          * @param {number[][]} board
@@ -1863,5 +1896,55 @@ void exec(int a[], int size) {
             }
             return (sum / 9 / i + parseInt(n / i) + '')[n % i];
         }
+```
+#### [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/solution/190-dian-dao-er-jin-zhi-wei-by-alexer-660/)
+```js
+        /** 常规解法
+         * @param {number} n - a positive integer
+         * @return {number} - a positive integer
+         */
+        var reverseBits = function(n) {
+            return parseInt(n.toString(2).padStart(32, 0).split('').reverse().join(''), 2);
+        };
+
+        /** 位运算
+         * @param {number} n - a positive integer
+         * @return {number} - a positive integer
+         */
+        var reverseBits = function(n) {
+            let res = 0;
+            while(let i = 0; i < 32; i++) {
+                res = res << 1 + n & 1;
+                n >= 1;
+            }
+            return res;
+        };
+```
+#### [201. 数字范围按位与](https://leetcode-cn.com/problems/bitwise-and-of-numbers-range/)
+```js
+        /**
+         * @param {number} m
+         * @param {number} n
+         * @return {number}
+         */
+        var rangeBitwiseAnd = function(m, n) {
+            let res = m;
+            if(n >> 1 > m) return 0;
+            for(let i = m; i <= n; i++) {
+                if(!res) return 0;
+                res &= i;
+            }
+            return res;
+        };
+```
+#### [231. 2的幂](https://leetcode-cn.com/problems/power-of-two/)
+```js
+        /**
+         * @param {number} n
+         * @return {boolean}
+         */
+        var isPowerOfTwo = function(n) {
+            return n > 0 && (n & (n - 1)) === 0;
+        };
 ```
 
