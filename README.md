@@ -40,6 +40,7 @@
       - [面试题48. 最长不含重复字符的子字符串](#%e9%9d%a2%e8%af%95%e9%a2%9848-%e6%9c%80%e9%95%bf%e4%b8%8d%e5%90%ab%e9%87%8d%e5%a4%8d%e5%ad%97%e7%ac%a6%e7%9a%84%e5%ad%90%e5%ad%97%e7%ac%a6%e4%b8%b2)
       - [面试题67. 把字符串转换成整数](#%e9%9d%a2%e8%af%95%e9%a2%9867-%e6%8a%8a%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b4%e6%95%b0)
       - [面试题46. 把数字翻译成字符串](#%e9%9d%a2%e8%af%95%e9%a2%9846-%e6%8a%8a%e6%95%b0%e5%ad%97%e7%bf%bb%e8%af%91%e6%88%90%e5%ad%97%e7%ac%a6%e4%b8%b2)
+      - [67. 二进制求和](#67-%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%b1%82%e5%92%8c)
   - [五、哈希表](#%e4%ba%94%e5%93%88%e5%b8%8c%e8%a1%a8)
     - [5.1 基本模板](#51-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 统计频率](#1-%e7%bb%9f%e8%ae%a1%e9%a2%91%e7%8e%87)
@@ -49,6 +50,7 @@
       - [面试题56 - I. 数组中数字出现的次数](#%e9%9d%a2%e8%af%95%e9%a2%9856---i-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0)
       - [面试题56 - II. 数组中数字出现的次数 II](#%e9%9d%a2%e8%af%95%e9%a2%9856---ii-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0-ii)
       - [面试题51. 数组中的逆序对](#%e9%9d%a2%e8%af%95%e9%a2%9851-%e6%95%b0%e7%bb%84%e4%b8%ad%e7%9a%84%e9%80%86%e5%ba%8f%e5%af%b9)
+      - [146. LRU缓存机制](#146-lru%e7%bc%93%e5%ad%98%e6%9c%ba%e5%88%b6)
   - [六、栈和队列](#%e5%85%ad%e6%a0%88%e5%92%8c%e9%98%9f%e5%88%97)
     - [6.1 基本模板](#61-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-1)
@@ -79,6 +81,8 @@
       - [199.二叉树的右视图](#199%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e5%8f%b3%e8%a7%86%e5%9b%be)
       - [200. 岛屿数量](#200-%e5%b2%9b%e5%b1%bf%e6%95%b0%e9%87%8f)
       - [面试题13. 机器人的运动范围](#%e9%9d%a2%e8%af%95%e9%a2%9813-%e6%9c%ba%e5%99%a8%e4%ba%ba%e7%9a%84%e8%bf%90%e5%8a%a8%e8%8c%83%e5%9b%b4)
+      - [22. 括号生成](#22-%e6%8b%ac%e5%8f%b7%e7%94%9f%e6%88%90)
+      - [面试题33. 二叉搜索树的后序遍历序列](#%e9%9d%a2%e8%af%95%e9%a2%9833-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e5%90%8e%e5%ba%8f%e9%81%8d%e5%8e%86%e5%ba%8f%e5%88%97)
   - [十一、贪心](#%e5%8d%81%e4%b8%80%e8%b4%aa%e5%bf%83)
     - [11.1 基本模板](#111-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-4)
@@ -629,6 +633,27 @@ void exec(int a[], int size) {
         };
 ```
 
+#### [67. 二进制求和](https://leetcode-cn.com/problems/add-binary/)
+
+```js
+        /**
+         * @param {string} a
+         * @param {string} b
+         * @return {string}
+         */
+        var addBinary = function(a, b) {
+            let max = Math.max(a.length, b.length);
+            a = a.padStart(max, 0);
+            b = b.padStart(max, 0);
+            let res = '', sum = 0;
+            while(max--) {
+                sum = (+a[max]) + (+b[max]) + (sum > 1);
+                res = (sum & 1) + res;
+            }
+            return sum > 1 ? '1' + res : res; 
+        };
+```
+
 ## 五、哈希表
 ### 5.1 基本模板 
         
@@ -728,6 +753,48 @@ void exec(int a[], int size) {
             }
             return res;
         };
+```
+
+#### [146. LRU缓存机制](https://leetcode-cn.com/problems/lru-cache/)
+```js
+        /**
+         * @param {number} capacity
+         */
+        var LRUCache = function(capacity) {
+            this.orderMap = new Map();
+            this.capacity = capacity;
+        };
+
+        /** 
+         * @param {number} key
+         * @return {number}
+         */
+        LRUCache.prototype.get = function(key) {
+            if(!this.orderMap.has(key)) return -1;
+            let value = this.orderMap.get(key);
+            this.orderMap.delete(key);
+            this.orderMap.set(key, value);
+            return value;
+        };
+
+        /** 
+         * @param {number} key 
+         * @param {number} value
+         * @return {void}
+         */
+        LRUCache.prototype.put = function(key, value) {
+            if (this.orderMap.has(key)) this.orderMap.delete(key);
+            else if(this.orderMap.size >= this.capacity) this.orderMap.delete(this.orderMap.keys().next().value);
+            this.orderMap.set(key, value);
+        };
+
+        /**
+         * Your LRUCache object will be instantiated and called as such:
+         * var obj = new LRUCache(capacity)
+         * var param_1 = obj.get(key)
+         * obj.put(key,value)
+         */
+
 ```
 
 ## 六、栈和队列
@@ -1180,6 +1247,46 @@ void exec(int a[], int size) {
         return res;
     };
 ```
+
+#### [22. 括号生成](https://leetcode-cn.com/problems/generate-parentheses/)
+```js
+        /**
+         * @param {number} n
+         * @return {string[]}
+         */
+        var generateParenthesis = function(n) {
+            const res = [];
+            function dfs(left, right, path) {
+                if (left < 0 || right < 0 || left > right) return;
+                if (!left && !right) {
+                    res.push(path);
+                    return;
+                }
+                dfs(left - 1, right, path + '(');
+                dfs(left, right - 1, path + ')');
+            }
+            dfs(n, n, '');
+            return res;
+        };
+```
+
+#### [面试题33. 二叉搜索树的后序遍历序列](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/)
+```js
+        /**
+         * @param {number[]} postorder
+         * @return {boolean}
+         */
+        var verifyPostorder = function(postorder) {
+            if (!postorder.length) return true;
+            const top = postorder.pop();
+            let i = postorder.length;
+            while(postorder[i - 1] > top) i--;
+            const left = postorder.slice(0, i);
+            if (left.some(i => i > top)) return false;
+            return verifyPostorder(left) && verifyPostorder(postorder.slice(i));
+        };
+```
+
 ## 十一、贪心
 ### 11.1 基本模板 
         
