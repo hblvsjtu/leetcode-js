@@ -42,6 +42,7 @@
       - [面试题67. 把字符串转换成整数](#%e9%9d%a2%e8%af%95%e9%a2%9867-%e6%8a%8a%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b4%e6%95%b0)
       - [面试题46. 把数字翻译成字符串](#%e9%9d%a2%e8%af%95%e9%a2%9846-%e6%8a%8a%e6%95%b0%e5%ad%97%e7%bf%bb%e8%af%91%e6%88%90%e5%ad%97%e7%ac%a6%e4%b8%b2)
       - [67. 二进制求和](#67-%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%b1%82%e5%92%8c)
+      - [415. 字符串相加](#415-%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%9b%b8%e5%8a%a0)
   - [五、哈希表](#%e4%ba%94%e5%93%88%e5%b8%8c%e8%a1%a8)
     - [5.1 基本模板](#51-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 统计频率](#1-%e7%bb%9f%e8%ae%a1%e9%a2%91%e7%8e%87)
@@ -63,6 +64,7 @@
     - [7.2 题目](#72-%e9%a2%98%e7%9b%ae)
       - [876. 链表的中间结点](#876-%e9%93%be%e8%a1%a8%e7%9a%84%e4%b8%ad%e9%97%b4%e7%bb%93%e7%82%b9)
       - [138. 复制带随机指针的链表](#138-%e5%a4%8d%e5%88%b6%e5%b8%a6%e9%9a%8f%e6%9c%ba%e6%8c%87%e9%92%88%e7%9a%84%e9%93%be%e8%a1%a8)
+      - [445. 两数相加 II](#445-%e4%b8%a4%e6%95%b0%e7%9b%b8%e5%8a%a0-ii)
   - [八、树](#%e5%85%ab%e6%a0%91)
     - [8.1 基本模板](#81-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
     - [8.2 题目](#82-%e9%a2%98%e7%9b%ae)
@@ -683,6 +685,28 @@ void exec(int a[], int size) {
         };
 ```
 
+#### [415. 字符串相加](https://leetcode-cn.com/problems/add-strings/)
+
+```js
+        /**
+         * @param {string} num1
+         * @param {string} num2
+         * @return {string}
+         */
+        var addStrings = function(num1, num2) {
+            let max = Math.max(num1.length, num2.length);
+            num1 = num1.padStart(max, 0);
+            num2 = num2.padStart(max, 0);
+            let res = '', sum = 0;
+            while(max--) {
+                sum = (+num1[max]) + (+num2[max]) + (sum > 9);
+                res = (sum % 10) + res;
+            }
+            return sum > 1 ? '1' + res : res; 
+        };
+```
+
+
 ## 五、哈希表
 ### 5.1 基本模板 
         
@@ -939,6 +963,54 @@ void exec(int a[], int size) {
             }
             return res;
         };
+```
+
+#### [445. 两数相加 II](https://leetcode-cn.com/problems/add-two-numbers-ii)
+```js
+         /**
+           * Definition for singly-linked list.
+           * function ListNode(val) {
+           *     this.val = val;
+           *     this.next = null;
+           * }
+           */
+          /**
+           * @param {ListNode} l1
+           * @param {ListNode} l2
+           * @return {ListNode}
+           */
+          var addTwoNumbers = function(l1, l2) {
+              let s1 = '', s2 = '';
+              let head = l1;
+              while (head) {
+                  s1 += head.val;
+                  head = head.next;
+              }
+              head = l2;
+              while (head) {
+                  s2 += head.val;
+                  head = head.next;
+              }
+              let i = Math.max(s1.length, s2.length);
+              s1 = s1.padStart(i, 0);
+              s2 = s2.padStart(i, 0);
+              let jinwei = 0;
+              let head = new Node();
+              let temp;
+              while(i--) {
+                  sum = +s1[i] + +s2[i] + jinwei;
+                  jinwei = sum > 9;
+                  head.val = sum % 10;
+                  temp = head;
+                  head = new Node();
+                  head.next = temp;
+              }
+              if (jinweo) {
+                  head.val = 1;
+                  return head;
+              }
+              else return head.next;
+          };
 ```
 
 ## 八、树
