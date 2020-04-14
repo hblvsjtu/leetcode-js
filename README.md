@@ -33,6 +33,7 @@
     - [3.1、荷兰国旗问题](#31%e8%8d%b7%e5%85%b0%e5%9b%bd%e6%97%97%e9%97%ae%e9%a2%98)
       - [1) 总体思路](#1-%e6%80%bb%e4%bd%93%e6%80%9d%e8%b7%af)
       - [289. 生命游戏](#289-%e7%94%9f%e5%91%bd%e6%b8%b8%e6%88%8f)
+      - [面试题 01.07. 旋转矩阵](#%e9%9d%a2%e8%af%95%e9%a2%98-0107-%e6%97%8b%e8%bd%ac%e7%9f%a9%e9%98%b5)
   - [四、字符串问题](#%e5%9b%9b%e5%ad%97%e7%ac%a6%e4%b8%b2%e9%97%ae%e9%a2%98)
     - [4.1 基本模板](#41-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95)
@@ -66,10 +67,16 @@
     - [8.1 基本模板](#81-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
     - [8.2 题目](#82-%e9%a2%98%e7%9b%ae)
       - [面试题26. 树的子结构](#%e9%9d%a2%e8%af%95%e9%a2%9826-%e6%a0%91%e7%9a%84%e5%ad%90%e7%bb%93%e6%9e%84)
+      - [236. 二叉树的最近公共祖先](#236-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e6%9c%80%e8%bf%91%e5%85%ac%e5%85%b1%e7%a5%96%e5%85%88)
+      - [235. 二叉搜索树的最近公共祖先](#235-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e6%9c%80%e8%bf%91%e5%85%ac%e5%85%b1%e7%a5%96%e5%85%88)
+      - [91. 解码方法](#91-%e8%a7%a3%e7%a0%81%e6%96%b9%e6%b3%95)
   - [九、DFS深度优先搜索](#%e4%b9%9ddfs%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [9.1 基本模板](#91-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-2)
       - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95)
+    - [9.2 题目](#92-%e9%a2%98%e7%9b%ae)
+      - [54. 螺旋矩阵](#54-%e8%9e%ba%e6%97%8b%e7%9f%a9%e9%98%b5)
+      - [59. 螺旋矩阵 II](#59-%e8%9e%ba%e6%97%8b%e7%9f%a9%e9%98%b5-ii)
   - [十、BFS广度优先搜索](#%e5%8d%81bfs%e5%b9%bf%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [10.1 基本模板](#101-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-3)
@@ -122,6 +129,10 @@
       - [190. 颠倒二进制位](#190-%e9%a2%a0%e5%80%92%e4%ba%8c%e8%bf%9b%e5%88%b6%e4%bd%8d)
       - [201. 数字范围按位与](#201-%e6%95%b0%e5%ad%97%e8%8c%83%e5%9b%b4%e6%8c%89%e4%bd%8d%e4%b8%8e)
       - [231. 2的幂](#231-2%e7%9a%84%e5%b9%82)
+  - [十六、设计问题](#%e5%8d%81%e5%85%ad%e8%ae%be%e8%ae%a1%e9%97%ae%e9%a2%98)
+    - [16.1 基本模板](#161-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
+    - [16.2 题目](#162-%e9%a2%98%e7%9b%ae)
+      - [355. 设计推特](#355-%e8%ae%be%e8%ae%a1%e6%8e%a8%e7%89%b9)
        
 ## 一、分治问题
 ### 1.1 模板        
@@ -575,6 +586,24 @@ void exec(int a[], int size) {
         };
 ```
 
+#### [面试题 01.07. 旋转矩阵](https://leetcode-cn.com/problems/rotate-matrix-lcci/)
+```js
+        /**
+         * @param {number[][]} matrix
+         * @return {void} Do not return anything, modify matrix in-place instead.
+         */
+        var rotate = function(matrix) {
+            const copy = JSON.parse(JSON.stringify(matrix));
+            const col = matrix[0].length - 1;
+            for(let i = 0; i <= col; i++) {
+                for(let j = 0; j < matrix.length; j++) {
+                    matrix[i][j] = copy[col - j][i];
+                }
+            }
+            return matrix;
+        };
+```
+
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -675,6 +704,7 @@ void exec(int a[], int size) {
             return t;
         }, []);
 ```
+
 ### 5.2 题目
 #### [347. 前 K 个高频元素](https://leetcode-cn.com/problems/top-k-frequent-elements/)
 ```js
@@ -694,6 +724,7 @@ void exec(int a[], int size) {
                .map(entry => +entry[0]);
        };
 ```
+
 #### [面试题56 - I. 数组中数字出现的次数](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/)
 ```js
         /**
@@ -914,7 +945,7 @@ void exec(int a[], int size) {
 ### 8.1 基本模板 
         
 ### 8.2 题目
-#### [面试题26. 树的子结构](https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/submissions/)
+#### [面试题26. 树的子结构](https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof)
 ```js
         /**
          * Definition for a binary tree node.
@@ -948,6 +979,138 @@ void exec(int a[], int size) {
                 i = queue.length;
             }
             return false;
+        };
+```
+
+#### [236. 二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @param {TreeNode} p
+         * @param {TreeNode} q
+         * @return {TreeNode}
+         */
+        var lowestCommonAncestor = function(root, p, q) {
+            root.pre = null;
+            let isGo = 2;
+            const children = ['left', 'right'];
+            function setParent(root) {
+                if (!root || !isGo) return;
+                if (root === p || root  === q) isGo--;
+                children.forEach(child => {
+                    if(root[child]) {
+                        root[child].pre = root;
+                        setParent(root[child]);
+                    }
+                })
+            }
+            setParent(root);
+            let headP = p, headQ = q;
+            headP.isVisited = true;
+            headQ.isVisited = true;
+            while(true) {
+                if (headP.pre) {
+                    if (headP.pre.isVisited) return headP.pre;
+                    headP = headP.pre;
+                    headP.isVisited = true;
+                }
+                if (headQ.pre) {
+                    if (headQ.pre.isVisited) return headQ.pre;
+                    headQ = headQ.pre;
+                    headQ.isVisited = true;
+                }
+            }
+        };
+
+        // 回溯法
+        var lowestCommonAncestor = function(root, p, q) {
+            if (!root || root === p || root === q) return root;
+            const left = lowestCommonAncestor(root.left, p, q);
+            const right = lowestCommonAncestor(root.right, p, q);
+            if (!left) return right; // 如果公共祖先不在左边，那肯定在右边
+            if (!right) return left; // 如果公共祖先不在右边，那肯定在左边
+            return root; // 如果公共祖先既在右边，又在右边，那肯定是该节点本身
+        }
+```
+
+#### [235. 二叉搜索树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+```js
+        /**
+        * Definition for a binary tree node.
+        * function TreeNode(val) {
+        *     this.val = val;
+        *     this.left = this.right = null;
+        * }
+        */
+        /**
+        * @param {TreeNode} root
+        * @param {TreeNode} p
+        * @param {TreeNode} q
+        * @return {TreeNode}
+        */
+        var lowestCommonAncestor = function(root, p, q) {
+            if (!root) return root;
+            if (p.val < root.val && q.val < root.val) return lowestCommonAncestor(root.left, p, q);
+            if (p.val > root.val && q.val > root.val) return lowestCommonAncestor(root.right, p, q);
+            return root;
+        };
+```
+
+#### [91. 解码方法](https://leetcode-cn.com/problems/decode-ways/comments/)
+```js
+        /** DFS 超时了
+         * @param {string} s
+         * @return {number}
+         */
+        var numDecodings = function(s) {
+            if (!s.length) return 0;
+            const queue = [0];
+            let res = 0;
+            let i = queue.length;
+            while(i) {
+                while(i--) {
+                    const front = queue.shift();
+                    if (front >= s.length || s[front] === '0') continue;
+                    const isLastTwoSuit = +(s[front] + s[front + 1]) <= 26;
+                    if (front === s.length - 2 && isLastTwoSuit) {
+                        res++;
+                        queue.push(front + 1);
+                    }
+                    else if (front === s.length - 1) res++;
+                    else  {
+                        queue.push(front + 1);
+                        isLastTwoSuit && queue.push(front + 2);
+                    }
+                }
+                i = queue.length;
+            }
+            return res;
+        };
+
+        /** DP 爬楼梯
+         * @param {string} s
+         * @return {number}
+         */
+        var numDecodings = function(s) {
+            if (!s.length || s[0] === '0') return 0;
+            const dp = [];
+            dp[0] = 1;
+            if (s[1] === '0' && +s[0] > 2) dp[1] = 0;
+            else if (s[1] === '0' || +(s[0] + s[1]) > 26) dp[1] = 1;
+            else dp[1] = 2;
+            for(let i = 2; i < s.length; i++) {
+                if(s[i - 1] === '0' || +(s[i - 1] + s[i]) > 26) dp[i] = s[i] === '0' ? 0 : dp[i - 1];
+                else if(s[i] === '0') dp[i] = dp[i - 2];
+                else dp[i] = dp[i - 1] + dp[i - 2];
+            }
+            return dp[s.length - 1];
         };
 ```
 
@@ -1031,6 +1194,66 @@ void exec(int a[], int size) {
         }
 ```
 > - 后序遍历
+
+### 9.2 题目
+#### [54. 螺旋矩阵](https://leetcode-cn.com/problems/spiral-matrix/)
+```js
+        /**
+        * @param {number[][]} matrix
+        * @return {number[]}
+        */
+        var spiralOrder = function(matrix) {
+            if (!matrix.length) return [];
+            const res = [], isVisited = {}, col = matrix[0].length;
+            const dir = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+            function getNextItemDFS(i, j, num, curDir) {
+                const key = i + '-' + j;
+                if (i < 0 || i >= matrix.length || j < 0 || j >= col) return;
+                if (isVisited[key]) {
+                    if (i === num && j === num) getNextItemDFS(i + 1, j + 1, num + 1, '01');
+                    return;
+                }
+                res.push(matrix[i][j]);
+                isVisited[key] = true;
+                dir.forEach(([offsetX, offsetY]) => {
+                    const nextDir = '' + offsetX + offsetY;
+                    if (curDir === '-10' && nextDir === '01') return;
+                    getNextItemDFS(i + offsetX, j + offsetY, num, nextDir);
+                })
+            }
+            getNextItemDFS(0, 0, 0, '01');
+            return res;
+        };
+```
+
+#### [59. 螺旋矩阵 II](https://leetcode-cn.com/problems/spiral-matrix-ii/)
+```js
+        /**
+         * @param {number} n
+         * @return {number[][]}
+         */
+        var generateMatrix = function(n) {
+            if (!n) return [];
+            const res = [], dir = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+            let count = 1;
+            function getNextItemDFS(i, j, num, curDir) {
+                if (i < 0 || i >= n || j < 0 || j >= n) return;
+                if (!res[i]) res[i] = [];
+                if (res[i][j]) {
+                    if (i === num && j === num) getNextItemDFS(i + 1, j + 1, num + 1, '01');
+                    return;
+                }
+                res[i][j] = count++;
+                dir.forEach(([offsetX, offsetY]) => {
+                    const nextDir = '' + offsetX + offsetY;
+                    if (curDir === '-10' && nextDir === '01') return;
+                    getNextItemDFS(i + offsetX, j + offsetY, num, nextDir);
+                })
+            }
+            getNextItemDFS(0, 0, 0, '01');
+            return res;
+        };
+```
 
 ## 十、BFS广度优先搜索
 ### 10.1 基本模板 
@@ -2090,3 +2313,79 @@ void exec(int a[], int size) {
         };
 ```
 
+## 十六、设计问题
+### 16.1 基本模板
+
+### 16.2 题目
+#### [355. 设计推特](https://leetcode-cn.com/problems/design-twitter)
+
+```js
+        /**
+        * Initialize your data structure here.
+        */
+        var Twitter = function() {
+            this.tweetTime = 0;
+            this.follows = {}; // 映射
+            this.tweets = {}; // 用户推文
+        };
+
+        /**
+        * Compose a new tweet. 
+        * @param {number} userId 
+        * @param {number} tweetId
+        * @return {void}
+        */
+        Twitter.prototype.postTweet = function(userId, tweetId) {
+            if(!this.tweets[userId]) this.tweets[userId] = [];
+            const tweetTime = this.tweetTime++;
+            this.tweets[userId].push({
+                tweetId,
+                createdTime: tweetTime
+            });
+        };
+
+        /**
+        * Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. 
+        * @param {number} userId
+        * @return {number[]}
+        */
+        Twitter.prototype.getNewsFeed = function(userId) { 
+            const allId = Array.from(this.follows[userId] || {});
+            allId.push(userId);
+            const sortedArray = allId.reduce((t, id) => t.concat(this.tweets[id]), [])
+            .sort((a, b) => b.createdTime - a.createdTime)
+            .map(item => item.tweetId)
+            return Array.from(new Set(sortedArray)).slice(0, 10);
+        };
+
+        /**
+        * Follower follows a followee. If the operation is invalid, it should be a no-op. 
+        * @param {number} followerId 
+        * @param {number} followeeId
+        * @return {void}
+        */
+        Twitter.prototype.follow = function(followerId, followeeId) {
+            if (!this.follows[followerId]) this.follows[followerId] = new Set();
+            this.follows[followerId].add(followeeId);
+        };
+
+        /**
+        * Follower unfollows a followee. If the operation is invalid, it should be a no-op. 
+        * @param {number} followerId 
+        * @param {number} followeeId
+        * @return {void}
+        */
+        Twitter.prototype.unfollow = function(followerId, followeeId) {
+            if (!this.follows[followerId]) this.follows[followerId] = new Set();
+            this.follows[followerId].delete(followeeId);
+        };
+
+        /**
+        * Your Twitter object will be instantiated and called as such:
+        * var obj = new Twitter()
+        * obj.postTweet(userId,tweetId)
+        * var param_2 = obj.getNewsFeed(userId)
+        * obj.follow(followerId,followeeId)
+        * obj.unfollow(followerId,followeeId)
+        */
+```
