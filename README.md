@@ -34,6 +34,8 @@
       - [1) 总体思路](#1-%e6%80%bb%e4%bd%93%e6%80%9d%e8%b7%af)
       - [289. 生命游戏](#289-%e7%94%9f%e5%91%bd%e6%b8%b8%e6%88%8f)
       - [面试题 01.07. 旋转矩阵](#%e9%9d%a2%e8%af%95%e9%a2%98-0107-%e6%97%8b%e8%bd%ac%e7%9f%a9%e9%98%b5)
+      - [240. 搜索二维矩阵 II](#240-%e6%90%9c%e7%b4%a2%e4%ba%8c%e7%bb%b4%e7%9f%a9%e9%98%b5-ii)
+      - [34. 在排序数组中查找元素的第一个和最后一个位置](#34-%e5%9c%a8%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%84%e4%b8%ad%e6%9f%a5%e6%89%be%e5%85%83%e7%b4%a0%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%e5%92%8c%e6%9c%80%e5%90%8e%e4%b8%80%e4%b8%aa%e4%bd%8d%e7%bd%ae)
   - [四、字符串问题](#%e5%9b%9b%e5%ad%97%e7%ac%a6%e4%b8%b2%e9%97%ae%e9%a2%98)
     - [4.1 基本模板](#41-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95)
@@ -65,6 +67,7 @@
       - [876. 链表的中间结点](#876-%e9%93%be%e8%a1%a8%e7%9a%84%e4%b8%ad%e9%97%b4%e7%bb%93%e7%82%b9)
       - [138. 复制带随机指针的链表](#138-%e5%a4%8d%e5%88%b6%e5%b8%a6%e9%9a%8f%e6%9c%ba%e6%8c%87%e9%92%88%e7%9a%84%e9%93%be%e8%a1%a8)
       - [445. 两数相加 II](#445-%e4%b8%a4%e6%95%b0%e7%9b%b8%e5%8a%a0-ii)
+      - [141. 环形链表](#141-%e7%8e%af%e5%bd%a2%e9%93%be%e8%a1%a8)
   - [八、树](#%e5%85%ab%e6%a0%91)
     - [8.1 基本模板](#81-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
     - [8.2 题目](#82-%e9%a2%98%e7%9b%ae)
@@ -72,6 +75,7 @@
       - [236. 二叉树的最近公共祖先](#236-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e6%9c%80%e8%bf%91%e5%85%ac%e5%85%b1%e7%a5%96%e5%85%88)
       - [235. 二叉搜索树的最近公共祖先](#235-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e6%9c%80%e8%bf%91%e5%85%ac%e5%85%b1%e7%a5%96%e5%85%88)
       - [91. 解码方法](#91-%e8%a7%a3%e7%a0%81%e6%96%b9%e6%b3%95)
+      - [39. 组合总和](#39-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c)
   - [九、DFS深度优先搜索](#%e4%b9%9ddfs%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [9.1 基本模板](#91-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-2)
@@ -92,10 +96,12 @@
       - [面试题13. 机器人的运动范围](#%e9%9d%a2%e8%af%95%e9%a2%9813-%e6%9c%ba%e5%99%a8%e4%ba%ba%e7%9a%84%e8%bf%90%e5%8a%a8%e8%8c%83%e5%9b%b4)
       - [22. 括号生成](#22-%e6%8b%ac%e5%8f%b7%e7%94%9f%e6%88%90)
       - [面试题33. 二叉搜索树的后序遍历序列](#%e9%9d%a2%e8%af%95%e9%a2%9833-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e5%90%8e%e5%ba%8f%e9%81%8d%e5%8e%86%e5%ba%8f%e5%88%97)
+      - [542. 01 矩阵](#542-01-%e7%9f%a9%e9%98%b5)
   - [十一、贪心](#%e5%8d%81%e4%b8%80%e8%b4%aa%e5%bf%83)
     - [11.1 基本模板](#111-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-4)
       - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-2)
+      - [55. 跳跃游戏](#55-%e8%b7%b3%e8%b7%83%e6%b8%b8%e6%88%8f)
   - [十二、回溯法](#%e5%8d%81%e4%ba%8c%e5%9b%9e%e6%ba%af%e6%b3%95)
     - [12.1 基本模板](#121-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归](#1-%e9%80%92%e5%bd%92)
@@ -131,6 +137,7 @@
       - [190. 颠倒二进制位](#190-%e9%a2%a0%e5%80%92%e4%ba%8c%e8%bf%9b%e5%88%b6%e4%bd%8d)
       - [201. 数字范围按位与](#201-%e6%95%b0%e5%ad%97%e8%8c%83%e5%9b%b4%e6%8c%89%e4%bd%8d%e4%b8%8e)
       - [231. 2的幂](#231-2%e7%9a%84%e5%b9%82)
+      - [50. Pow(x, n)](#50-powx-n)
   - [十六、设计问题](#%e5%8d%81%e5%85%ad%e8%ae%be%e8%ae%a1%e9%97%ae%e9%a2%98)
     - [16.1 基本模板](#161-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
     - [16.2 题目](#162-%e9%a2%98%e7%9b%ae)
@@ -605,6 +612,65 @@ void exec(int a[], int size) {
             return matrix;
         };
 ```
+#### [240. 搜索二维矩阵 II](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/)
+```js
+        /**
+         * @param {number[][]} matrix
+         * @param {number} target
+         * @return {boolean}
+         */
+        var searchMatrix = function(matrix, target) {
+            for(let item of matrix) {
+                if (item[0] > target) return false;
+                let left = 0, right = item.length - 1, mid;
+                while(left <= right) {
+                    mid = (left + right) >> 1;
+                    if (item[mid] === target) return true;
+                    if (item[mid] > target) right = mid - 1;
+                    else left = mid + 1;
+                }
+            }
+            return false;
+        };
+```
+#### [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array)
+![image.png](https://pic.leetcode-cn.com/b64d63648a6f0a99eae1d2b9a0869ce65b8edd96f3c71710c405d0cf1de6f954-image.png)
+```js
+        /**
+        * @param {number[]} nums
+        * @param {number} target
+        * @return {number[]}
+        */
+        var searchRange = function(nums, target) {
+            let left = 0, right = nums.length - 1, mid;
+            while (left <= right) {
+                mid = (left + right) >> 1;
+                if (nums[mid] === target) break;
+                if (nums[mid] > target) right = mid - 1;
+                else left = mid + 1;
+            }
+            if(left > right) return [-1, -1];
+            let i = mid, j = mid;
+            while(nums[i] === nums[i - 1]) i--;
+            while(nums[j] === nums[j + 1]) j++;
+            return [i, j];
+        };
+```
+```js
+        /**
+        * @param {number[]} nums
+        * @return {number}
+        */
+        var findDuplicate = function(nums) {
+            let i = nums[0], j = nums[0];
+            while(i !== j) {
+                i = nums[i];
+                j = nums[j];
+                j = nums[j];
+            }
+            return i;
+        };
+```
 
 ## 四、字符串问题
 ### 4.1 基本模板 
@@ -1013,6 +1079,31 @@ void exec(int a[], int size) {
           };
 ```
 
+#### [141. 环形链表](https://leetcode-cn.com/problems/linked-list-cycle/)
+```js
+        /**
+        * Definition for singly-linked list.
+        * function ListNode(val) {
+        *     this.val = val;
+        *     this.next = null;
+        * }
+        */
+
+        /**
+        * @param {ListNode} head
+        * @return {boolean}
+        */
+        var hasCycle = function(head) {
+            if (!head) return false;
+            let slow = head, quick = head.next;
+            while(quick && quick.next) {
+                if (quick === slow) return true;
+                slow = slow.next;
+                quick = quick.next.next;
+            }
+            return false;
+        };
+```
 ## 八、树
 ### 8.1 基本模板 
         
@@ -1186,6 +1277,37 @@ void exec(int a[], int size) {
         };
 ```
 
+#### [39. 组合总和](https://leetcode-cn.com/problems/combination-sum/)
+```js
+        /**
+         * @param {number[]} candidates
+         * @param {number} target
+         * @return {number[][]}
+         */
+        var combinationSum = function(candidates, target) {
+            const candidate = candidates.filter(i => i <= target);
+            const queue = candidate.map(i => [i]);
+            let i = queue.length, stringify = '';
+            const res = [], resord = {};
+            while(i) {
+                while(i--) {
+                    const front = queue.shift().sort((a, b) => a - b);
+                    const sum = front.reduce((t, i) => t + i, 0);
+                    if (sum === target) {
+                        stringify = front.join('-');
+                        if(!resord[stringify]) {
+                            res.push(front);
+                            resord[stringify] = true;
+                        }
+                    }
+                    else candidate.filter(i => sum + i <= target).forEach(i => queue.push(front.concat([i])));
+                }
+                i = queue.length;
+            }
+            return res;
+        };
+```
+
 ## 九、DFS深度优先搜索
 ### 9.1 基本模板 
 #### 1) 递归法
@@ -1229,7 +1351,18 @@ void exec(int a[], int size) {
 > - 先序遍历
 
 ```js
-        var preOrderDFS = function(root) {
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {number[]}
+         */
+        var preorderTraversal = function(root) {
             if(!root) return;
             const stack = [root];
             let i = stack.length;
@@ -1245,27 +1378,81 @@ void exec(int a[], int size) {
             }
             return;
         }
+
+        // 或者使用这种方式，追加一个变量用来表示有无被访问过
+        var preorderTraversal = function(root) {
+            if(!root) return;
+            const stack = [root];
+            let i = stack.length;
+            while(i) {
+                while(i--) {
+                    const front = stack.pop();
+                    if (front.isVisited) {
+                        // 输入你要处理的逻辑
+                        ...
+                    }
+                    else {
+                        front.right && stack.push(front.right);
+                        front.left && stack.push(front.left);
+                        front.isVisited = true && stack.push(front);
+                    }
+                }
+                i = stack.length;
+            }
+            return res;
+        }
+        
 ```
 > - 中序遍历
 
 ```js
-        var inOrderDFS = function(root) {
-            if(!root) return;
-            let head = root;
-            const stack = [];
-            while(stack.length || head) {
-                while(head) {
-                    stack.push(head);
-                    head = head.left;
+        var inorderTraversal = function(root) {
+            if(!root) return [];
+            const stack = [root];
+            let i = stack.length;
+            const res = [];
+            while(i) {
+                while(i--) {
+                    const front = stack.pop();
+                    if (front.isVisited) {
+                        // 输入你要处理的逻辑
+                        res.push(front.val);
+                    }
+                    else {
+                        front.right && stack.push(front.right);
+                        front.isVisited = true && stack.push(front);
+                        front.left && stack.push(front.left);
+                    }
                 }
-                head = stack.pop();
-                // do something
-                console.log(head .val);
-                head = head.right;
+                i = stack.length;
             }
+            return res;
         }
 ```
 > - 后序遍历
+```js
+        var postorderTraversal = function(root) {
+            if(!root) return;
+            const stack = [root];
+            let i = stack.length;
+            while(i) {
+                while(i--) {
+                    const front = stack.pop();
+                    if (front.isVisited) {
+                        // 输入你要处理的逻辑
+                        ...
+                    }
+                    else {
+                        front.isVisited = true && stack.push(front);
+                        front.right && stack.push(front.right);
+                        front.left && stack.push(front.left);
+                    }
+                }
+                i = stack.length;
+            }
+            return res;
+        }
+```
 
 ### 9.2 题目
 #### [54. 螺旋矩阵](https://leetcode-cn.com/problems/spiral-matrix/)
@@ -1581,6 +1768,36 @@ void exec(int a[], int size) {
             return verifyPostorder(left) && verifyPostorder(postorder.slice(i));
         };
 ```
+#### [542. 01 矩阵](https://leetcode-cn.com/problems/01-matrix/)
+```js
+        /**
+        * @param {number[][]} matrix
+        * @return {number[][]}
+        */
+        var updateMatrix = function(matrix) {
+            const col = matrix[0].length, dir = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+            matrix.forEach((item, i) => item.forEach((s, j) => matrix[i][j] = matrix[i][j] ? getResultBFS(i, j) : 0));
+            function getResultBFS(i, j) {
+                const queue = [[i, j]], isVisited = {};
+                let l = queue.length, deep = 0;
+                while(l) {
+                    while(l--) {
+                        const [x, y] = queue.shift();
+                        if (!matrix[x][y]) return deep;
+                        isVisited[x + '-' + y] = true;
+                        dir.forEach(([offestX, offsetY]) => {
+                            const [newX, newY] = [x + offestX, y + offsetY];
+                            if (newX < 0 || newX >= matrix.length || newY < 0 || newY >= col || isVisited[newX + '-' + newY]) return;
+                            queue.push([newX, newY]);
+                        })
+                    }
+                    deep++;
+                    l = queue.length;
+                }
+            }
+            return matrix;
+        };
+```
 
 ## 十一、贪心
 ### 11.1 基本模板 
@@ -1590,6 +1807,47 @@ void exec(int a[], int size) {
 #### 2) 迭代法
 > - 分治方法将问题划分为互不相交的子问题，递归地求解子问题，再将它们的解组合起来，求出原问题的解
 > - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
+#### [55. 跳跃游戏](https://leetcode-cn.com/problems/jump-game/)
+
+```js
+        /** DFS毫无疑问超时了
+         * @param {number[]} nums
+         * @return {boolean}
+         */
+        var canJump = function(nums) {
+            const last = nums.length - 1;
+            let res = fasle;
+            function backTrace(i) {
+                if (res) return;
+                if (i < last && !nums[i]) return;
+                if (i >= last) res = true;
+                else for(let j = 1; j <= nums[i]; j++) backTrace(i + j);
+            }
+            backTrace(0);
+            return res;
+        };
+
+        // 贪心剪枝
+        var canJump = function(nums) {
+            const last = nums.length - 1;
+            if (nums[0] >= last) return true;
+            let max, sum, temp, maxTemp = 0;
+            for(let i = 0; i < nums.length; i = maxTemp) {
+                max = 0, sum = 0;
+                for(let j = 1; j <= nums[i]; j++) {
+                    temp = i + j;
+                    sum = temp + nums[temp];
+                    if (sum >= last) return true; // 到达终点就结束
+                    if (sum > max && nums[temp]) { // 下一个可以跳且跳的最远
+                        maxTemp = temp;
+                        max = sum;
+                    }
+                }
+                if (i === maxTemp) return false; // 找不到合适的下家就结束
+            }
+        };
+
+```
 
 ## 十二、回溯法
 ### 12.1 基本模板 
@@ -2383,6 +2641,33 @@ void exec(int a[], int size) {
         var isPowerOfTwo = function(n) {
             return n > 0 && (n & (n - 1)) === 0;
         };
+```
+#### [50. Pow(x, n)](https://leetcode-cn.com/problems/powx-n/)
+![image.png](https://pic.leetcode-cn.com/adabe280172d8c88e3b633d31aaccec3add21900e10574fce8a3a113280e4a86-image.png)
+```js
+        /**
+         * @param {number} x
+         * @param {number} n
+         * @return {number}
+         */
+        var myPow = function(x, n) {
+            if (!x) return 0;
+            if (x === 1) return 1;
+            if (x === -1) return (n & 1) ? -1 : 1;
+            if (n == 2147483647) return 0;
+            if (n == -2147483648) return x === 2 ? 0 : 1;
+            if (n < 0) {
+                x = 1 / x;
+                n = -n;
+            }
+            let res = 1;
+            while(n) {
+                if (n & 1) res *= x;
+                x *= x;
+                n >>= 1;
+            }
+            return res;
+        }
 ```
 
 ## 十六、设计问题
