@@ -36,6 +36,7 @@
       - [面试题 01.07. 旋转矩阵](#%e9%9d%a2%e8%af%95%e9%a2%98-0107-%e6%97%8b%e8%bd%ac%e7%9f%a9%e9%98%b5)
       - [240. 搜索二维矩阵 II](#240-%e6%90%9c%e7%b4%a2%e4%ba%8c%e7%bb%b4%e7%9f%a9%e9%98%b5-ii)
       - [34. 在排序数组中查找元素的第一个和最后一个位置](#34-%e5%9c%a8%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%84%e4%b8%ad%e6%9f%a5%e6%89%be%e5%85%83%e7%b4%a0%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%e5%92%8c%e6%9c%80%e5%90%8e%e4%b8%80%e4%b8%aa%e4%bd%8d%e7%bd%ae)
+      - [11. 盛最多水的容器](#11-%e7%9b%9b%e6%9c%80%e5%a4%9a%e6%b0%b4%e7%9a%84%e5%ae%b9%e5%99%a8)
   - [四、字符串问题](#%e5%9b%9b%e5%ad%97%e7%ac%a6%e4%b8%b2%e9%97%ae%e9%a2%98)
     - [4.1 基本模板](#41-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95)
@@ -63,6 +64,7 @@
   - [七、链表](#%e4%b8%83%e9%93%be%e8%a1%a8)
     - [7.1 基本模板](#71-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 快慢指针](#1-%e5%bf%ab%e6%85%a2%e6%8c%87%e9%92%88)
+      - [2) 反转链表](#2-%e5%8f%8d%e8%bd%ac%e9%93%be%e8%a1%a8)
     - [7.2 题目](#72-%e9%a2%98%e7%9b%ae)
       - [876. 链表的中间结点](#876-%e9%93%be%e8%a1%a8%e7%9a%84%e4%b8%ad%e9%97%b4%e7%bb%93%e7%82%b9)
       - [138. 复制带随机指针的链表](#138-%e5%a4%8d%e5%88%b6%e5%b8%a6%e9%9a%8f%e6%9c%ba%e6%8c%87%e9%92%88%e7%9a%84%e9%93%be%e8%a1%a8)
@@ -113,6 +115,7 @@
       - [78. 子集](#78-%e5%ad%90%e9%9b%86)
       - [90. 子集 II](#90-%e5%ad%90%e9%9b%86-ii)
       - [面试题34. 二叉树中和为某一值的路径](#%e9%9d%a2%e8%af%95%e9%a2%9834-%e4%ba%8c%e5%8f%89%e6%a0%91%e4%b8%ad%e5%92%8c%e4%b8%ba%e6%9f%90%e4%b8%80%e5%80%bc%e7%9a%84%e8%b7%af%e5%be%84)
+      - [93. 复原IP地址](#93-%e5%a4%8d%e5%8e%9fip%e5%9c%b0%e5%9d%80)
   - [十三、动态规划](#%e5%8d%81%e4%b8%89%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92)
     - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
       - [1) 相同之处](#1-%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84)
@@ -120,11 +123,13 @@
   - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
     - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 图的遍历](#1-%e5%9b%be%e7%9a%84%e9%81%8d%e5%8e%86)
-      - [1) 有向图是否存在环](#1-%e6%9c%89%e5%90%91%e5%9b%be%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8%e7%8e%af)
-      - [2) 构造无向图](#2-%e6%9e%84%e9%80%a0%e6%97%a0%e5%90%91%e5%9b%be)
+      - [2) 有向图是否存在环](#2-%e6%9c%89%e5%90%91%e5%9b%be%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8%e7%8e%af)
+      - [3) 构造无向图](#3-%e6%9e%84%e9%80%a0%e6%97%a0%e5%90%91%e5%9b%be)
+      - [4) 并查集](#4-%e5%b9%b6%e6%9f%a5%e9%9b%86)
     - [14.2 题目](#142-%e9%a2%98%e7%9b%ae)
       - [207. 课程表](#207-%e8%af%be%e7%a8%8b%e8%a1%a8)
       - [310. 最小高度树](#310-%e6%9c%80%e5%b0%8f%e9%ab%98%e5%ba%a6%e6%a0%91)
+      - [547. 朋友圈](#547-%e6%9c%8b%e5%8f%8b%e5%9c%88)
   - [十五、数学问题](#%e5%8d%81%e4%ba%94%e6%95%b0%e5%ad%a6%e9%97%ae%e9%a2%98)
     - [15.1 基本模板](#151-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 最大公约数](#1-%e6%9c%80%e5%a4%a7%e5%85%ac%e7%ba%a6%e6%95%b0)
@@ -138,10 +143,13 @@
       - [201. 数字范围按位与](#201-%e6%95%b0%e5%ad%97%e8%8c%83%e5%9b%b4%e6%8c%89%e4%bd%8d%e4%b8%8e)
       - [231. 2的幂](#231-2%e7%9a%84%e5%b9%82)
       - [50. Pow(x, n)](#50-powx-n)
+      - [69. x 的平方根](#69-x-%e7%9a%84%e5%b9%b3%e6%96%b9%e6%a0%b9)
   - [十六、设计问题](#%e5%8d%81%e5%85%ad%e8%ae%be%e8%ae%a1%e9%97%ae%e9%a2%98)
     - [16.1 基本模板](#161-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
     - [16.2 题目](#162-%e9%a2%98%e7%9b%ae)
       - [355. 设计推特](#355-%e8%ae%be%e8%ae%a1%e6%8e%a8%e7%89%b9)
+      - [460. LFU缓存](#460-lfu%e7%bc%93%e5%ad%98)
+      - [146. LRU缓存机制](#146-lru%e7%bc%93%e5%ad%98%e6%9c%ba%e5%88%b6-1)
        
 ## 一、分治问题
 ### 1.1 模板        
@@ -671,6 +679,22 @@ void exec(int a[], int size) {
             return i;
         };
 ```
+#### [11. 盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/)
+```js
+        /**
+         * @param {number[]} height
+         * @return {number}
+         */
+        var maxArea = function(height) {
+            let left = 0, right = height.length - 1, max = 0, sum = 0;
+            while(left < right) {
+                sum = Math.min(height[left], height[right]) * (right - left);
+                max = Math.max(sum, max);
+                height[left] > height[right] ? right-- : left++;
+            }
+            return max;
+        };
+```
 
 ## 四、字符串问题
 ### 4.1 基本模板 
@@ -964,6 +988,33 @@ void exec(int a[], int size) {
             }
             return slow;
         };
+```
+#### 2) 反转链表
+> - 双指针
+
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param {ListNode} head
+         * @return {ListNode}
+         */
+
+        var reverseList = function(head) {
+            let tail = null, temp;
+            while(head) {
+                temp = head.next;
+                head.next = tail;
+                tail = head;
+                head = temp;
+            }
+            return tail;
+        }
 ```
 ### 7.2 题目
 #### [876. 链表的中间结点](https://leetcode-cn.com/problems/middle-of-the-linked-list/solution/lian-biao-de-zhong-jian-jie-dian-by-leetcode-solut/)
@@ -2128,6 +2179,28 @@ void exec(int a[], int size) {
         };
 ```
 
+#### [93. 复原IP地址](https://leetcode-cn.com/problems/restore-ip-addresses/)
+```js
+        /**
+         * @param {string} s
+         * @return {string[]}
+         */
+        var restoreIpAddresses = function(s) {
+            if (s.length > 12) return [];
+            const res = [], dir = [1, 2, 3];
+            function dfs(i, path, num) {
+                if (i > s.length) return;
+                if (num === 4 && i === s.length) res.push(path.substr(1));
+                else dir.forEach(offset => {
+                    if (offset === 1 || s[i] !== '0')
+                        +s.substr(i, offset) < 256 && dfs(i + offset, path + '.' + s.substr(i, offset), num + 1);
+                });
+            }
+            dfs(0, '', 0);
+            return res;
+        };
+```
+
 ## 十三、动态规划
 ### 13.1 与分治思想的异同
         
@@ -2238,7 +2311,35 @@ void exec(int a[], int size) {
             console.log(res, paths);
         };
 ```
-#### 1) 有向图是否存在环
+> - 邻接表
+
+```js
+        /** 邻接表的DFS遍历
+        * @param {number[][]} M
+        * @return {number}
+        */
+        var findCircleNum = function(M) {
+            const isVisited = [];
+            let res = 0;
+            function mapDFS(i) {
+                for (let j = 0; j < M.length; j++) {
+                    if(M[i][j] && !isVisited[j]) {
+                        isVisited[j] = true;
+                        mapDFS(j);
+                    }
+                }
+            }
+            for(let i = 0; i < M.length; i++) {
+                if(!isVisited[i]) {
+                    isVisited[i] = true;
+                    mapDFS(i);
+                    res++;
+                }
+            }
+            return res;
+        }
+```
+#### 2) 有向图是否存在环
 > - 拓扑排序
 
 ```js
@@ -2332,7 +2433,7 @@ void exec(int a[], int size) {
             return res.length === N;
         }
 ```
-#### 2) 构造无向图
+#### 3) 构造无向图
 > - 暴力
 
 ```js
@@ -2392,6 +2493,34 @@ void exec(int a[], int size) {
             }
             return res;
         };
+```
+#### 4) 并查集
+> - 主要实现`union`连通，`find`寻找根结点，`count`集的数量三个API
+```js
+        /** 并查集
+        * @param {number[][]} M
+        * @return {number}
+        */
+
+        var findCircleNum = function(M) {
+            let count = M.length, parent = [];
+            function find(i) {
+                while(parent[i] !== undefined) i = parent[i];
+                return i;
+            }
+            function union(i, j) {
+                const rootI = find(i), rootJ = find(j);
+                if (rootI === rootJ) return;
+                parent[rootJ] = rootI;
+                count--;
+            }
+            for(let i = 0; i < M.length; i++) {
+                for(let j = 0; j <= i; j++) {
+                    if (M[i][j]) union(i, j);
+                }
+            }
+            return count;
+        }
 ```
 ### 14.2 题目
 #### [207. 课程表](https://leetcode-cn.com/problems/course-schedule/submissions/)
@@ -2496,6 +2625,67 @@ void exec(int a[], int size) {
             }
             return res;
         };
+```
+#### [547. 朋友圈](https://leetcode-cn.com/problems/friend-circles/)
+![截屏2020-04-19 下午2.12.14.png](https://pic.leetcode-cn.com/4ef2c248015516ceb3836045e91c4324bbb7a96a20db7ad9a54e2b3bd9050394-%E6%88%AA%E5%B1%8F2020-04-19%20%E4%B8%8B%E5%8D%882.12.14.png)
+
+```js
+        /** 并查集+路径压缩
+        * @param {number[][]} M
+        * @return {number}
+        */
+
+        var findCircleNum = function(M) {
+            let count = M.length, parent = [], rank = Array(M.length).fill(0);
+            function find(i) {
+                while(parent[i] !== undefined) i = parent[i];
+                return i;
+            }
+            function union(i, j) {
+                const rootI = find(i), rootJ = find(j);
+                if (rootI === rootJ) return;
+                if (rank[rootI] > rank[rootJ]) {
+                    parent[rootJ] = rootI;
+                    rank[rootI]++;
+                }
+                else {
+                    parent[rootI] = rootJ;
+                    rank[rootJ]++;
+                }
+                count--;
+            }
+            for(let i = 0; i < M.length; i++) {
+                for(let j = 0; j <= i; j++) {
+                    if (M[i][j]) union(i, j);
+                }
+            }
+            return count;
+        }
+        /** 邻接表的DFS遍历
+        * @param {number[][]} M
+        * @return {number}
+        */
+
+        var findCircleNum = function(M) {
+            const isVisited = [];
+            let res = 0;
+            function mapDFS(i) {
+                for (let j = 0; j < M.length; j++) {
+                    if(M[i][j] && !isVisited[j]) {
+                        isVisited[j] = true;
+                        mapDFS(j);
+                    }
+                }
+            }
+            for(let i = 0; i < M.length; i++) {
+                if(!isVisited[i]) {
+                    isVisited[i] = true;
+                    mapDFS(i);
+                    res++;
+                }
+            }
+            return res;
+        }
 ```
 
 ## 十五、数学问题
@@ -2670,6 +2860,27 @@ void exec(int a[], int size) {
         }
 ```
 
+#### [69. x 的平方根](https://leetcode-cn.com/problems/sqrtx/)
+![image.png](https://pic.leetcode-cn.com/adabe280172d8c88e3b633d31aaccec3add21900e10574fce8a3a113280e4a86-image.png)
+```js
+        /** 二分法
+         * @param {number} x
+         * @return {number}
+         */
+        var mySqrt = function(x) {
+            // return parseInt(Math.pow(x, 0.5), 10);
+            let l = 0, r = x, mid, sum;
+            while(l <= r) {
+                mid = (l + r) >> 1;
+                sum = mid * mid;
+                if (sum === x) return mid;
+                else if (sum > x) r = mid - 1;
+                else l = mid + 1;
+            }
+            return r;
+        };
+```
+
 ## 十六、设计问题
 ### 16.1 基本模板
 
@@ -2745,4 +2956,106 @@ void exec(int a[], int size) {
         * obj.follow(followerId,followeeId)
         * obj.unfollow(followerId,followeeId)
         */
+```
+
+#### [460. LFU缓存](https://leetcode-cn.com/problems/lfu-cache/)
+
+```js
+        /**
+         * @param {number} capacity
+         */
+        var LFUCache = function(capacity) {
+            this.record = {};
+            this.capacity = capacity;
+            this.numMap = {};
+            this.stack = [];
+            this.reOrder = function(key) {
+                let i = this.stack.indexOf(key);
+                while (this.numMap[this.stack[i]] >= this.numMap[this.stack[i - 1]]) {
+                    [this.stack[i], this.stack[i - 1]] = [this.stack[i - 1], this.stack[i]];
+                    i--;
+                }
+            }
+        };
+
+        /** 
+         * @param {number} key
+         * @return {number}
+         */
+        LFUCache.prototype.get = function(key) {
+            if (this.record[key] === undefined) return -1;
+            this.numMap[key]++;
+            this.reOrder(key);
+            return this.record[key];
+        };
+
+        /** 
+         * @param {number} key 
+         * @param {number} value
+         * @return {void}
+         */
+        LFUCache.prototype.put = function(key, value) {
+            if (!this.capacity) return;
+            if (this.record[key] !== undefined) this.numMap[key]++;
+            else {
+                if (this.stack.length >= this.capacity) {
+                    let lowFrequencestKey = this.stack.pop();
+                    delete this.record[lowFrequencestKey];
+                    delete this.numMap[lowFrequencestKey];
+                }
+                this.stack.push(key);
+                this.numMap[key] = 1;
+            }
+            this.reOrder(key);
+            this.record[key] = value;
+        };
+
+        /**
+         * Your LFUCache object will be instantiated and called as such:
+         * var obj = new LFUCache(capacity)
+         * var param_1 = obj.get(key)
+         * obj.put(key,value)
+         */
+```
+
+#### [146. LRU缓存机制](https://leetcode-cn.com/problems/lru-cache/)
+
+```js
+        /**
+         * @param {number} capacity
+         */
+        var LRUCache = function(capacity) {
+            this.orderMap = new Map();
+            this.capacity = capacity;
+        };
+
+        /** 
+         * @param {number} key
+         * @return {number}
+         */
+        LRUCache.prototype.get = function(key) {
+            if(!this.orderMap.has(key)) return -1;
+            let value = this.orderMap.get(key);
+            this.orderMap.delete(key);
+            this.orderMap.set(key, value);
+            return value;
+        };
+
+        /** 
+         * @param {number} key 
+         * @param {number} value
+         * @return {void}
+         */
+        LRUCache.prototype.put = function(key, value) {
+            if (this.orderMap.has(key)) this.orderMap.delete(key);
+            else if(this.orderMap.size >= this.capacity) this.orderMap.delete(this.orderMap.keys().next().value);
+            this.orderMap.set(key, value);
+        };
+
+        /**
+         * Your LRUCache object will be instantiated and called as such:
+         * var obj = new LRUCache(capacity)
+         * var param_1 = obj.get(key)
+         * obj.put(key,value)
+         */
 ```
