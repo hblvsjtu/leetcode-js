@@ -47,6 +47,7 @@
       - [面试题46. 把数字翻译成字符串](#%e9%9d%a2%e8%af%95%e9%a2%9846-%e6%8a%8a%e6%95%b0%e5%ad%97%e7%bf%bb%e8%af%91%e6%88%90%e5%ad%97%e7%ac%a6%e4%b8%b2)
       - [67. 二进制求和](#67-%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%b1%82%e5%92%8c)
       - [415. 字符串相加](#415-%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%9b%b8%e5%8a%a0)
+      - [1297. 子串的最大出现次数](#1297-%e5%ad%90%e4%b8%b2%e7%9a%84%e6%9c%80%e5%a4%a7%e5%87%ba%e7%8e%b0%e6%ac%a1%e6%95%b0)
   - [五、哈希表](#%e4%ba%94%e5%93%88%e5%b8%8c%e8%a1%a8)
     - [5.1 基本模板](#51-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 统计频率](#1-%e7%bb%9f%e8%ae%a1%e9%a2%91%e7%8e%87)
@@ -79,6 +80,7 @@
       - [235. 二叉搜索树的最近公共祖先](#235-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e6%9c%80%e8%bf%91%e5%85%ac%e5%85%b1%e7%a5%96%e5%85%88)
       - [91. 解码方法](#91-%e8%a7%a3%e7%a0%81%e6%96%b9%e6%b3%95)
       - [39. 组合总和](#39-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c)
+      - [39. 镜像二叉树](#39-%e9%95%9c%e5%83%8f%e4%ba%8c%e5%8f%89%e6%a0%91)
   - [九、DFS深度优先搜索](#%e4%b9%9ddfs%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [9.1 基本模板](#91-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-2)
@@ -117,10 +119,13 @@
       - [90. 子集 II](#90-%e5%ad%90%e9%9b%86-ii)
       - [面试题34. 二叉树中和为某一值的路径](#%e9%9d%a2%e8%af%95%e9%a2%9834-%e4%ba%8c%e5%8f%89%e6%a0%91%e4%b8%ad%e5%92%8c%e4%b8%ba%e6%9f%90%e4%b8%80%e5%80%bc%e7%9a%84%e8%b7%af%e5%be%84)
       - [93. 复原IP地址](#93-%e5%a4%8d%e5%8e%9fip%e5%9c%b0%e5%9d%80)
+      - [351. 安卓系统手势解锁](#351-%e5%ae%89%e5%8d%93%e7%b3%bb%e7%bb%9f%e6%89%8b%e5%8a%bf%e8%a7%a3%e9%94%81)
   - [十三、动态规划](#%e5%8d%81%e4%b8%89%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92)
     - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
       - [1) 相同之处](#1-%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84)
       - [2) 不同之处](#2-%e4%b8%8d%e5%90%8c%e4%b9%8b%e5%a4%84)
+    - [13.2 题目](#132-%e9%a2%98%e7%9b%ae)
+      - [1014. 最佳观光组合](#1014-%e6%9c%80%e4%bd%b3%e8%a7%82%e5%85%89%e7%bb%84%e5%90%88)
   - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
     - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 图的遍历](#1-%e5%9b%be%e7%9a%84%e9%81%8d%e5%8e%86)
@@ -797,6 +802,30 @@ void exec(int a[], int size) {
             return sum > 1 ? '1' + res : res; 
         };
 ```
+#### [1297. 子串的最大出现次数](https://leetcode-cn.com/problems/maximum-number-of-occurrences-of-a-substring)
+
+```js
+        /**
+         * @param {string} s
+         * @param {number} maxLetters
+         * @param {number} minSize
+         * @param {number} maxSize
+         * @return {number}
+         */
+        var maxFreq = function(s, maxLetters, minSize, maxSize) {
+            const record = {};
+            const constLen = minSize - 1;
+            let temp = '*' + s.substr(0, constLen);
+            for (let i = constLen; i < s.length; i++) {
+                temp = temp.substr(1, constLen) + s[i];
+                if (new Set(temp).size <= maxLetters) {
+                    if(record[temp]) record[temp]++;
+                    else record[temp] = 1;
+                }
+            }
+            return Object.keys(record || {}).reduce((t, i) => record[i] > t ? record[i] : t, 0);
+        };
+```
 
 
 ## 五、哈希表
@@ -1358,6 +1387,70 @@ void exec(int a[], int size) {
                 i = queue.length;
             }
             return res;
+        };
+```
+#### [39. 镜像二叉树](https://leetcode-cn.com/problems/combination-sum/)
+```js
+        /** 暴力BFS
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {boolean}
+         */
+        var isSymmetric = function(root) {
+            if(!root) return true;
+            const queue = [root.left, root.right];
+            let i = queue.length;
+            let level = [];
+            while(i) {
+                while(i--) {
+                    const front = queue.shift();
+                    level.push(front && front.val);
+                    if(!front) continue;
+                    queue.push(front.left, front.right);
+                }
+                if(!isSymmetricArray(level)) return false;
+                level = [];
+                i = queue.length;
+            }
+            function isSymmetricArray(arr) {
+                console.log(arr);
+                if (arr.length & 1) return false;
+                let i = 0, j = arr.length - 1;
+                while(i < j) {
+                    if(arr[i] !== arr[j]) return false;
+                    i++;
+                    j--;
+                }
+                return true;;
+            }
+            return true;
+        };
+
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {boolean}
+         */
+        var isSymmetric = function(root) {
+            if (!root) return true;
+            function isSymmetricDFS(left, right) {
+                if (!left && !right) return true;
+                if (!left || !right || left.val !== right.val) return false;
+                return isSymmetricDFS(left.left, right.right) && isSymmetricDFS(left.right, right.left);
+            }
+            return isSymmetricDFS(root.left, root.right);
         };
 ```
 
@@ -2202,6 +2295,41 @@ void exec(int a[], int size) {
             return res;
         };
 ```
+#### [351. 安卓系统手势解锁](https://leetcode-cn.com/problems/android-unlock-patterns/)
+```js
+        /** 没完成
+         * @param {number} m
+         * @param {number} n
+         * @return {number}
+         */
+        var numberOfPatterns = function(m, n) {
+            const target = [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']];
+            const record = new Set();
+            const dir = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
+            function isCross = 
+            function backTrace(path, i, j, isVisited) {
+                if (path.length > n) return;
+                if (path.length >= m) record.add(path);
+                isVisited[i + '-' + j] = true;
+                dir.forEach(([offsetX, offsetY]) => {
+                    const [newX, newY] = [i + offsetX, j + offsetY];
+                    if (newX >= 0 && newX < 3 && newY >= 0 && newY < 3
+                        && !isVisited[newX + '-' + newY]
+                        && ) {   
+                        backTrace(path + target[newX][newY], newX, newY, isVisited);
+                    }
+                })
+                isVisited[i + '-' + j] = false;
+            }
+            for(let i = 0; i < 3; i++) {
+                for(let j = 0; j < 3; j++) {
+                    backTrace(target[i][j], i, j, {});
+                }
+            }
+            console.log(record);
+            return record.size;
+        };
+```
 
 ## 十三、动态规划
 ### 13.1 与分治思想的异同
@@ -2211,6 +2339,28 @@ void exec(int a[], int size) {
 #### 2) 不同之处
 > - 分治方法将问题划分为互不相交的子问题，递归地求解子问题，再将它们的解组合起来，求出原问题的解
 > - 动态规划则应用于子问题重叠的情况，即不同的子问题具有公共的子子问题，分治算法会做很多不必要的工作，他会反复求解那些公共子子问题。而动态规划算法对每个子子问题只求解一次，将其解保存在一个表格中，从而无需每次求解一个子问题时都需要重新计算，避免了这种不必要的计算工作。
+
+### 13.2 题目
+#### [1014. 最佳观光组合](https://leetcode-cn.com/problems/best-sightseeing-pair)
+
+![image.png](https://pic.leetcode-cn.com/91fd6e5d91e0b7d9d809cff82b3f14297f15e061b46a454357fb6460eca29450-image.png)
+
+```js
+/**
+ * @param {number[]} A
+ * @return {number}
+ */
+var maxScoreSightseeingPair = function(A) {
+    let max = -Infinity, preMax = A[0], temp;
+    for (let i = 1; i < A.length; i++) {
+        sum = A[i] - i + preMax;
+        if(sum > max) max = sum;
+        temp = A[i] + i;
+        if(temp > preMax) preMax = temp;
+    }
+    return max;
+};
+```
 
 
 ## 十四、图论
