@@ -38,6 +38,8 @@
       - [240. 搜索二维矩阵 II](#240-%e6%90%9c%e7%b4%a2%e4%ba%8c%e7%bb%b4%e7%9f%a9%e9%98%b5-ii)
       - [34. 在排序数组中查找元素的第一个和最后一个位置](#34-%e5%9c%a8%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%84%e4%b8%ad%e6%9f%a5%e6%89%be%e5%85%83%e7%b4%a0%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%e5%92%8c%e6%9c%80%e5%90%8e%e4%b8%80%e4%b8%aa%e4%bd%8d%e7%bd%ae)
       - [11. 盛最多水的容器](#11-%e7%9b%9b%e6%9c%80%e5%a4%9a%e6%b0%b4%e7%9a%84%e5%ae%b9%e5%99%a8)
+      - [1248. 统计「优美子数组」](#1248-%e7%bb%9f%e8%ae%a1%e4%bc%98%e7%be%8e%e5%ad%90%e6%95%b0%e7%bb%84)
+      - [209. 长度最小的子数组](#209-%e9%95%bf%e5%ba%a6%e6%9c%80%e5%b0%8f%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84)
   - [四、字符串问题](#%e5%9b%9b%e5%ad%97%e7%ac%a6%e4%b8%b2%e9%97%ae%e9%a2%98)
     - [4.1 基本模板](#41-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95)
@@ -72,6 +74,7 @@
       - [138. 复制带随机指针的链表](#138-%e5%a4%8d%e5%88%b6%e5%b8%a6%e9%9a%8f%e6%9c%ba%e6%8c%87%e9%92%88%e7%9a%84%e9%93%be%e8%a1%a8)
       - [445. 两数相加 II](#445-%e4%b8%a4%e6%95%b0%e7%9b%b8%e5%8a%a0-ii)
       - [141. 环形链表](#141-%e7%8e%af%e5%bd%a2%e9%93%be%e8%a1%a8)
+      - [142. 环形链表 II](#142-%e7%8e%af%e5%bd%a2%e9%93%be%e8%a1%a8-ii)
   - [八、树](#%e5%85%ab%e6%a0%91)
     - [8.1 基本模板](#81-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
     - [8.2 题目](#82-%e9%a2%98%e7%9b%ae)
@@ -703,6 +706,65 @@ void exec(int a[], int size) {
         };
 ```
 
+#### [1248. 统计「优美子数组」](https://leetcode-cn.com/problems/count-number-of-nice-subarrays/)
+```js
+        /**
+         * @param {number[]} nums
+         * @param {number} k
+         * @return {number}
+         */
+        var numberOfSubarrays = function(nums, k) {
+            let sum = 0, queue = [-1];
+            for (let i = 0; i <= nums.length; i++) {
+                if (nums[i] & 1 || i === nums.length) queue.push(i);
+                if (queue.length === k + 2) {
+                    sum += (queue[1] - queue[0]) * (i - queue[k]);
+                    queue.shift();
+                }
+            }
+            return sum;
+        };
+```
+
+#### [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/)
+![image.png](https://pic.leetcode-cn.com/cd3393a28111964c0150d2e28387f962e1e06ae53efcf58e507a6be63d66b64d-image.png)
+
+```js
+        /**
+         * @param {number} s
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var minSubArrayLen = function(s, nums) {
+            let min = Infinity, start = 0, sum = nums[0];
+            if (sum >= s) return 1;
+            for (let i = 1; i < nums.length; i++) {
+                sum += nums[i];
+                if (sum >= s) {
+                    while(sum - nums[start] >= s) sum -= nums[start++];
+                    min = Math.min(min, i - start + 1);
+                }
+            }
+            return min === Infinity ? 0 : min;
+        };
+        /**
+         * @param {number} s
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var minSubArrayLen = function(s, nums) {
+            let min = Infinity, sum;
+            for(let i = 0; i < nums.length; i++) {
+                if (nums[i] >= s) return 1;
+                let j = i, sum = nums[j];
+                while (sum + nums[--j] < s) sum += nums[j];
+                if (j >= 0) min = Math.min(min, i - j + 1);
+            }
+            return min === Infinity ? 0 : min;
+        };
+```
+
+
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -1186,6 +1248,40 @@ void exec(int a[], int size) {
             return false;
         };
 ```
+#### [142. 环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/)
+![image.png](https://pic.leetcode-cn.com/a862f5e1aa441f2f26ed9a0ce5dac6058275f8a668253b79a5ffc9512251bd15-image.png)
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+
+        /**
+         * @param {ListNode} head
+         * @return {ListNode}
+         */
+        var detectCycle = function(head) {
+            let slow = head, fast = head;
+            while(fast && fast.next) {
+                slow = slow.next;
+                fast = fast.next.next;
+                if (fast === slow) {
+                    slow = head;
+                    fast = fast;
+                    while (slow !== fast) {
+                        slow = slow.next;
+                        fast = fast.next;
+                    }
+                    return fast1;
+                }
+            }
+            return null;
+        };
+```
+
 ## 八、树
 ### 8.1 基本模板 
         
