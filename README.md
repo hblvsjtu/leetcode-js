@@ -35,11 +35,14 @@
       - [荷兰国旗问题](#%e8%8d%b7%e5%85%b0%e5%9b%bd%e6%97%97%e9%97%ae%e9%a2%98)
       - [289. 生命游戏](#289-%e7%94%9f%e5%91%bd%e6%b8%b8%e6%88%8f)
       - [面试题 01.07. 旋转矩阵](#%e9%9d%a2%e8%af%95%e9%a2%98-0107-%e6%97%8b%e8%bd%ac%e7%9f%a9%e9%98%b5)
+      - [48. 旋转图像](#48-%e6%97%8b%e8%bd%ac%e5%9b%be%e5%83%8f)
       - [240. 搜索二维矩阵 II](#240-%e6%90%9c%e7%b4%a2%e4%ba%8c%e7%bb%b4%e7%9f%a9%e9%98%b5-ii)
       - [34. 在排序数组中查找元素的第一个和最后一个位置](#34-%e5%9c%a8%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%84%e4%b8%ad%e6%9f%a5%e6%89%be%e5%85%83%e7%b4%a0%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%e5%92%8c%e6%9c%80%e5%90%8e%e4%b8%80%e4%b8%aa%e4%bd%8d%e7%bd%ae)
       - [11. 盛最多水的容器](#11-%e7%9b%9b%e6%9c%80%e5%a4%9a%e6%b0%b4%e7%9a%84%e5%ae%b9%e5%99%a8)
       - [1248. 统计「优美子数组」](#1248-%e7%bb%9f%e8%ae%a1%e4%bc%98%e7%be%8e%e5%ad%90%e6%95%b0%e7%bb%84)
       - [209. 长度最小的子数组](#209-%e9%95%bf%e5%ba%a6%e6%9c%80%e5%b0%8f%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84)
+      - [386. 字典序排数](#386-%e5%ad%97%e5%85%b8%e5%ba%8f%e6%8e%92%e6%95%b0)
+      - [179. 最大数](#179-%e6%9c%80%e5%a4%a7%e6%95%b0)
   - [四、字符串问题](#%e5%9b%9b%e5%ad%97%e7%ac%a6%e4%b8%b2%e9%97%ae%e9%a2%98)
     - [4.1 基本模板](#41-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95)
@@ -615,7 +618,7 @@ void exec(int a[], int size) {
 
 #### [面试题 01.07. 旋转矩阵](https://leetcode-cn.com/problems/rotate-matrix-lcci/)
 ```js
-        /**
+        /** 
          * @param {number[][]} matrix
          * @return {void} Do not return anything, modify matrix in-place instead.
          */
@@ -625,6 +628,31 @@ void exec(int a[], int size) {
             for(let i = 0; i <= col; i++) {
                 for(let j = 0; j < matrix.length; j++) {
                     matrix[i][j] = copy[col - j][i];
+                }
+            }
+            return matrix;
+        };
+        
+```
+#### [48. 旋转图像](https://leetcode-cn.com/problems/rotate-image)
+![image.png](https://pic.leetcode-cn.com/97632fa267c8f8e3f1168015ce0daccad4ba859dbbe8a13a09928e8cb0c39e14-image.png)
+
+```js
+        /**
+         * @param {number[][]} matrix
+         * @return {void} Do not return anything, modify matrix in-place instead.
+         */
+        var rotate = function(matrix) {
+            const lastIndex = matrix.length - 1;
+            const half = matrix.length >> 1;
+            const halfPlus = (matrix.length + 1) >> 1;
+            let a, b, temp;
+            for (let i = 0; i < halfPlus; i++) {
+                for (let j = 0; j < half; j++) {
+                    a = lastIndex - i;
+                    b = lastIndex - j;
+                    [matrix[i][j], matrix[b][i], matrix[a][b], matrix[j][a]]
+                        = [matrix[b][i], matrix[a][b], matrix[j][a], matrix[i][j]];
                 }
             }
             return matrix;
@@ -763,7 +791,51 @@ void exec(int a[], int size) {
             return min === Infinity ? 0 : min;
         };
 ```
+#### [386. 字典序排数](https://leetcode-cn.com/problems/lexicographical-numbers/)
+```js
+        /**
+         * @param {number} n
+         * @return {number[]}
+         */
+        var lexicalOrder = function(n) {
+            const res = [];
+            for (let i = 0; i < n; i++) res[i] = i + 1;
+            res.sort((a, b) => '' + a > '' + b ? 1 : -1);
+            return res;
+        };
 
+        /** 树
+         * @param {number} n
+         * @return {number[]}
+         */
+        var lexicalOrder = function(n) {
+            const stack = [9, 8, 7, 6, 5, 4, 3, 2, 1];
+            const res = [];
+            let i = stack.length, temp, front;
+            while(i) {
+                while(i--) {
+                    front = stack.pop();
+                    if (front === undefined || front > n)  continue;
+                    res.push(front);
+                    for(let i = 9; i >= 0; i--) stack.push(+('' + front + i));
+                }
+                i = stack.length;
+            }
+            return res;
+        };
+```
+#### [179. 最大数](https://leetcode-cn.com/problems/largest-number/)
+```js
+        /**
+         * @param {number[]} nums
+         * @return {string}
+         */
+        var largestNumber = function(nums) {
+            nums.sort((a, b) => +('' + b + a) - +('' + a + b));
+            const res = nums.join('');
+            return res[0] === '0' ? '0' : res;
+        };
+```
 
 ## 四、字符串问题
 ### 4.1 基本模板 
