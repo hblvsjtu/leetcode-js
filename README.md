@@ -43,6 +43,7 @@
       - [209. 长度最小的子数组](#209-%e9%95%bf%e5%ba%a6%e6%9c%80%e5%b0%8f%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84)
       - [386. 字典序排数](#386-%e5%ad%97%e5%85%b8%e5%ba%8f%e6%8e%92%e6%95%b0)
       - [179. 最大数](#179-%e6%9c%80%e5%a4%a7%e6%95%b0)
+      - [560. 和为K的子数组](#560-%e5%92%8c%e4%b8%bak%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84)
   - [四、字符串问题](#%e5%9b%9b%e5%ad%97%e7%ac%a6%e4%b8%b2%e9%97%ae%e9%a2%98)
     - [4.1 基本模板](#41-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95)
@@ -113,6 +114,8 @@
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-4)
       - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-2)
       - [55. 跳跃游戏](#55-%e8%b7%b3%e8%b7%83%e6%b8%b8%e6%88%8f)
+      - [面试题 08.11. 硬币](#%e9%9d%a2%e8%af%95%e9%a2%98-0811-%e7%a1%ac%e5%b8%81)
+      - [139. 单词拆分](#139-%e5%8d%95%e8%af%8d%e6%8b%86%e5%88%86)
   - [十二、回溯法](#%e5%8d%81%e4%ba%8c%e5%9b%9e%e6%ba%af%e6%b3%95)
     - [12.1 基本模板](#121-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归](#1-%e9%80%92%e5%bd%92)
@@ -836,7 +839,29 @@ void exec(int a[], int size) {
             return res[0] === '0' ? '0' : res;
         };
 ```
-
+#### [560. 和为K的子数组](https://leetcode-cn.com/problems/subarray-sum-equals-k/)
+```js
+        /**
+        * @param {number[]} nums
+        * @param {number} k
+        * @return {number}
+        */
+        var subarraySum = function(nums, k) {
+            let res = 0; sum = 0, j = 0;
+            const record = [];
+            for (let i = 0; i < nums.length; i++) {
+                sum += nums[i];
+                record[i] = sum;
+                if(sum === k) res++;
+            }
+            for (let i = 1; i < nums.length; i++) {
+                for (let j = 0; j < i; j++) {
+                    if (record[i] - record[j] === k) res++;
+                }
+            }
+            return res;
+        };
+```
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -2161,6 +2186,83 @@ void exec(int a[], int size) {
             }
         };
 
+```
+#### [面试题 08.11. 硬币](https://leetcode-cn.com/problems/coin-lcci/)
+![image.png](https://pic.leetcode-cn.com/2ee6d3b55e6614978785d07e22aeb3541c5babbd9af5718e7e301efbca9125d0-image.png)
+```js
+/** dp
+* @param {number} n
+* @return {number}
+*/
+var waysToChange = function(n) {
+    if (n === 0) return 1;
+    const coins = [1, 5, 10, 25];
+    const dp = [1].concat(Array(n).fill(0));
+    for (let j = 0; j < coins.length; j++) {
+        for (let i = 1; i <= n; i++) {
+            if (i - coins[j] >= 0) dp[i] = dp[i] + dp[i - coins[j]];
+        }
+    }
+    return dp[n] % 1000000007;
+};
+
+/** 爆栈
+* @param {number} n
+* @return {number}
+*/
+var waysToChange = function(n) {
+    const dir = [1, 5, 10, 25];
+    let res = 0;
+    function dfs(curSum, index) {
+        if (curSum > n) return;
+        if (curSum === n) {
+            res++;
+            return;
+        }
+        for(let i = index; i < 4; i++) dfs(curSum + dir[i], i);
+    }
+    dfs(0, 0);
+    return res % 1000000007;
+};
+```
+#### [139. 单词拆分](https://leetcode-cn.com/problems/word-break/)
+![image.png](https://pic.leetcode-cn.com/c8c4b615da0c064c18f7939f4aad01a606ec9a0ccd0a6f1401569fa7eee2f047-image.png)
+
+```js
+        /** 回溯法超时
+        * @param {string} s
+        * @param {string[]} wordDict
+        * @return {boolean}
+        */
+        var wordBreak = function(s, wordDict) {
+            let res = false;
+            function backTrace(i) {
+                if(res) return;
+                if (i === s.length) res = true;
+                else if(i < s.length)
+                    wordDict.filter(str => str === s.substr(i, str.length))
+                        .forEach(str => backTrace(i + str.length));
+            }
+            backTrace(0);
+            return res;
+        };
+
+        /** 背包问题dp
+        * @param {string} s
+        * @param {string[]} wordDict
+        * @return {boolean}
+        */
+        var wordBreak = function(s, wordDict) {
+            const dp = [];
+            dp[0] = true;
+            for(let i = 1; i <= s.length; i++) {
+                wordDict.forEach(str => {
+                    let temp = i - str.length;
+                    if (dp[temp] && s.substring(temp, i) === str) dp[i] = true;
+                })
+            }
+            return !!dp[s.length];
+        };
 ```
 
 ## 十二、回溯法
