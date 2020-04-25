@@ -136,6 +136,7 @@
       - [46. 全排列](#46-%e5%85%a8%e6%8e%92%e5%88%97)
       - [39. 组合总和](#39-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c-1)
       - [40. 组合总和 II](#40-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c-ii)
+      - [77. 组合](#77-%e7%bb%84%e5%90%88)
   - [十三、动态规划](#%e5%8d%81%e4%b8%89%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92)
     - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
       - [1) 相同之处](#1-%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84)
@@ -2835,7 +2836,25 @@ var combinationSum2 = function(candidates, target) {
     return res;
 };
 ```
+#### [77. 组合](https://leetcode-cn.com/problems/combinations/)
+![截屏2020-04-25 下午10.51.11.png](https://pic.leetcode-cn.com/ef3efa88491930504c2517c3e95ea87f453b7f888f33d072e0e3a813e618c661-%E6%88%AA%E5%B1%8F2020-04-25%20%E4%B8%8B%E5%8D%8810.51.11.png)
 
+```js
+        /**
+         * @param {number} n
+         * @param {number} k
+         * @return {number[][]}
+         */
+        var combine = function(n, k) {
+            const res = [];
+            function backTrace(i, path, num) {
+                if (num === k) res.push(path.trim().split(' ').map(i => +i));
+                for(let j = i; j <= n; j++) backTrace(j + 1, path + ' ' + j, num + 1);
+            }
+            backTrace(1, '', 0);
+            return res;
+        };
+```
 ## 十三、动态规划
 ### 13.1 与分治思想的异同
         
