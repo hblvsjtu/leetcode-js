@@ -62,6 +62,7 @@
       - [347. 前 K 个高频元素](#347-%e5%89%8d-k-%e4%b8%aa%e9%ab%98%e9%a2%91%e5%85%83%e7%b4%a0)
       - [面试题56 - I. 数组中数字出现的次数](#%e9%9d%a2%e8%af%95%e9%a2%9856---i-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0)
       - [面试题56 - II. 数组中数字出现的次数 II](#%e9%9d%a2%e8%af%95%e9%a2%9856---ii-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0-ii)
+      - [260. 只出现一次的数字 III](#260-%e5%8f%aa%e5%87%ba%e7%8e%b0%e4%b8%80%e6%ac%a1%e7%9a%84%e6%95%b0%e5%ad%97-iii)
       - [面试题51. 数组中的逆序对](#%e9%9d%a2%e8%af%95%e9%a2%9851-%e6%95%b0%e7%bb%84%e4%b8%ad%e7%9a%84%e9%80%86%e5%ba%8f%e5%af%b9)
       - [146. LRU缓存机制](#146-lru%e7%bc%93%e5%ad%98%e6%9c%ba%e5%88%b6)
   - [六、栈和队列](#%e5%85%ad%e6%a0%88%e5%92%8c%e9%98%9f%e5%88%97)
@@ -79,6 +80,7 @@
       - [445. 两数相加 II](#445-%e4%b8%a4%e6%95%b0%e7%9b%b8%e5%8a%a0-ii)
       - [141. 环形链表](#141-%e7%8e%af%e5%bd%a2%e9%93%be%e8%a1%a8)
       - [142. 环形链表 II](#142-%e7%8e%af%e5%bd%a2%e9%93%be%e8%a1%a8-ii)
+      - [61. 旋转链表](#61-%e6%97%8b%e8%bd%ac%e9%93%be%e8%a1%a8)
   - [八、树](#%e5%85%ab%e6%a0%91)
     - [8.1 基本模板](#81-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
     - [8.2 题目](#82-%e9%a2%98%e7%9b%ae)
@@ -129,12 +131,18 @@
       - [面试题34. 二叉树中和为某一值的路径](#%e9%9d%a2%e8%af%95%e9%a2%9834-%e4%ba%8c%e5%8f%89%e6%a0%91%e4%b8%ad%e5%92%8c%e4%b8%ba%e6%9f%90%e4%b8%80%e5%80%bc%e7%9a%84%e8%b7%af%e5%be%84)
       - [93. 复原IP地址](#93-%e5%a4%8d%e5%8e%9fip%e5%9c%b0%e5%9d%80)
       - [351. 安卓系统手势解锁](#351-%e5%ae%89%e5%8d%93%e7%b3%bb%e7%bb%9f%e6%89%8b%e5%8a%bf%e8%a7%a3%e9%94%81)
+      - [216. 组合总和 III](#216-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c-iii)
+      - [46. 全排列](#46-%e5%85%a8%e6%8e%92%e5%88%97)
   - [十三、动态规划](#%e5%8d%81%e4%b8%89%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92)
     - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
       - [1) 相同之处](#1-%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84)
       - [2) 不同之处](#2-%e4%b8%8d%e5%90%8c%e4%b9%8b%e5%a4%84)
     - [13.2 题目](#132-%e9%a2%98%e7%9b%ae)
       - [1014. 最佳观光组合](#1014-%e6%9c%80%e4%bd%b3%e8%a7%82%e5%85%89%e7%bb%84%e5%90%88)
+      - [面试题 08.11. 硬币](#%e9%9d%a2%e8%af%95%e9%a2%98-0811-%e7%a1%ac%e5%b8%81)
+      - [139. 单词拆分](#139-%e5%8d%95%e8%af%8d%e6%8b%86%e5%88%86)
+      - [279. 完全平方数](#279-%e5%ae%8c%e5%85%a8%e5%b9%b3%e6%96%b9%e6%95%b0)
+      - [377. 组合总和 Ⅳ](#377-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c-%e2%85%a3)
   - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
     - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 图的遍历](#1-%e5%9b%be%e7%9a%84%e9%81%8d%e5%8e%86)
@@ -1056,6 +1064,19 @@ void exec(int a[], int size) {
             }, new Set()));
         };
 ```
+#### [260. 只出现一次的数字 III](https://leetcode-cn.com/problems/single-number-iii/)
+![截屏2020-04-25 下午4.57.23.png](https://pic.leetcode-cn.com/489e1494eb6bdefd8f168d9c9ebea2316e67b59aefca06ffc1a49565e26dc6c2-%E6%88%AA%E5%B1%8F2020-04-25%20%E4%B8%8B%E5%8D%884.57.23.png)
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var singleNumber = function(nums) {
+    const res  = new Set();
+    nums.forEach(i => res.has(i) ? res.delete(i) : res.add(i));
+    return Array.from(res);
+};
+```
 
 #### [面试题51. 数组中的逆序对](https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/)
 ```js
@@ -1376,6 +1397,36 @@ void exec(int a[], int size) {
                 }
             }
             return null;
+        };
+```
+
+#### [61. 旋转链表](https://leetcode-cn.com/problems/rotate-list/)
+
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param {ListNode} head
+         * @param {number} k
+         * @return {ListNode}
+         */
+        var rotateRight = function(head, k) {
+            if (!head) return null;
+            let slow = head, fast = head;
+            while(k--) fast = fast.next ? fast.next : head;
+            while(fast.next) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            fast.next = head;
+            const res = slow.next;
+            slow.next = null;
+            return res;
         };
 ```
 
@@ -2600,7 +2651,55 @@ var waysToChange = function(n) {
             return record.size;
         };
 ```
+#### [216. 组合总和 III](https://leetcode-cn.com/problems/combination-sum-iii/)
+![截屏2020-04-24 下午11.49.41.png](https://pic.leetcode-cn.com/a364b1ca4746e9fb720f702cc7c33a43a6fbe8db6da5235a9069c5e7adfca1e7-%E6%88%AA%E5%B1%8F2020-04-24%20%E4%B8%8B%E5%8D%8811.49.41.png)
+```js
+        var combinationSum3 = function(k, target) {
+            const candidates = [1,2,3,4,5,6,7,8,9];
+            const res = [];
+            function backTrace(i, sum, path) {
+                if (!sum) {
+                    if(path.length === k) res.push(path);
+                    return;
+                }
+                for (let j = i; j < candidates.length; j++) {
+                    if (candidates[j] > sum) return;
+                    if (j > i && candidates[j] == candidates[j - 1]) continue;
+                    backTrace(j + 1, sum - candidates[j], path.concat(candidates[j]));
+                }
+            } 
+            backTrace(0, target, []);
+            return res;
+        };
+```
+#### [46. 全排列](https://leetcode-cn.com/problems/permutations/)
+![截屏2020-04-25 上午12.06.41.png](https://pic.leetcode-cn.com/738a74d144a149f3fac9c8b00db876b4779e7b33afb00d2028b808661e8ab83b-%E6%88%AA%E5%B1%8F2020-04-25%20%E4%B8%8A%E5%8D%8812.06.41.png)
 
+```js
+var permute = function(nums) {
+    const result = [];
+    const len = nums.length;
+    const num = Array(len);
+    function dfs(arr, p, q) {
+        if (q === p) {
+            result.push(arr.slice(0));
+            return arr;
+        }  
+        for(let i = p; i <= q; i++) {
+            swap(arr, p, i);
+            dfs(arr, p+1, q);
+            swap(arr, p, i);
+        }
+    }
+    function swap(arr, i, j) {
+        let tem = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tem;
+    }
+    dfs(nums, 0, len - 1);
+    return result;
+};
+```
 ## 十三、动态规划
 ### 13.1 与分治思想的异同
         
@@ -2631,7 +2730,163 @@ var maxScoreSightseeingPair = function(A) {
     return max;
 };
 ```
+#### [面试题 08.11. 硬币](https://leetcode-cn.com/problems/coin-lcci/)
+![image.png](https://pic.leetcode-cn.com/2ee6d3b55e6614978785d07e22aeb3541c5babbd9af5718e7e301efbca9125d0-image.png)
+```js
+/** dp
+* @param {number} n
+* @return {number}
+*/
+var waysToChange = function(n) {
+    if (n === 0) return 1;
+    const coins = [1, 5, 10, 25];
+    const dp = [1].concat(Array(n).fill(0));
+    for (let j = 0; j < coins.length; j++) {
+        for (let i = 1; i <= n; i++) {
+            if (i - coins[j] >= 0) dp[i] = dp[i] + dp[i - coins[j]];
+        }
+    }
+    return dp[n] % 1000000007;
+};
 
+/** 爆栈
+* @param {number} n
+* @return {number}
+*/
+var waysToChange = function(n) {
+    const dir = [1, 5, 10, 25];
+    let res = 0;
+    function dfs(curSum, index) {
+        if (curSum > n) return;
+        if (curSum === n) {
+            res++;
+            return;
+        }
+        for(let i = index; i < 4; i++) dfs(curSum + dir[i], i);
+    }
+    dfs(0, 0);
+    return res % 1000000007;
+};
+```
+#### [139. 单词拆分](https://leetcode-cn.com/problems/word-break/)
+![image.png](https://pic.leetcode-cn.com/c8c4b615da0c064c18f7939f4aad01a606ec9a0ccd0a6f1401569fa7eee2f047-image.png)
+
+```js
+        /** 回溯法超时
+        * @param {string} s
+        * @param {string[]} wordDict
+        * @return {boolean}
+        */
+        var wordBreak = function(s, wordDict) {
+            let res = false;
+            function backTrace(i) {
+                if(res) return;
+                if (i === s.length) res = true;
+                else if(i < s.length)
+                    wordDict.filter(str => str === s.substr(i, str.length))
+                        .forEach(str => backTrace(i + str.length));
+            }
+            backTrace(0);
+            return res;
+        };
+
+        /** 背包问题dp
+        * @param {string} s
+        * @param {string[]} wordDict
+        * @return {boolean}
+        */
+        var wordBreak = function(s, wordDict) {
+            const dp = [];
+            dp[0] = true;
+            for(let i = 1; i <= s.length; i++) {
+                wordDict.forEach(str => {
+                    let temp = i - str.length;
+                    if (dp[temp] && s.substring(temp, i) === str) dp[i] = true;
+                })
+            }
+            return !!dp[s.length];
+        };
+```
+#### [279. 完全平方数](https://leetcode-cn.com/problems/perfect-squares/)
+![截屏2020-04-25 下午5.59.57.png](https://pic.leetcode-cn.com/a124ad8e24b5c8e1404e9b896d920b5505b8a26a5e59c18800a57f7f8c59ec00-%E6%88%AA%E5%B1%8F2020-04-25%20%E4%B8%8B%E5%8D%885.59.57.png)
+
+```js
+/** 回溯法
+ * @param {number} n
+ * @return {number}
+ */
+var numSquares = function(n) {
+    let last = Math.pow(n, 0.5);
+    if (parseInt(last) === last) return 1;
+    else last = parseInt(last);
+    let res = Infinity;
+    function backTrace(i, sum, num) {
+        if (num > 4) return; // 4平方数定理，超过4的解肯定不符合要求
+        if (!sum) {
+            res = Math.min(res, num);
+            return;
+        }
+        for (let j = i; j > 0; j--) {
+            const ji = j * j;
+            if (ji > sum) continue;
+            backTrace(j, sum - ji, num + 1);
+        }
+    }
+    backTrace(last, n, 0);
+    return res;
+};
+
+/** dp
+ * @param {number} n
+ * @return {number}
+ */
+var numSquares = function(n) {
+    const dp = [];
+    dp[0] = 1;
+    for (let i = 1; i <= n; i++) {
+        let last = Math.pow(i, 0.5);
+        if (parseInt(last) === last) {
+            dp[i] = 1;
+            continue;
+        }
+        let min = Infinity;
+        for(let j = 1; j <= last; j++) {
+            const temp = dp[i - j * j];
+            if (temp === 1) {
+                min = 1;
+                break;
+            }
+            else min = Math.min(temp, min);
+        }
+        dp[i] = min + 1;
+    }
+    return dp[n];
+};
+```
+
+#### [377. 组合总和 Ⅳ](https://leetcode-cn.com/problems/combination-sum-iv)
+![截屏2020-04-25 下午6.58.25.png](https://pic.leetcode-cn.com/b1e62a4101f18de8b075030fe7a63786fe27a1bd0d45ed8fef7bde7fb86542bc-%E6%88%AA%E5%B1%8F2020-04-25%20%E4%B8%8B%E5%8D%886.58.25.png)
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var combinationSum4 = function(candidates, target) {
+    const dp = [];
+    dp[0] = 1;
+    for (let i = 1; i <= target; i++) {
+        dp[i] = 0;
+        candidates.forEach(val => {
+            let temp = i - val;
+            if (!temp) dp[i] += 1;
+            else if (temp > 0 && temp < i) dp[i] += dp[temp];
+        });
+    }
+    return dp[target];
+};
+```
 
 ## 十四、图论
 ### 14.1 基本模板
