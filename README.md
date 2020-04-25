@@ -90,90 +90,9 @@
       - [91. 解码方法](#91-%e8%a7%a3%e7%a0%81%e6%96%b9%e6%b3%95)
       - [39. 组合总和](#39-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c)
       - [39. 镜像二叉树](#39-%e9%95%9c%e5%83%8f%e4%ba%8c%e5%8f%89%e6%a0%91)
-  - [九、DFS深度优先搜索](#%e4%b9%9ddfs%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
-    - [9.1 基本模板](#91-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-2)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95)
-    - [9.2 题目](#92-%e9%a2%98%e7%9b%ae)
-      - [54. 螺旋矩阵](#54-%e8%9e%ba%e6%97%8b%e7%9f%a9%e9%98%b5)
-      - [59. 螺旋矩阵 II](#59-%e8%9e%ba%e6%97%8b%e7%9f%a9%e9%98%b5-ii)
-  - [十、BFS广度优先搜索](#%e5%8d%81bfs%e5%b9%bf%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
-    - [10.1 基本模板](#101-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-3)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-1)
-    - [10.2 题目](#102-%e9%a2%98%e7%9b%ae)
-      - [103 二叉树的锯齿形层次遍历](#103-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%94%af%e9%bd%bf%e5%bd%a2%e5%b1%82%e6%ac%a1%e9%81%8d%e5%8e%86)
-      - [127 单词接龙](#127-%e5%8d%95%e8%af%8d%e6%8e%a5%e9%be%99)
-      - [130. 被围绕的区域](#130-%e8%a2%ab%e5%9b%b4%e7%bb%95%e7%9a%84%e5%8c%ba%e5%9f%9f)
-      - [199.二叉树的右视图](#199%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e5%8f%b3%e8%a7%86%e5%9b%be)
-      - [200. 岛屿数量](#200-%e5%b2%9b%e5%b1%bf%e6%95%b0%e9%87%8f)
-      - [面试题13. 机器人的运动范围](#%e9%9d%a2%e8%af%95%e9%a2%9813-%e6%9c%ba%e5%99%a8%e4%ba%ba%e7%9a%84%e8%bf%90%e5%8a%a8%e8%8c%83%e5%9b%b4)
-      - [22. 括号生成](#22-%e6%8b%ac%e5%8f%b7%e7%94%9f%e6%88%90)
-      - [面试题33. 二叉搜索树的后序遍历序列](#%e9%9d%a2%e8%af%95%e9%a2%9833-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e5%90%8e%e5%ba%8f%e9%81%8d%e5%8e%86%e5%ba%8f%e5%88%97)
-      - [542. 01 矩阵](#542-01-%e7%9f%a9%e9%98%b5)
-  - [十一、贪心](#%e5%8d%81%e4%b8%80%e8%b4%aa%e5%bf%83)
-    - [11.1 基本模板](#111-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-4)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-2)
-      - [55. 跳跃游戏](#55-%e8%b7%b3%e8%b7%83%e6%b8%b8%e6%88%8f)
-      - [面试题 08.11. 硬币](#%e9%9d%a2%e8%af%95%e9%a2%98-0811-%e7%a1%ac%e5%b8%81)
-      - [139. 单词拆分](#139-%e5%8d%95%e8%af%8d%e6%8b%86%e5%88%86)
-  - [十二、回溯法](#%e5%8d%81%e4%ba%8c%e5%9b%9e%e6%ba%af%e6%b3%95)
-    - [12.1 基本模板](#121-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 递归](#1-%e9%80%92%e5%bd%92)
-      - [2) 迭代法](#2-%e8%bf%ad%e4%bb%a3%e6%b3%95-3)
-    - [12.2 题目](#122-%e9%a2%98%e7%9b%ae)
-      - [79. 单词搜索](#79-%e5%8d%95%e8%af%8d%e6%90%9c%e7%b4%a2)
-      - [212. 单词搜索 II](#212-%e5%8d%95%e8%af%8d%e6%90%9c%e7%b4%a2-ii)
-      - [面试题38. 字符串的排列](#%e9%9d%a2%e8%af%95%e9%a2%9838-%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%9a%84%e6%8e%92%e5%88%97)
-      - [78. 子集](#78-%e5%ad%90%e9%9b%86)
-      - [90. 子集 II](#90-%e5%ad%90%e9%9b%86-ii)
-      - [面试题34. 二叉树中和为某一值的路径](#%e9%9d%a2%e8%af%95%e9%a2%9834-%e4%ba%8c%e5%8f%89%e6%a0%91%e4%b8%ad%e5%92%8c%e4%b8%ba%e6%9f%90%e4%b8%80%e5%80%bc%e7%9a%84%e8%b7%af%e5%be%84)
-      - [93. 复原IP地址](#93-%e5%a4%8d%e5%8e%9fip%e5%9c%b0%e5%9d%80)
-      - [351. 安卓系统手势解锁](#351-%e5%ae%89%e5%8d%93%e7%b3%bb%e7%bb%9f%e6%89%8b%e5%8a%bf%e8%a7%a3%e9%94%81)
-      - [216. 组合总和 III](#216-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c-iii)
-      - [46. 全排列](#46-%e5%85%a8%e6%8e%92%e5%88%97)
-  - [十三、动态规划](#%e5%8d%81%e4%b8%89%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92)
-    - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
-      - [1) 相同之处](#1-%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84)
-      - [2) 不同之处](#2-%e4%b8%8d%e5%90%8c%e4%b9%8b%e5%a4%84)
-    - [13.2 题目](#132-%e9%a2%98%e7%9b%ae)
-      - [1014. 最佳观光组合](#1014-%e6%9c%80%e4%bd%b3%e8%a7%82%e5%85%89%e7%bb%84%e5%90%88)
-      - [面试题 08.11. 硬币](#%e9%9d%a2%e8%af%95%e9%a2%98-0811-%e7%a1%ac%e5%b8%81)
-      - [139. 单词拆分](#139-%e5%8d%95%e8%af%8d%e6%8b%86%e5%88%86)
-      - [279. 完全平方数](#279-%e5%ae%8c%e5%85%a8%e5%b9%b3%e6%96%b9%e6%95%b0)
-      - [377. 组合总和 Ⅳ](#377-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c-%e2%85%a3)
-  - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
-    - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 图的遍历](#1-%e5%9b%be%e7%9a%84%e9%81%8d%e5%8e%86)
-      - [2) 有向图是否存在环](#2-%e6%9c%89%e5%90%91%e5%9b%be%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8%e7%8e%af)
-      - [3) 构造无向图](#3-%e6%9e%84%e9%80%a0%e6%97%a0%e5%90%91%e5%9b%be)
-      - [4) 并查集](#4-%e5%b9%b6%e6%9f%a5%e9%9b%86)
-    - [14.2 题目](#142-%e9%a2%98%e7%9b%ae)
-      - [207. 课程表](#207-%e8%af%be%e7%a8%8b%e8%a1%a8)
-      - [310. 最小高度树](#310-%e6%9c%80%e5%b0%8f%e9%ab%98%e5%ba%a6%e6%a0%91)
-      - [547. 朋友圈](#547-%e6%9c%8b%e5%8f%8b%e5%9c%88)
-  - [十五、数学问题](#%e5%8d%81%e4%ba%94%e6%95%b0%e5%ad%a6%e9%97%ae%e9%a2%98)
-    - [15.1 基本模板](#151-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-      - [1) 最大公约数](#1-%e6%9c%80%e5%a4%a7%e5%85%ac%e7%ba%a6%e6%95%b0)
-    - [15.2 题目](#152-%e9%a2%98%e7%9b%ae)
-      - [365. 水壶问题](#365-%e6%b0%b4%e5%a3%b6%e9%97%ae%e9%a2%98)
-      - [264. 丑数 II](#264-%e4%b8%91%e6%95%b0-ii)
-      - [313. 超级丑数](#313-%e8%b6%85%e7%ba%a7%e4%b8%91%e6%95%b0)
-      - [面试题62. 圆圈中最后剩下的数字](#%e9%9d%a2%e8%af%95%e9%a2%9862-%e5%9c%86%e5%9c%88%e4%b8%ad%e6%9c%80%e5%90%8e%e5%89%a9%e4%b8%8b%e7%9a%84%e6%95%b0%e5%ad%97)
-      - [面试题44. 数字序列中某一位的数字](#%e9%9d%a2%e8%af%95%e9%a2%9844-%e6%95%b0%e5%ad%97%e5%ba%8f%e5%88%97%e4%b8%ad%e6%9f%90%e4%b8%80%e4%bd%8d%e7%9a%84%e6%95%b0%e5%ad%97)
-      - [190. 颠倒二进制位](#190-%e9%a2%a0%e5%80%92%e4%ba%8c%e8%bf%9b%e5%88%b6%e4%bd%8d)
-      - [201. 数字范围按位与](#201-%e6%95%b0%e5%ad%97%e8%8c%83%e5%9b%b4%e6%8c%89%e4%bd%8d%e4%b8%8e)
-      - [231. 2的幂](#231-2%e7%9a%84%e5%b9%82)
-      - [50. Pow(x, n)](#50-powx-n)
-      - [69. x 的平方根](#69-x-%e7%9a%84%e5%b9%b3%e6%96%b9%e6%a0%b9)
-  - [十六、设计问题](#%e5%8d%81%e5%85%ad%e8%ae%be%e8%ae%a1%e9%97%ae%e9%a2%98)
-    - [16.1 基本模板](#161-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
-    - [16.2 题目](#162-%e9%a2%98%e7%9b%ae)
-      - [355. 设计推特](#355-%e8%ae%be%e8%ae%a1%e6%8e%a8%e7%89%b9)
-      - [460. LFU缓存](#460-lfu%e7%bc%93%e5%ad%98)
-      - [146. LRU缓存机制](#146-lru%e7%bc%93%e5%ad%98%e6%9c%ba%e5%88%b6-1)
-       
+      - [994. 腐烂的橘子](#994-%e8%85%90%e7%83%82%e7%9a%84%e6%a9%98%e5%ad%90)
+
+
 ## 一、分治问题
 ### 1.1 模板        
 #### 归并排序
@@ -1697,6 +1616,49 @@ var singleNumber = function(nums) {
             return isSymmetricDFS(root.left, root.right);
         };
 ```
+#### [994. 腐烂的橘子](https://leetcode-cn.com/problems/rotting-oranges)
+![image.png](https://pic.leetcode-cn.com/5a64c86239c75da25255ffbe9be3145e9b47e31f74610603b8303109b36aa8fd-image.png)
+
+    ```js
+    /**
+    * @param {number[][]} grid
+    * @return {number}
+    */
+    var orangesRotting = function(grid) {
+        const row = grid.length;
+        if (!row) return 0;
+        const col = grid[0].length;
+        const dir = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+        const queue = [];
+        const fresh = new Map();
+        for(let i = 0; i < row; i++) {
+            for(let j = 0; j < col; j++) {
+                if (grid[i][j] === 2) queue.push([i, j]);
+                if (grid[i][j] === 1) fresh.set(i + '-' + j, 1);
+            }
+        }
+        let i = queue.length;
+        if (!i) return fresh.size ? -1 : 0;
+        let res = 0;
+        while(i) {
+            while(i--) {
+                const [x, y] = queue.shift();
+                dir.forEach(([offsetX, offsetY]) => {
+                    const [newX, newY] = [x + offsetX, y + offsetY];
+                    if (newX < 0 || newX >= row || newY < 0 || newY >= col) return;
+                    if (grid[newX][newY] === 1) {
+                        fresh.delete(newX + '-' + newY);
+                        grid[newX][newY] = 2;
+                        queue.push([newX, newY]);
+                    }
+                })
+            }
+            i = queue.length;
+            res++;
+        }
+        return fresh.size ? -1 : res - 1;
+    };
+```
 
 ## 九、DFS深度优先搜索
 ### 9.1 基本模板 
@@ -2700,6 +2662,93 @@ var permute = function(nums) {
     return result;
 };
 ```
+
+#### [351. 安卓系统手势解锁](https://leetcode-cn.com/problems/android-unlock-patterns/)
+```js
+        /**
+        * @param {number[]} candidates
+        * @param {number} target
+        * @return {number[][]}
+        */
+        var combinationSum2 = function(candidates, target) {
+            let res = 0;
+            candidates.sort((a, b) => a - b);
+            const paths = [];
+            function backTrace(i, sum, path) {
+                if (!sum) {
+                    res++;
+                    paths.push(path);
+                    return;
+                }
+                for (let j = i; j < candidates.length; j++) {
+                    if (candidates[j] > sum) return;
+                    let k = j + 1;
+                    while(candidates[k] === candidates[k + 1]) k++;
+                    backTrace(k, sum - candidates[j], path + ', ' + candidates[j]);
+                }
+            } 
+            backTrace(0, target, '');
+            console.log(paths);
+            return res;
+        };
+```
+
+#### [39. 组合总和](https://leetcode-cn.com/problems/combination-sum/)
+![image.png](https://pic.leetcode-cn.com/731e4e793681293a7f6064df44b02e5bd1dd807ddc5be0ced4da4a5951b9410c-image.png)
+
+```js
+/**
+ * @param {number[]} candidates
+ * @param {number} target
+ * @return {number[][]}
+ */
+var combinationSum2 = function(candidates, target) {
+    candidates.sort((a, b) => a - b);
+    const res = [];
+    function backTrace(i, sum, path) {
+        if (!sum) {
+            res.push(path.trim().split(' ').map(i => +i));
+            return;
+        }
+        for (let j = i; j < candidates.length; j++) {
+            if (candidates[j] > sum) return;
+            if (j > i && candidates[j] == candidates[j - 1]) continue; // 小剪枝
+            backTrace(j, sum - candidates[j], path + ' ' + candidates[j]);
+        }
+    } 
+    backTrace(0, target, '');
+    return res;
+};
+```
+
+#### [40. 组合总和 II](https://leetcode-cn.com/problems/combination-sum-ii/)
+![image.png](https://pic.leetcode-cn.com/731e4e793681293a7f6064df44b02e5bd1dd807ddc5be0ced4da4a5951b9410c-image.png)
+
+```js
+/**
+ * @param {number[]} candidates
+ * @param {number} target
+ * @return {number[][]}
+ */
+var combinationSum2 = function(candidates, target) {
+    candidates.sort((a, b) => a - b);
+    const res = [];
+    function backTrace(i, sum, path) {
+        if (!sum) {
+            res.push(path.trim().split(' ').map(i => +i));
+            return;
+        }
+        for (let j = i; j < candidates.length; j++) {
+            if (candidates[j] > sum) return;
+            if (j > i && candidates[j] == candidates[j - 1]) continue; // 小剪枝
+            backTrace(j + 1, sum - candidates[j], path + ' ' + candidates[j]);
+        }
+    } 
+    backTrace(0, target, '');
+    return res;
+};
+```
+
 ## 十三、动态规划
 ### 13.1 与分治思想的异同
         
