@@ -81,6 +81,7 @@
       - [141. 环形链表](#141-%e7%8e%af%e5%bd%a2%e9%93%be%e8%a1%a8)
       - [142. 环形链表 II](#142-%e7%8e%af%e5%bd%a2%e9%93%be%e8%a1%a8-ii)
       - [61. 旋转链表](#61-%e6%97%8b%e8%bd%ac%e9%93%be%e8%a1%a8)
+      - [23. 合并K个排序链表](#23-%e5%90%88%e5%b9%b6k%e4%b8%aa%e6%8e%92%e5%ba%8f%e9%93%be%e8%a1%a8)
   - [八、树](#%e5%85%ab%e6%a0%91)
     - [8.1 基本模板](#81-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
     - [8.2 题目](#82-%e9%a2%98%e7%9b%ae)
@@ -147,6 +148,9 @@
       - [139. 单词拆分](#139-%e5%8d%95%e8%af%8d%e6%8b%86%e5%88%86-1)
       - [279. 完全平方数](#279-%e5%ae%8c%e5%85%a8%e5%b9%b3%e6%96%b9%e6%95%b0)
       - [377. 组合总和 Ⅳ](#377-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c-%e2%85%a3)
+      - [518. 零钱兑换 II](#518-%e9%9b%b6%e9%92%b1%e5%85%91%e6%8d%a2-ii)
+      - [1143. 最长公共子序列](#1143-%e6%9c%80%e9%95%bf%e5%85%ac%e5%85%b1%e5%ad%90%e5%ba%8f%e5%88%97)
+      - [96. 不同的二叉搜索树](#96-%e4%b8%8d%e5%90%8c%e7%9a%84%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91)
   - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
     - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 图的遍历](#1-%e5%9b%be%e7%9a%84%e9%81%8d%e5%8e%86)
@@ -1432,6 +1436,43 @@ var singleNumber = function(nums) {
             const res = slow.next;
             slow.next = null;
             return res;
+        };
+```
+
+#### [23. 合并K个排序链表](https://leetcode-cn.com/problems/merge-k-sorted-lists/)
+
+```js
+        /**
+        * Definition for singly-linked list.
+        * function ListNode(val) {
+        *     this.val = val;
+        *     this.next = null;
+        * }
+        */
+        /**
+        * @param {ListNode[]} lists
+        * @return {ListNode}
+        */
+        var mergeKLists = function(lists) {
+            const heads = [];
+            lists.forEach(head => head && heads.push(head));
+            const res = new ListNode();
+            let front = res, minIndex, min;
+            while(heads.length) {
+                minIndex = -1;
+                min = Infinity;
+                heads.forEach((head, index) => {
+                    if (head && min > head.val) {
+                        min = head.val;
+                        minIndex = index; 
+                    }
+                })
+                heads[minIndex] = heads[minIndex].next;
+                if (!heads[minIndex]) heads.splice(minIndex, 1);
+                front.next = new ListNode(min);
+                front = front.next;
+            }
+            return res.next;
         };
 ```
 
@@ -3041,6 +3082,70 @@ var combinationSum4 = function(candidates, target) {
     }
     return dp[target];
 };
+```
+#### [518. 零钱兑换 II](https://leetcode-cn.com/problems/coin-change-2/)
+![截屏2020-04-27 上午12.22.44.png](https://pic.leetcode-cn.com/3a8036e06efbc7b26810b257d3c3c031675f14bcb6d3c9d271d4407efdf74ba1-%E6%88%AA%E5%B1%8F2020-04-27%20%E4%B8%8A%E5%8D%8812.22.44.png)
+
+```js
+/**
+ * @param {number} amount
+ * @param {number[]} coins
+ * @return {number}
+ */
+var change = function(amount, coins) {
+    const dp = Array(amount + 1).fill(0);
+    dp[0] = 1;
+    for(let j = 0; j < coins.length; j++) {
+        for(let i = 1; i <= amount; i++) {
+            let temp = i - coins[j];
+            dp[i] += temp < 0 ? 0 : dp[temp];
+        }
+    }
+    return dp[amount];
+};
+```
+
+#### [1143. 最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence)
+
+```js
+        /**
+        * @param {string} text1
+        * @param {string} text2
+        * @return {number}
+        */
+        var longestCommonSubsequence = function(text1, text2) {
+            const dp = [];
+            for(let i = 0; i <= text1.length; i++) {
+                dp[i] = [];
+                for(let j = 0; j <= text2.length; j++) {
+                    if (!i || !j) dp[i][j] = 0;
+                    else if (text1[i - 1] === text2[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;    
+                    else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+            return dp[text1.length][text2.length];
+        };
+```
+
+#### [96. 不同的二叉搜索树](https://leetcode-cn.com/problems/unique-binary-search-trees/)
+
+```js
+        /**
+         * @param {number} n
+         * @return {number}
+         */
+        var numTrees = function(n) {
+            const dp = [];
+            dp[0] = 1;
+            dp[1] = 1;
+            for(let i = 2; i <= n; i++) {
+                dp[i] = 0;
+                for(let j = 0; j < i; j++) {
+                    dp[i] += dp[j] * dp[i - 1 - j]; 
+                }
+            }
+            return dp[n];
+        };
 ```
 
 ## 十四、图论
