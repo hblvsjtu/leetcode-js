@@ -56,6 +56,9 @@
       - [1297. 子串的最大出现次数](#1297-%e5%ad%90%e4%b8%b2%e7%9a%84%e6%9c%80%e5%a4%a7%e5%87%ba%e7%8e%b0%e6%ac%a1%e6%95%b0)
       - [137. 只出现一次的数字 II](#137-%e5%8f%aa%e5%87%ba%e7%8e%b0%e4%b8%80%e6%ac%a1%e7%9a%84%e6%95%b0%e5%ad%97-ii)
       - [647. 回文子串](#647-%e5%9b%9e%e6%96%87%e5%ad%90%e4%b8%b2)
+      - [227. 基本计算器 II](#227-%e5%9f%ba%e6%9c%ac%e8%ae%a1%e7%ae%97%e5%99%a8-ii)
+      - [224. 基本计算器](#224-%e5%9f%ba%e6%9c%ac%e8%ae%a1%e7%ae%97%e5%99%a8)
+      - [165. 比较版本号](#165-%e6%af%94%e8%be%83%e7%89%88%e6%9c%ac%e5%8f%b7)
   - [五、哈希表](#%e4%ba%94%e5%93%88%e5%b8%8c%e8%a1%a8)
     - [5.1 基本模板](#51-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 统计频率](#1-%e7%bb%9f%e8%ae%a1%e9%a2%91%e7%8e%87)
@@ -1041,6 +1044,115 @@ void exec(int a[], int size) {
                 }
             }
             return dp;
+        };
+```
+
+#### [227. 基本计算器 II](https://leetcode-cn.com/problems/basic-calculator-ii/)
+```js
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    var calculate = function(s) {
+        s = s.replace(/ +/g, '').match(/(\+|-|\*|\/|\d+)/g);
+        const stack = [];
+        for(let i = 0; i < s.length; i++) {
+            if (s[i] === '*') {
+                stack.push(stack.pop() * +s[i + 1]);
+                i++;
+            }
+            else if (s[i] === '/') {
+                stack.push(parseInt(stack.pop() / +s[i + 1], 10));
+                i++;
+            }
+            else {
+                stack.push(s[i]);
+            }
+        }
+        let res = +stack[0];
+        for(let i = 1; i < stack.length; i += 2) {
+            if (stack[i] === '+') res += +stack[i + 1];
+            else if (stack[i] === '-') res -= +stack[i + 1];
+        }
+        return res;
+    };
+```
+
+#### [224. 基本计算器](https://leetcode-cn.com/problems/basic-calculator/)
+```js
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    var calculate = function(s) {
+        s = s.replace(/ +/g, '').match(/(\+|-|\*|\/|\d+|\(|\))/g);
+        const stack = [];
+        let left;
+        for (let i = 0; i < s.length;) {
+            if (s[i] === ')') {
+                left = stack.pop();
+                res = '' + simpleCal(s.slice(left + 1, i));
+                s = [].concat(s.slice(0, left), res, s.slice(i + 1));
+                i = left + 1;
+                continue;
+            }
+            if (s[i] === '(') stack.push(i);
+            i++;
+        }
+        return simpleCal(s);
+        function simpleCal(s) {
+            const stack = [];
+            for(let i = 0; i < s.length; i++) {
+                if (s[i] === '*') {
+                    stack.push(stack.pop() * +s[i + 1]);
+                    i++;
+                }
+                else if (s[i] === '/') {
+                    stack.push(parseInt(stack.pop() / +s[i + 1], 10));
+                    i++;
+                }
+                else {
+                    stack.push(s[i]);
+                    }
+                }
+                let res = +stack[0];
+                for(let i = 1; i < stack.length; i += 2) {
+                    if (stack[i] === '+') res += +stack[i + 1];
+                    else if (stack[i] === '-') res -= +stack[i + 1];
+                }
+                return res;
+                }
+            };
+        }
+    }
+  
+```
+#### [165. 比较版本号](https://leetcode-cn.com/problems/compare-version-numbers/)
+```js
+        /**
+         * @param {string} version1
+         * @param {string} version2
+         * @return {number}
+         */
+        var compareVersion = function(version1, version2) {
+            const v1 = version1.split('.');
+            const v2 = version2.split('.');
+            let i = 0, temp1, temp2;
+            while(i < v1.length || i < v2.length) {
+                if (i >= v1.length && parseInt(v2[i], 10)) {
+                    if (parseInt(v2[i], 10)) 
+                }
+                else if (i >= v2.length) {
+                    if (parseInt(v1[i], 10)) return 1;
+                }
+                else {
+                    temp1 = parseInt(v1[i], 10);
+                    temp2 = parseInt(v2[i], 10);
+                    if (temp1 !== temp2) return temp1 > temp2 ? 1 : -1;
+                }
+                i++;
+            }
+            return 0;
         };
 ```
 
