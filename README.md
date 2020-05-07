@@ -54,6 +54,8 @@
       - [67. 二进制求和](#67-%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%b1%82%e5%92%8c)
       - [415. 字符串相加](#415-%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%9b%b8%e5%8a%a0)
       - [1297. 子串的最大出现次数](#1297-%e5%ad%90%e4%b8%b2%e7%9a%84%e6%9c%80%e5%a4%a7%e5%87%ba%e7%8e%b0%e6%ac%a1%e6%95%b0)
+      - [137. 只出现一次的数字 II](#137-%e5%8f%aa%e5%87%ba%e7%8e%b0%e4%b8%80%e6%ac%a1%e7%9a%84%e6%95%b0%e5%ad%97-ii)
+      - [647. 回文子串](#647-%e5%9b%9e%e6%96%87%e5%ad%90%e4%b8%b2)
   - [五、哈希表](#%e4%ba%94%e5%93%88%e5%b8%8c%e8%a1%a8)
     - [5.1 基本模板](#51-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 统计频率](#1-%e7%bb%9f%e8%ae%a1%e9%a2%91%e7%8e%87)
@@ -92,6 +94,7 @@
       - [39. 组合总和](#39-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c)
       - [39. 镜像二叉树](#39-%e9%95%9c%e5%83%8f%e4%ba%8c%e5%8f%89%e6%a0%91)
       - [994. 腐烂的橘子](#994-%e8%85%90%e7%83%82%e7%9a%84%e6%a9%98%e5%ad%90)
+      - [572. 另一个树的子树](#572-%e5%8f%a6%e4%b8%80%e4%b8%aa%e6%a0%91%e7%9a%84%e5%ad%90%e6%a0%91)
   - [九、DFS深度优先搜索](#%e4%b9%9ddfs%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [9.1 基本模板](#91-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-2)
@@ -151,6 +154,7 @@
       - [518. 零钱兑换 II](#518-%e9%9b%b6%e9%92%b1%e5%85%91%e6%8d%a2-ii)
       - [1143. 最长公共子序列](#1143-%e6%9c%80%e9%95%bf%e5%85%ac%e5%85%b1%e5%ad%90%e5%ba%8f%e5%88%97)
       - [96. 不同的二叉搜索树](#96-%e4%b8%8d%e5%90%8c%e7%9a%84%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91)
+      - [面试题63. 股票的最大利润](#%e9%9d%a2%e8%af%95%e9%a2%9863-%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e5%a4%a7%e5%88%a9%e6%b6%a6)
   - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
     - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 图的遍历](#1-%e5%9b%be%e7%9a%84%e9%81%8d%e5%8e%86)
@@ -1003,6 +1007,42 @@ void exec(int a[], int size) {
         };
 ```
 
+#### [137. 只出现一次的数字 II](https://leetcode-cn.com/problems/single-number-ii/)
+![image.png](https://pic.leetcode-cn.com/57706ddd74fb4814c7bd1f762dc789528f5259d4784fecea8897531fb1beb084-image.png)
+
+```js
+        var singleNumber = function(nums) {
+            return +Object.keys(nums.reduce((t, i) => {
+                if (t[i] === 2) delete t[i];
+                else if (t[i] === 1) t[i] = 2;
+                else t[i] = 1;
+                return t;
+            }, {}))
+        };
+```
+
+#### [647. 回文子串](https://leetcode-cn.com/problems/palindromic-substrings)
+```js
+        /**
+        * @param {string} s
+        * @return {number}
+        */
+        var countSubstrings = function(s) {
+            let dp = 0;
+            for(let i = 0; i < s.length; i++) {
+                for (let j = 0; j <= i; j++) {
+                    let left = j, right = i;
+                    while(left <= right) {
+                        if (s[left] !== s[right]) break;
+                        left++;
+                        right--;
+                    }
+                if (left >= right) dp++;
+                }
+            }
+            return dp;
+        };
+```
 
 ## 五、哈希表
 ### 5.1 基本模板 
@@ -1786,6 +1826,42 @@ var singleNumber = function(nums) {
         }
         return fresh.size ? -1 : res - 1;
     };
+```
+
+#### [572. 另一个树的子树](https://leetcode-cn.com/problems/subtree-of-another-tree)
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} s
+         * @param {TreeNode} t
+         * @return {boolean}
+         */
+        var isSubtree = function(s, t) {
+            if (!s) return !!!t;
+            const queue = [s];
+            let i = queue.length;
+            while(i) {
+                while(i--) {
+                    const front = queue.shift();
+                    if(!front) continue;
+                    if (isSame(front, t)) return true;
+                    queue.push(front.left, front.right);
+                }
+                i = queue.length;
+            }
+            function isSame(s, t) {
+                if (!t && !s) return true;
+                if (!s || !t || s.val !== t.val) return false;
+                return isSame(s.left, t.left) && isSame(s.right, t.right);
+            }
+            return false;
+        };
 ```
 
 ## 九、DFS深度优先搜索
@@ -3148,6 +3224,21 @@ var change = function(amount, coins) {
         };
 ```
 
+#### [面试题63. 股票的最大利润](https://leetcode-cn.com/problems/gu-piao-de-zui-da-li-run-lcof/)
+```js
+        /**
+        * @param {number[]} prices
+        * @return {number}
+        */
+        var maxProfit = function(prices) {
+            let unhold = 0, hold: -prices[0], res = 0;
+            for(let i = 1; i < prices.length; i++) {
+                [unhold, hold] = [Math.max(unhold, hold + prices[i]), Math.max(-prices[i], hold)];
+                res = Math.max(res, unhold);
+            }
+            return res;
+        };
+```
 ## 十四、图论
 ### 14.1 基本模板
 
@@ -3995,4 +4086,81 @@ var change = function(amount, coins) {
          * var param_1 = obj.get(key)
          * obj.put(key,value)
          */
+```
+
+```js
+        /**
+        * @param {string} s
+        * @return {number}
+        */
+        var countSubstrings = function(s) {
+            let dp = 0, left, right;
+            for(let i = 0; i < s.length; i++) {
+                for (let j = 0; j <= i; j++) {
+                    left = j, right = i;
+                    while(left <= right) {
+                        if (s[left] !== s[right]) break;
+                        left++;
+                        right--;
+                    }
+                if (left >= right) dp++;
+                }
+            }
+            return dp;
+        };
+
+        /**
+        * @param {string} s
+        * @return {number}
+        */
+        var countSubstrings = function(s) {
+            let dp = 0, left, right;
+            let heads = [], head, temp;
+            for(let i = 0; i < s.length; i++) {
+                temp = [i];
+                if (s[i === s[i - 1]]) temp.push(i - 1);
+                heads.forEach(index => {
+                    head = index - 1;
+                    if (s[head] === s[i]) temp.push(head);
+                });
+                dp += temp.length;
+                heads = temp;
+            }
+            return dp;
+        };
+```
+
+```js
+        /**
+        * Definition for a binary tree node.
+        * function TreeNode(val) {
+        *     this.val = val;
+        *     this.left = this.right = null;
+        * }
+        */
+        /**
+        * @param {TreeNode} s
+        * @param {TreeNode} t
+        * @return {boolean}
+        */
+        var isSubtree = function(s, t) {
+            if (!s) return !!!t;
+            const queue = [s];
+            let i = queue.length;
+            while(i) {
+                while(i--) {
+                    const front = queue.shift();
+                    if(!front) continue;
+                    if (isSame(front, t)) return true;
+                    queue.push(front.left, front.right);
+                }
+                i = queue.length;
+            }
+            function isSame(s, t) {
+                if (!t && !s) return true;
+                if (!s || !t || s.val !== t.val) return false;
+                return isSame(s.left, t.left) && isSame(s.right, t.right);
+            }
+            return false;
+        };
 ```
