@@ -59,6 +59,7 @@
       - [227. 基本计算器 II](#227-%e5%9f%ba%e6%9c%ac%e8%ae%a1%e7%ae%97%e5%99%a8-ii)
       - [224. 基本计算器](#224-%e5%9f%ba%e6%9c%ac%e8%ae%a1%e7%ae%97%e5%99%a8)
       - [165. 比较版本号](#165-%e6%af%94%e8%be%83%e7%89%88%e6%9c%ac%e5%8f%b7)
+      - [242. 有效的字母异位词](#242-%e6%9c%89%e6%95%88%e7%9a%84%e5%ad%97%e6%af%8d%e5%bc%82%e4%bd%8d%e8%af%8d)
   - [五、哈希表](#%e4%ba%94%e5%93%88%e5%b8%8c%e8%a1%a8)
     - [5.1 基本模板](#51-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 统计频率](#1-%e7%bb%9f%e8%ae%a1%e9%a2%91%e7%8e%87)
@@ -70,11 +71,13 @@
       - [260. 只出现一次的数字 III](#260-%e5%8f%aa%e5%87%ba%e7%8e%b0%e4%b8%80%e6%ac%a1%e7%9a%84%e6%95%b0%e5%ad%97-iii)
       - [面试题51. 数组中的逆序对](#%e9%9d%a2%e8%af%95%e9%a2%9851-%e6%95%b0%e7%bb%84%e4%b8%ad%e7%9a%84%e9%80%86%e5%ba%8f%e5%af%b9)
       - [146. LRU缓存机制](#146-lru%e7%bc%93%e5%ad%98%e6%9c%ba%e5%88%b6)
+      - [49. 字母异位词分组](#49-%e5%ad%97%e6%af%8d%e5%bc%82%e4%bd%8d%e8%af%8d%e5%88%86%e7%bb%84)
   - [六、栈和队列](#%e5%85%ad%e6%a0%88%e5%92%8c%e9%98%9f%e5%88%97)
     - [6.1 基本模板](#61-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-1)
     - [6.2 题目](#62-%e9%a2%98%e7%9b%ae)
       - [946. 验证栈序列](#946-%e9%aa%8c%e8%af%81%e6%a0%88%e5%ba%8f%e5%88%97)
+      - [678. 有效的括号字符串](#678-%e6%9c%89%e6%95%88%e7%9a%84%e6%8b%ac%e5%8f%b7%e5%ad%97%e7%ac%a6%e4%b8%b2)
   - [七、链表](#%e4%b8%83%e9%93%be%e8%a1%a8)
     - [7.1 基本模板](#71-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 快慢指针](#1-%e5%bf%ab%e6%85%a2%e6%8c%87%e9%92%88)
@@ -158,6 +161,7 @@
       - [1143. 最长公共子序列](#1143-%e6%9c%80%e9%95%bf%e5%85%ac%e5%85%b1%e5%ad%90%e5%ba%8f%e5%88%97)
       - [96. 不同的二叉搜索树](#96-%e4%b8%8d%e5%90%8c%e7%9a%84%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91)
       - [面试题63. 股票的最大利润](#%e9%9d%a2%e8%af%95%e9%a2%9863-%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e5%a4%a7%e5%88%a9%e6%b6%a6)
+      - [343. 整数拆分](#343-%e6%95%b4%e6%95%b0%e6%8b%86%e5%88%86)
   - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
     - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 图的遍历](#1-%e5%9b%be%e7%9a%84%e9%81%8d%e5%8e%86)
@@ -1127,6 +1131,7 @@ void exec(int a[], int size) {
     }
   
 ```
+
 #### [165. 比较版本号](https://leetcode-cn.com/problems/compare-version-numbers/)
 ```js
         /**
@@ -1153,6 +1158,20 @@ void exec(int a[], int size) {
                 i++;
             }
             return 0;
+        };
+```
+
+#### [242. 有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/)
+```js
+        /**
+         * @param {string} s
+         * @param {string} t
+         * @return {boolean}
+         */
+        var isAnagram = function(s, t) {
+            if (s.length !== t.length) return false;
+            return s.split('').sort((a, b) => a > b ? 1 : -1).join('')
+                === t.split('').sort((a, b) => a > b ? 1 : -1).join('')
         };
 ```
 
@@ -1314,6 +1333,29 @@ var singleNumber = function(nums) {
 
 ```
 
+#### [49. 字母异位词分组](https://leetcode-cn.com/problems/group-anagrams/)
+![image.png](https://pic.leetcode-cn.com/98eb13bb85981d6d3e10bb8450e87d78d8af1b86488b22d5fa66cab97c22f282-image.png)
+
+```js
+        var groupAnagrams = function(strs) {
+            if (!strs.length) return [];
+            const res = [[strs[0]]];
+            let temp = strs[0].split('').sort((a, b) => a > b ? 1 : -1).join('');
+            const record = {};
+            record[temp] = 0;
+            let j = 1;
+            for(let i = 1; i < strs.length; i++) {
+                temp = strs[i].split('').sort((a, b) => a > b ? 1 : -1).join('');
+                if (record[temp] !== undefined) res[record[temp]].push(strs[i]);
+                else {
+                    res[j] = [strs[i]];
+                    record[temp] = j++;
+                }
+            }
+            return res;
+        };
+```
+
 ## 六、栈和队列
 ### 6.1 基本模板 
         
@@ -1344,6 +1386,57 @@ var singleNumber = function(nums) {
             return popHead === pushed.length;
         };
 ```
+
+#### [678. 有效的括号字符串](https://leetcode-cn.com/problems/valid-parenthesis-string/submissions/)
+![image.png](https://pic.leetcode-cn.com/69a4097222293c9e4672c83a9d65f430126f1cc9e6114b41147abd223cd1c174-image.png)
+
+```js
+        /**
+         * @param {string} s
+         * @return {boolean}
+         */
+        var checkValidString = function(s) {
+            const record = [];
+            const cache = [];
+            for (let i = 0; i < s.length; i++) {
+                if (!s[i]) continue;
+                if (s[i] === '*') cache.push(i);
+                if (s[i] === '(') record.push(i);
+                if (s[i] === ')') {
+                    if (!record.length) {
+                        if (!cache.length) return false;
+                        cache.pop();
+                    }
+                    else record.pop(s[i]);
+                }
+            }
+            const temp = [];
+            let j = 0, k = 0;
+            for (let i = 0; i < s.length; i++) {
+                if (i === record[j]) {
+                    temp.push(i);
+                    j++;
+                }
+                else if (i === cache[k]) {
+                    temp.pop();
+                    k++;
+                }
+            }
+            return !temp.length;
+        };
+```
+
+给定一个只包含三种字符的字符串：（ ，） 和 *，写一个函数来检验这个字符串是否为有效字符串。有效字符串具有如下规则：
+
+任何左括号 ( 必须有相应的右括号 )。
+任何右括号 ) 必须有相应的左括号 ( 。
+左括号 ( 必须在对应的右括号之前 )。
+* 可以被视为单个右括号 ) ，或单个左括号 ( ，或一个空字符串。
+一个空字符串也被视为有效字符串。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/valid-parenthesis-string
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 ## 七、链表
 ### 7.1 基本模板 
@@ -3351,6 +3444,29 @@ var change = function(amount, coins) {
             return res;
         };
 ```
+
+#### [343. 整数拆分](https://leetcode-cn.com/problems/integer-break)
+![image.png](https://pic.leetcode-cn.com/ee73241d3dd4ba32247b722fd7b5bbd61243f738f57b086146521a894fc2a53c-image.png)
+```js
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var integerBreak = function(n) {
+    const dp = [];
+    dp[0] = 1;
+    dp[1] = 1;
+    dp[2] = 1;
+    for(let i = 3; i <= n; i++) {
+        dp[i] = 0;
+        for(let j = 1; j < i; j++) {
+            dp[i] = Math.max(dp[i], Math.max(dp[i - j], i - j) * j);
+        }
+    }
+    return dp[n];
+};
+```
+
 ## 十四、图论
 ### 14.1 基本模板
 
