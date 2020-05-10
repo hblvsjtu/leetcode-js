@@ -161,6 +161,7 @@
       - [1143. 最长公共子序列](#1143-%e6%9c%80%e9%95%bf%e5%85%ac%e5%85%b1%e5%ad%90%e5%ba%8f%e5%88%97)
       - [96. 不同的二叉搜索树](#96-%e4%b8%8d%e5%90%8c%e7%9a%84%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91)
       - [面试题63. 股票的最大利润](#%e9%9d%a2%e8%af%95%e9%a2%9863-%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e5%a4%a7%e5%88%a9%e6%b6%a6)
+      - [714. 买卖股票的最佳时机含手续费](#714-%e4%b9%b0%e5%8d%96%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e4%bd%b3%e6%97%b6%e6%9c%ba%e5%90%ab%e6%89%8b%e7%bb%ad%e8%b4%b9)
       - [343. 整数拆分](#343-%e6%95%b4%e6%95%b0%e6%8b%86%e5%88%86)
   - [十四、图论](#%e5%8d%81%e5%9b%9b%e5%9b%be%e8%ae%ba)
     - [14.1 基本模板](#141-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
@@ -1049,6 +1050,26 @@ void exec(int a[], int size) {
             }
             return dp;
         };
+
+        /**
+        * @param {string} s
+        * @return {number}
+        */
+        var countSubstrings = function(s) {
+            let dp = 0, left, right;
+            let heads = [], head, temp;
+            for(let i = 0; i < s.length; i++) {
+                temp = [i];
+                if (s[i === s[i - 1]]) temp.push(i - 1);
+                heads.forEach(index => {
+                    head = index - 1;
+                    if (s[head] === s[i]) temp.push(head);
+                });
+                dp += temp.length;
+                heads = temp;
+            }
+            return dp;
+        };
 ```
 
 #### [227. 基本计算器 II](https://leetcode-cn.com/problems/basic-calculator-ii/)
@@ -1763,6 +1784,8 @@ var singleNumber = function(nums) {
 ```
 
 #### [236. 二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+![截屏2020-05-10 上午11.52.18.png](https://pic.leetcode-cn.com/dbc27e1eda067ab98d03a72bde9d03640b7f00d32676a9b495cb7cbaa349a63d-%E6%88%AA%E5%B1%8F2020-05-10%20%E4%B8%8A%E5%8D%8811.52.18.png)
+
 ```js
         /**
          * Definition for a binary tree node.
@@ -1818,6 +1841,28 @@ var singleNumber = function(nums) {
             if (!right) return left; // 如果公共祖先不在右边，那肯定在左边
             return root; // 如果公共祖先既在右边，又在右边，那肯定是该节点本身
         }
+
+        /**
+        * Definition for a binary tree node.
+        * function TreeNode(val) {
+        *     this.val = val;
+        *     this.left = this.right = null;
+        * }
+        */
+        /**
+        * @param {TreeNode} root
+        * @param {TreeNode} p
+        * @param {TreeNode} q
+        * @return {TreeNode}
+        */
+        var lowestCommonAncestor = function(root, p, q) {
+            if (!root || root === p || root === q) return root;
+            const left = lowestCommonAncestor(root.left, p, q);
+            const right = lowestCommonAncestor(root.right, p, q);
+            if ((left === p && right === q)
+                || (left === q && right === p)) return root;
+            return left || right;
+        };
 ```
 
 #### [235. 二叉搜索树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
@@ -3445,6 +3490,27 @@ var change = function(amount, coins) {
         };
 ```
 
+#### [714. 买卖股票的最佳时机含手续费](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
+![截屏2020-05-10 下午12.14.55.png](https://pic.leetcode-cn.com/b37095f5c8d0e98cca8a04aef52efe0ca9c74f77dd6a9f08274cf87a59d34ac7-%E6%88%AA%E5%B1%8F2020-05-10%20%E4%B8%8B%E5%8D%8812.14.55.png)
+
+```js
+/**
+ * @param {number[]} prices
+ * @param {number} fee
+ * @return {number}
+ */
+var maxProfit = function(prices, fee) {
+    let hold = -prices[0], unhold = 0;
+    for(let i = 1; i < prices.length; i++) {
+        [hold, unhold] = [
+            Math.max(hold, unhold - prices[i]),
+            Math.max(hold + prices[i] - fee, unhold)
+        ];
+    }
+    return unhold;
+};
+```
+
 #### [343. 整数拆分](https://leetcode-cn.com/problems/integer-break)
 ![image.png](https://pic.leetcode-cn.com/ee73241d3dd4ba32247b722fd7b5bbd61243f738f57b086146521a894fc2a53c-image.png)
 ```js
@@ -4314,81 +4380,4 @@ var integerBreak = function(n) {
          * var param_1 = obj.get(key)
          * obj.put(key,value)
          */
-```
-
-```js
-        /**
-        * @param {string} s
-        * @return {number}
-        */
-        var countSubstrings = function(s) {
-            let dp = 0, left, right;
-            for(let i = 0; i < s.length; i++) {
-                for (let j = 0; j <= i; j++) {
-                    left = j, right = i;
-                    while(left <= right) {
-                        if (s[left] !== s[right]) break;
-                        left++;
-                        right--;
-                    }
-                if (left >= right) dp++;
-                }
-            }
-            return dp;
-        };
-
-        /**
-        * @param {string} s
-        * @return {number}
-        */
-        var countSubstrings = function(s) {
-            let dp = 0, left, right;
-            let heads = [], head, temp;
-            for(let i = 0; i < s.length; i++) {
-                temp = [i];
-                if (s[i === s[i - 1]]) temp.push(i - 1);
-                heads.forEach(index => {
-                    head = index - 1;
-                    if (s[head] === s[i]) temp.push(head);
-                });
-                dp += temp.length;
-                heads = temp;
-            }
-            return dp;
-        };
-```
-
-```js
-        /**
-        * Definition for a binary tree node.
-        * function TreeNode(val) {
-        *     this.val = val;
-        *     this.left = this.right = null;
-        * }
-        */
-        /**
-        * @param {TreeNode} s
-        * @param {TreeNode} t
-        * @return {boolean}
-        */
-        var isSubtree = function(s, t) {
-            if (!s) return !!!t;
-            const queue = [s];
-            let i = queue.length;
-            while(i) {
-                while(i--) {
-                    const front = queue.shift();
-                    if(!front) continue;
-                    if (isSame(front, t)) return true;
-                    queue.push(front.left, front.right);
-                }
-                i = queue.length;
-            }
-            function isSame(s, t) {
-                if (!t && !s) return true;
-                if (!s || !t || s.val !== t.val) return false;
-                return isSame(s.left, t.left) && isSame(s.right, t.right);
-            }
-            return false;
-        };
 ```
