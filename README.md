@@ -101,6 +101,9 @@
       - [39. 镜像二叉树](#39-%e9%95%9c%e5%83%8f%e4%ba%8c%e5%8f%89%e6%a0%91)
       - [994. 腐烂的橘子](#994-%e8%85%90%e7%83%82%e7%9a%84%e6%a9%98%e5%ad%90)
       - [572. 另一个树的子树](#572-%e5%8f%a6%e4%b8%80%e4%b8%aa%e6%a0%91%e7%9a%84%e5%ad%90%e6%a0%91)
+      - [572. 另一个树的子树](#572-%e5%8f%a6%e4%b8%80%e4%b8%aa%e6%a0%91%e7%9a%84%e5%ad%90%e6%a0%91-1)
+      - [230. 二叉搜索树中第K小的元素](#230-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e4%b8%ad%e7%ac%ack%e5%b0%8f%e7%9a%84%e5%85%83%e7%b4%a0)
+      - [662. 二叉树最大宽度](#662-%e4%ba%8c%e5%8f%89%e6%a0%91%e6%9c%80%e5%a4%a7%e5%ae%bd%e5%ba%a6)
   - [九、DFS深度优先搜索](#%e4%b9%9ddfs%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [9.1 基本模板](#91-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-2)
@@ -2113,6 +2116,114 @@ var singleNumber = function(nums) {
             return false;
         };
 ```
+#### [572. 另一个树的子树](https://leetcode-cn.com/problems/subtree-of-another-tree)
+![image.png](https://pic.leetcode-cn.com/0698076d147d6d2e9de09c94cf406ff49aa4f43ae508c15a0a6be8894d2da730-image.png)
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {boolean}
+         */
+        var isCompleteTree = function(root) {
+            if (!root) return true;
+            const queue = [root];
+            let i = queue.length;
+            while(i) {
+                while(i--) {
+                    const front = queue.shift();
+                    if (!front) return !queue.some(i => i);
+                    if (!front.left && front.right) return false;
+                    queue.push(front.left, front.right);
+                }
+                i = queue.length;
+            }
+            return true;
+        };
+```
+
+#### [230. 二叉搜索树中第K小的元素](https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/)
+![image.png](https://pic.leetcode-cn.com/09b57c07c290ede9c47b4465715ce5ee6406ef063f478e24e79a372ce0c3a410-image.png)
+
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @param {number} k
+         * @return {number}
+         */
+        var kthSmallest = function(root, k) {
+            let res;
+            function inorderDFS(root) {
+                if (!root || !k) return;
+                inorderDFS(root.left);
+                k--;
+                if(!k) res = root.val;
+                inorderDFS(root.right);
+            }
+            inorderDFS(root)
+            return res;
+        };
+```
+
+#### [662. 二叉树最大宽度](https://leetcode-cn.com/problems/maximum-width-of-binary-tree)
+![image.png](https://pic.leetcode-cn.com/d0251524e1f696a3f3621df4662059ca75334264b6fd5905ac1c819d0153e865-image.png)
+
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {number}
+         */
+        var widthOfBinaryTree = function(root) {
+            if(!root) return 0;
+            let max = 1;
+            root.position = 1;
+            const queue = [root];
+            let i = queue.length, temp, front, position;
+            while(i) {
+                temp = [];
+                while(i--) {
+                    front = queue.shift();
+                    position = 2 * front.position;
+                    if (front.left) {
+                        front.left.position = position - 1;
+                        temp.push(front.left.position);
+                        queue.push(front.left);
+                    }
+                    if (front.right) {
+                        front.right.position = position;
+                        temp.push(front.right.position);
+                        queue.push(front.right);
+                    }
+                }
+                i = queue.length;
+                if (temp.length) {
+                    if (temp.length === 1) max = Math.max(max, 1);
+                    else max = Math.max(max, temp[temp.length - 1] - temp[0] + 1);
+                }
+            }
+            return max;
+        };
+```
+
 
 ## 九、DFS深度优先搜索
 ### 9.1 基本模板 
