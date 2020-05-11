@@ -150,6 +150,7 @@
       - [39. 组合总和](#39-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c-1)
       - [40. 组合总和 II](#40-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c-ii)
       - [77. 组合](#77-%e7%bb%84%e5%90%88)
+      - [131. 分割回文串](#131-%e5%88%86%e5%89%b2%e5%9b%9e%e6%96%87%e4%b8%b2)
   - [十三、动态规划](#%e5%8d%81%e4%b8%89%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92)
     - [13.1 与分治思想的异同](#131-%e4%b8%8e%e5%88%86%e6%b2%bb%e6%80%9d%e6%83%b3%e7%9a%84%e5%bc%82%e5%90%8c)
       - [1) 相同之处](#1-%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84)
@@ -162,6 +163,7 @@
       - [377. 组合总和 Ⅳ](#377-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c-%e2%85%a3)
       - [518. 零钱兑换 II](#518-%e9%9b%b6%e9%92%b1%e5%85%91%e6%8d%a2-ii)
       - [1143. 最长公共子序列](#1143-%e6%9c%80%e9%95%bf%e5%85%ac%e5%85%b1%e5%ad%90%e5%ba%8f%e5%88%97)
+      - [583. 两个字符串的删除操作](#583-%e4%b8%a4%e4%b8%aa%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%9a%84%e5%88%a0%e9%99%a4%e6%93%8d%e4%bd%9c)
       - [96. 不同的二叉搜索树](#96-%e4%b8%8d%e5%90%8c%e7%9a%84%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91)
       - [面试题63. 股票的最大利润](#%e9%9d%a2%e8%af%95%e9%a2%9863-%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e5%a4%a7%e5%88%a9%e6%b6%a6)
       - [714. 买卖股票的最佳时机含手续费](#714-%e4%b9%b0%e5%8d%96%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e4%bd%b3%e6%97%b6%e6%9c%ba%e5%90%ab%e6%89%8b%e7%bb%ad%e8%b4%b9)
@@ -190,6 +192,7 @@
       - [231. 2的幂](#231-2%e7%9a%84%e5%b9%82)
       - [50. Pow(x, n)](#50-powx-n)
       - [69. x 的平方根](#69-x-%e7%9a%84%e5%b9%b3%e6%96%b9%e6%a0%b9)
+      - [1262. 可被三整除的最大和](#1262-%e5%8f%af%e8%a2%ab%e4%b8%89%e6%95%b4%e9%99%a4%e7%9a%84%e6%9c%80%e5%a4%a7%e5%92%8c)
   - [十六、设计问题](#%e5%8d%81%e5%85%ad%e8%ae%be%e8%ae%a1%e9%97%ae%e9%a2%98)
     - [16.1 基本模板](#161-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
     - [16.2 题目](#162-%e9%a2%98%e7%9b%ae)
@@ -3333,6 +3336,40 @@ var combinationSum2 = function(candidates, target) {
             return res;
         };
 ```
+
+#### [131. 分割回文串](https://leetcode-cn.com/problems/palindrome-partitioning/)
+![image.png](https://pic.leetcode-cn.com/378181ba717d7ef01797d11aa47d5e076eae369047940e989e8b72543a44ad53-image.png)
+
+```js
+        /**
+        * @param {string} s
+        * @return {string[][]}
+        */
+        var partition = function(s) {
+            const res = [];
+            let left, right, flag;
+            function backTrace(i, path) {
+                if (i === s.length) res.push(path);
+                else {
+                    for(let j = i; j < s.length; j++) {
+                        left = i, right = j, flag = true;
+                        while (left <= right) {
+                            if (s[left] !== s[right]) {
+                                flag = false;
+                                break;
+                            }
+                            left++;
+                            right--;
+                        }
+                        if (flag) backTrace(j + 1, path.concat(s.substring(i, j + 1)));
+                    }
+                }
+            }
+            backTrace(0, []);
+            return res;
+        };
+```
+
 ## 十三、动态规划
 ### 13.1 与分治思想的异同
         
@@ -3562,6 +3599,31 @@ var change = function(amount, coins) {
             }
             return dp[text1.length][text2.length];
         };
+```
+
+#### [583. 两个字符串的删除操作](https://leetcode-cn.com/problems/delete-operation-for-two-strings/)
+![image.png](https://pic.leetcode-cn.com/4b5cd66901e03b7749f1fa6d45dc516c7f283bed3c08cfc7d0fee5b62f50335c-image.png)
+
+```js
+/**
+ * @param {string} word1
+ * @param {string} word2
+ * @return {number}
+ */
+var minDistance = function(word1, word2) {
+    const m = word1.length, n = word2.length;
+    if (!word1 || !word2) return m + n;
+    const record = [];
+    for (let i = 0; i <= m; i++) {
+        record[i] = [];
+        for (let j = 0; j <= n; j++) {
+            if (!i || !j) record[i][j] = 0;
+            else if (word1[i - 1] === word2[j - 1]) record[i][j] = record[i - 1][j - 1] + 1;
+            else record[i][j] = Math.max(record[i - 1][j], record[i][j - 1]);
+        }
+    }
+    return m + n - 2 * record[m][n];
+};
 ```
 
 #### [96. 不同的二叉搜索树](https://leetcode-cn.com/problems/unique-binary-search-trees/)
@@ -4311,6 +4373,40 @@ var integerBreak = function(n) {
                 else l = mid + 1;
             }
             return r;
+        };
+```
+#### [1262. 可被三整除的最大和](https://leetcode-cn.com/problems/greatest-sum-divisible-by-three/)
+![image.png](https://pic.leetcode-cn.com/59f3e1cbc983f30ff46efe98d061044b6b103a1c9f4d44d5874b2d7689a2b029-image.png)
+
+```js
+        /** 回溯
+        * @param {number[]} nums
+        * @return {number}
+        */
+        var maxSumDivThree = function(nums) {
+            let res = 0;
+            function brackTrace(i, sum) {
+                if (!(sum % 3)) res = Math.max(res, sum);
+                if (i === nums.length) return;
+                for (let j = i; j < nums.length; j++) {
+                    brackTrace(j + 1, sum + nums[j]);
+                } 
+            }
+            brackTrace(0, 0);
+            return res;
+        };
+        // 数学法
+        var maxSumDivThree = function(arr) {
+            const arr1 = arr.filter(item => item % 3 === 1).sort((a, b) => a - b);
+            const arr2 = arr.filter(item => item % 3 === 2).sort((a, b) => a - b);
+            let sum = arr.reduce((t, i) => t + i, 0);
+            if (sum % 3 === 0) return sum;
+            else if (sum % 3 === 1) {
+                sum = Math.max(sum - arr1[0], sum - arr2[0] - arr2[1] || 0);
+            } else {
+                sum = Math.max(sum - arr2[0], sum - arr1[0] - arr1[1] || 0);
+            }
+            return sum;
         };
 ```
 
