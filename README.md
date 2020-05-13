@@ -44,6 +44,8 @@
       - [386. 字典序排数](#386-%e5%ad%97%e5%85%b8%e5%ba%8f%e6%8e%92%e6%95%b0)
       - [179. 最大数](#179-%e6%9c%80%e5%a4%a7%e6%95%b0)
       - [560. 和为K的子数组](#560-%e5%92%8c%e4%b8%bak%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84)
+      - [456. 132模式](#456-132%e6%a8%a1%e5%bc%8f)
+      - [面试题53 - II. 0～n-1中缺失的数字](#%e9%9d%a2%e8%af%95%e9%a2%9853---ii-0n-1%e4%b8%ad%e7%bc%ba%e5%a4%b1%e7%9a%84%e6%95%b0%e5%ad%97)
   - [四、字符串问题](#%e5%9b%9b%e5%ad%97%e7%ac%a6%e4%b8%b2%e9%97%ae%e9%a2%98)
     - [4.1 基本模板](#41-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95)
@@ -104,6 +106,7 @@
       - [572. 另一个树的子树](#572-%e5%8f%a6%e4%b8%80%e4%b8%aa%e6%a0%91%e7%9a%84%e5%ad%90%e6%a0%91-1)
       - [230. 二叉搜索树中第K小的元素](#230-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e4%b8%ad%e7%ac%ack%e5%b0%8f%e7%9a%84%e5%85%83%e7%b4%a0)
       - [662. 二叉树最大宽度](#662-%e4%ba%8c%e5%8f%89%e6%a0%91%e6%9c%80%e5%a4%a7%e5%ae%bd%e5%ba%a6)
+      - [332. 重新安排行程](#332-%e9%87%8d%e6%96%b0%e5%ae%89%e6%8e%92%e8%a1%8c%e7%a8%8b)
   - [九、DFS深度优先搜索](#%e4%b9%9ddfs%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2)
     - [9.1 基本模板](#91-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-2)
@@ -193,6 +196,7 @@
       - [50. Pow(x, n)](#50-powx-n)
       - [69. x 的平方根](#69-x-%e7%9a%84%e5%b9%b3%e6%96%b9%e6%a0%b9)
       - [1262. 可被三整除的最大和](#1262-%e5%8f%af%e8%a2%ab%e4%b8%89%e6%95%b4%e9%99%a4%e7%9a%84%e6%9c%80%e5%a4%a7%e5%92%8c)
+      - [950. 按递增顺序显示卡牌](#950-%e6%8c%89%e9%80%92%e5%a2%9e%e9%a1%ba%e5%ba%8f%e6%98%be%e7%a4%ba%e5%8d%a1%e7%89%8c)
   - [十六、设计问题](#%e5%8d%81%e5%85%ad%e8%ae%be%e8%ae%a1%e9%97%ae%e9%a2%98)
     - [16.1 基本模板](#161-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
     - [16.2 题目](#162-%e9%a2%98%e7%9b%ae)
@@ -874,6 +878,7 @@ void exec(int a[], int size) {
             return res[0] === '0' ? '0' : res;
         };
 ```
+
 #### [560. 和为K的子数组](https://leetcode-cn.com/problems/subarray-sum-equals-k/)
 ```js
         /**
@@ -897,6 +902,49 @@ void exec(int a[], int size) {
             return res;
         };
 ```
+
+#### [456. 132模式](https://leetcode-cn.com/problems/132-pattern/)
+```js
+        /**
+        * @param {number[]} nums
+        * @return {boolean}
+        */
+        var find132pattern = function(nums) {
+            let min = nums[0];
+            for(let i = 1; i < nums.length; i++) {
+                if (nums[i] > min) {
+                    for (let j = i + 1; j < nums.length; j++) {
+                        if (nums[j] > min && nums[j] < nums[i]) return true;
+                    }
+                }
+                if (nums[i] < min) min = nums[i];
+            }
+            return false;
+        };
+```
+
+#### [面试题53 - II. 0～n-1中缺失的数字](面试题53 - II. 0～n-1中缺失的数字)
+![image.png](https://pic.leetcode-cn.com/929563a4bb25b99b59c756ab52c73b71923e49e408f18cd617b78180698ec7bc-image.png)
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var missingNumber = function(nums) {
+    if (nums.length - 1 === nums[nums.length - 1]) return nums.length;
+    if (nums[0]) return 0;
+    let left = 0, right = (nums.length - 1) >> 1;
+    while(left <= right) {
+        mid = (left + right) >> 1;
+        if (mid === nums[mid]) left = mid + 1;
+        else break;
+    }
+    while(left === nums[left]) left++;
+    return left;
+};
+```
+
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -2227,6 +2275,40 @@ var singleNumber = function(nums) {
         };
 ```
 
+#### [332. 重新安排行程](https://leetcode-cn.com/problems/reconstruct-itinerary/)
+```js
+        /**
+        * @param {string[][]} tickets
+        * @return {string[]}
+        */
+        var findItinerary = function(tickets) {
+            tickets.sort(([a1, a2], [b1, b2]) => (a1 > b1 || (a1 === b1 && a2 > b2)) ? 1 : -1);
+            const record = tickets.reduce((t, i) => {
+                if(t[i[0]]) t[i[0]].push(i[1]);
+                else t[i[0]] = [i[1]];
+                return t;
+            }, {});
+            let res, next, key, nextIsVisited;
+            function backTrace(now, path, isVisited) {
+                if (res) return;
+                if (path.length === tickets.length + 1) {
+                    res = path;
+                    return;
+                }
+                if (!record[now]) return;
+                for(let i = 0; i < record[now].length; i++) {
+                    next = record[now][i];
+                    key = now + '-' + i;
+                    if (isVisited[key]) continue;
+                    nextIsVisited = Object.assign({}, isVisited);
+                    nextIsVisited[key] = true;
+                    backTrace(next, path.concat(next), nextIsVisited);
+                }
+            }
+            backTrace('JFK', ['JFK'], {}, 0);
+            return res;
+        };
+```
 
 ## 九、DFS深度优先搜索
 ### 9.1 基本模板 
@@ -4408,6 +4490,27 @@ var integerBreak = function(n) {
             }
             return sum;
         };
+```
+
+#### [950. 按递增顺序显示卡牌](https://leetcode-cn.com/problems/reveal-cards-in-increasing-order/)
+
+![image.png](https://pic.leetcode-cn.com/3d47fe9886f4dead7d81be38e649720900adbd908626473760e9ed6a71209c2b-image.png)
+
+```js
+/**
+ * @param {number[]} deck
+ * @return {number[]}
+ */
+var deckRevealedIncreasing = function(deck) {
+    if (!deck.length) return [];
+    deck.sort((a, b) => a - b);
+    const res = [deck.pop()];
+    while(deck.length) {
+        res.unshift(res.pop());
+        res.unshift(deck.pop());
+    }
+    return res;
+};
 ```
 
 ## 十六、设计问题
