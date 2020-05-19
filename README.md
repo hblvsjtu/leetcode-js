@@ -46,6 +46,7 @@
       - [560. 和为K的子数组](#560-%e5%92%8c%e4%b8%bak%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84)
       - [456. 132模式](#456-132%e6%a8%a1%e5%bc%8f)
       - [面试题53 - II. 0～n-1中缺失的数字](#%e9%9d%a2%e8%af%95%e9%a2%9853---ii-0n-1%e4%b8%ad%e7%bc%ba%e5%a4%b1%e7%9a%84%e6%95%b0%e5%ad%97)
+      - [36. 有效的数独](#36-%e6%9c%89%e6%95%88%e7%9a%84%e6%95%b0%e7%8b%ac)
   - [四、字符串问题](#%e5%9b%9b%e5%ad%97%e7%ac%a6%e4%b8%b2%e9%97%ae%e9%a2%98)
     - [4.1 基本模板](#41-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95)
@@ -62,6 +63,8 @@
       - [224. 基本计算器](#224-%e5%9f%ba%e6%9c%ac%e8%ae%a1%e7%ae%97%e5%99%a8)
       - [165. 比较版本号](#165-%e6%af%94%e8%be%83%e7%89%88%e6%9c%ac%e5%8f%b7)
       - [242. 有效的字母异位词](#242-%e6%9c%89%e6%95%88%e7%9a%84%e5%ad%97%e6%af%8d%e5%bc%82%e4%bd%8d%e8%af%8d)
+      - [567. 字符串的排列](#567-%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%9a%84%e6%8e%92%e5%88%97)
+      - [680. 验证回文字符串 Ⅱ](#680-%e9%aa%8c%e8%af%81%e5%9b%9e%e6%96%87%e5%ad%97%e7%ac%a6%e4%b8%b2-%e2%85%a1)
   - [五、哈希表](#%e4%ba%94%e5%93%88%e5%b8%8c%e8%a1%a8)
     - [5.1 基本模板](#51-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 统计频率](#1-%e7%bb%9f%e8%ae%a1%e9%a2%91%e7%8e%87)
@@ -128,6 +131,7 @@
       - [22. 括号生成](#22-%e6%8b%ac%e5%8f%b7%e7%94%9f%e6%88%90)
       - [面试题33. 二叉搜索树的后序遍历序列](#%e9%9d%a2%e8%af%95%e9%a2%9833-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e5%90%8e%e5%ba%8f%e9%81%8d%e5%8e%86%e5%ba%8f%e5%88%97)
       - [542. 01 矩阵](#542-01-%e7%9f%a9%e9%98%b5)
+      - [1091. 二进制矩阵中的最短路径](#1091-%e4%ba%8c%e8%bf%9b%e5%88%b6%e7%9f%a9%e9%98%b5%e4%b8%ad%e7%9a%84%e6%9c%80%e7%9f%ad%e8%b7%af%e5%be%84)
   - [十一、贪心](#%e5%8d%81%e4%b8%80%e8%b4%aa%e5%bf%83)
     - [11.1 基本模板](#111-%e5%9f%ba%e6%9c%ac%e6%a8%a1%e6%9d%bf)
       - [1) 递归法](#1-%e9%80%92%e5%bd%92%e6%b3%95-4)
@@ -945,6 +949,47 @@ var missingNumber = function(nums) {
 };
 ```
 
+#### [36. 有效的数独](https://leetcode-cn.com/problems/valid-sudoku/)
+
+![image.png](https://pic.leetcode-cn.com/b3fb556c88bf74629e2c2fc1de164b05181f9c9af041676dfe1155b374860b68-image.png)
+```js
+        /**
+        * @param {character[][]} board
+        * @return {boolean}
+        */
+        var isValidSudoku = function(board) {
+            const row = board.length, col = board[0].length;
+            if (row % 3 || col % 3) return false;
+            const row3 = row / 3, col3 = col / 3;
+            const recordRow = new Set();
+            const recordCol = Array(col).fill(0).map(i => new Set());
+            const recordSqu = [];
+            for(let i = 0; i < row / 3; i++) {
+                recordSqu[i] = [];
+                for(let j = 0; j < col / 3; j++) {
+                    recordSqu[i][j] = new Set();
+                }
+            }
+            let i3, j3;
+            for(let i = 0; i < row; i++) {
+                recordRow.clear();
+                i3 = parseInt(i / 3);
+                for(let j = 0; j < col; j++) {
+                    if (board[i][j] === '.') continue;
+                    if (recordRow.has(board[i][j])) return false;
+                    recordRow.add(board[i][j]);
+                    if (recordCol[j].has(board[i][j])) return false;
+                    recordCol[j].add(board[i][j]);
+                    j3 = parseInt(j / 3);
+                    if (recordSqu[i3][j3].has(board[i][j])) return false;
+                    recordSqu[i3][j3].add(board[i][j]);
+                }
+            }
+            return true;
+        };
+```
+
+
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -1247,6 +1292,61 @@ var missingNumber = function(nums) {
             if (s.length !== t.length) return false;
             return s.split('').sort((a, b) => a > b ? 1 : -1).join('')
                 === t.split('').sort((a, b) => a > b ? 1 : -1).join('')
+        };
+```
+
+#### [567. 字符串的排列](https://leetcode-cn.com/problems/permutation-in-string)
+![image.png](https://pic.leetcode-cn.com/6b35cff04d361dc9d980bb61fb867e70e7016b131514f01073eabb9e55d2c119-image.png)
+
+```js
+var checkInclusion = function(s1, s2) {
+    const record = {};
+    for (let i of s1) {
+        if (record[i]) record[i]++;
+        else record[i] = 1;
+    }
+    for (let i of s2.substring(0, s1.length)) {
+        if (record[i] !== undefined) record[i]--;
+    }
+    if (Object.values(record).every(i => i === 0)) return true;
+    let j = 0;
+    for(let i = s1.length; i < s2.length; i++) {
+        if (record[s2[i]] !== undefined) record[s2[i]]--;
+        if (record[s2[j]] !== undefined) record[s2[j]]++;
+        j++;
+        if (Object.values(record).every(i => !i)) return true;
+    }
+    return false;
+};
+```
+
+#### [680. 验证回文字符串 Ⅱ](https://leetcode-cn.com/problems/valid-palindrome-ii/)
+```js
+        /**
+         * @param {string} s
+         * @return {boolean}
+         */
+        var validPalindrome = function(s) {
+            if (s.length <= 2) return true;
+            let left = 0, right = s.length - 1;
+            while(left <= right) {
+                if (s[left] !== s[right]) {
+                    if (s[left] === s[right - 1] && check(s, left, right - 1)) return true;
+                    if (s[left + 1] === s[right] && check(s, left + 1, right)) return true;
+                    return false;
+                }
+                left++;
+                right--;
+            }
+            function check(s, left, right) {
+                while(left <= right) {
+                    if (s[left] !== s[right]) return false;
+                    left++;
+                    right--;
+                }
+                return true;
+            }
+            return true;
         };
 ```
 
@@ -2799,6 +2899,37 @@ var singleNumber = function(nums) {
             }
             return matrix;
         };
+```
+
+#### [1091. 二进制矩阵中的最短路径](https://leetcode-cn.com/problems/shortest-path-in-binary-matrix)
+![image.png](https://pic.leetcode-cn.com/929aca2c178eab32e82a1547d932ad089160643cc4cff6e8f8225c4baa471b91-image.png)
+
+```js
+var shortestPathBinaryMatrix = function(grid) {
+    if (grid[0][0]) return -1;
+    const row = grid.length - 1, col = grid[0].length - 1;
+    if (grid[row][col]) return -1;
+    const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
+    const queue = [[0, 0]];
+    grid[0][0] = 1;
+    let res = 0, i = queue.length, newX, newY, temp, x, y;
+    while (i) {
+        res++;
+        while(i--) {
+            temp = queue.shift();
+            if (temp[0] === row && temp[1] === col) return res;
+            dirs.forEach(dir => {
+                newX = temp[0] + dir[0];
+                newY = temp[1] + dir[1];
+                if (newX < 0 || newX > row || newY < 0 || newY > col || grid[newX][newY]) return;
+                queue.push([newX, newY]);
+                grid[newX][newY] = 1;
+            })
+        }
+        i = queue.length;
+    }
+    return -1;
+};
 ```
 
 ## 十一、贪心
@@ -4691,3 +4822,4 @@ var deckRevealedIncreasing = function(deck) {
          * obj.put(key,value)
          */
 ```
+
