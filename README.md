@@ -22,10 +22,12 @@
     - [参考书籍：《剑指Offer》第二版 何海涛](#%e5%8f%82%e8%80%83%e4%b9%a6%e7%b1%8d%e5%89%91%e6%8c%87offer%e7%ac%ac%e4%ba%8c%e7%89%88-%e4%bd%95%e6%b5%b7%e6%b6%9b)
     - [参考源：leetcode：https://www.nowcoder.com/ta/leetcode](#%e5%8f%82%e8%80%83%e6%ba%90leetcodehttpswwwnowcodercomtaleetcode)
   - [目录](#%e7%9b%ae%e5%bd%95)
-  - [一、分治问题](#%e4%b8%80%e5%88%86%e6%b2%bb%e9%97%ae%e9%a2%98)
+  - [一、排序问题](#%e4%b8%80%e6%8e%92%e5%ba%8f%e9%97%ae%e9%a2%98)
     - [1.1 模板](#11-%e6%a8%a1%e6%9d%bf)
-      - [归并排序](#%e5%bd%92%e5%b9%b6%e6%8e%92%e5%ba%8f)
+      - [冒泡排序](#%e5%86%92%e6%b3%a1%e6%8e%92%e5%ba%8f)
+      - [插入排序](#%e6%8f%92%e5%85%a5%e6%8e%92%e5%ba%8f)
       - [快速排序](#%e5%bf%ab%e9%80%9f%e6%8e%92%e5%ba%8f)
+      - [归并排序](#%e5%bd%92%e5%b9%b6%e6%8e%92%e5%ba%8f)
     - [1.2 题目](#12-%e9%a2%98%e7%9b%ae)
       - [1.3 子数组和为定值](#13-%e5%ad%90%e6%95%b0%e7%bb%84%e5%92%8c%e4%b8%ba%e5%ae%9a%e5%80%bc)
       - [42. 接雨水](#42-%e6%8e%a5%e9%9b%a8%e6%b0%b4)
@@ -209,266 +211,64 @@
       - [146. LRU缓存机制](#146-lru%e7%bc%93%e5%ad%98%e6%9c%ba%e5%88%b6-1)
 
 
-## 一、分治问题
-### 1.1 模板        
-#### 归并排序
-
-```c
-        int DivideStrategy(char *a, int left, int right){
-            if(left==right){
-                return …
-            }else{
-                int middle=(left+ right)/2;
-                left= DivideStrategy(a, left, middle);
-                right= DivideStrategy(a, middle+1, right);
-                //其他操作；
-                return …
+## 一、排序问题
+### 1.1 模板
+#### 冒泡排序
+```js
+    function bubble(arr) {
+        let len = arr.length;
+        while(len--) {
+            for (let j = 0; j < len; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                }
             }
         }
+        return arr;
+    }
 ```
-> - 有一个缺点，如果采用原址排序的话，需要在合并的时候采用二阶循环，如果不采用原址排序的话，需要开辟多一倍的空间
 
-```c
-        /* ***************************************************************
-        *      Filename: DividedSort.c
-        *   Description:
-        *       Version: 1.0
-        *       Created: 2018/06/24 
-        *      Revision: none
-        *      Compiler: gcc
-        *        Author: Lv Hongbin
-        *       Company: Shanghai JiaoTong Univerity
-        * **************************************************************/
-
-        #include<stdio.h>
-        #include<time.h>
-        #include<sys/time.h>
-        #include <stdlib.h>
-
-        void SelectSort1(int array[], int n);
-        void SelectSort2(int array[], int n);
-        void BubbleSort(int array[], int n);
-        void merge(int array[], int leftStart, int leftEnd, int rightEnd);
-        void DividedSort(int array[], int start, int end);
-        void Merge(int *a, int p, int q, int r );
-
-        int main()
-        {
-            int array[] = {1,3,5,7,9,2,4,6,8};
-            int i;
-            struct timeval StartTime, EndTime;
-            double cost;
-            gettimeofday(&StartTime,NULL);
-            DividedSort(array, 0, 8);
-            for(i=0; i<9; i++) {
-                printf("%d\t",array[i]);
-                if(i%10 == 9) {
-                    printf("\n");
-                }
-            }
-            gettimeofday(&EndTime,NULL);
-            cost=(EndTime.tv_sec-StartTime.tv_sec)*1000000+(EndTime.tv_usec-StartTime.tv_usec);
-            printf("\n采用分治排序法 The time cost is %.f\n",cost);
-            return 0;
-        }
-
-        // 分治法
-        void DividedSort(int arrays[],int start, int end) {
-            if(start < end) {
-                int leftStart=start;
-                int leftEnd=(start + end)/2;
-                int rightStart=(start + end)/2 + 1;
-                int rightEnd=end;
-                // 左侧
-                DividedSort(arrays, leftStart, leftEnd);
-
-                // 右侧
-                DividedSort(arrays, rightStart, rightEnd);
-
-                // 合并
-                Merge(arrays, leftStart, leftEnd, end);
+#### 插入排序
+```js
+    function insert(arr) {
+        for (let i = 1; i < arr.length; i++) {
+            let j = i;
+            while (j - 1 >= 0 && arr[j - 1] > arr[j]) {
+                [arr[j - 1], arr[j]] = [arr[j], arr[j - 1]];
+                j--;
             }
         }
-
-        // 数组合并-空间复杂度为O(1);
-        void merge(int array[], int leftStart, int leftEnd, int rightEnd) {
-            int i=leftEnd, j=leftEnd, temp=0;
-
-            // printf("\n合并前\n");
-            // for(i=leftStart; i<=rightEnd; i++) {
-            //  printf("%d\t",array[i]);
-            // }
-            // printf("\n");
-            for(i=leftEnd; i<rightEnd; i++) {
-                if(array[i] < array[i+1]) {
-                    break;
-                }
-                for(j=i; j>=leftStart; j--) {
-                    if(array[j] > array[j+1]) {
-                        temp = array[j];
-                        array[j] = array[j+1];
-                        array[j+1] = temp;
-                    }
-                }
-            }
-            // printf("\n合并后\n");
-            // for(i=leftStart; i<=rightEnd; i++) {
-            //  printf("%d\t",array[i]);
-            // }
-            // printf("\n");
-
-        }
-
-        // 数组合并-空间复杂度为O(1);
-        void Merge(int array[], int leftStart, int leftEnd, int rightEnd){
-
-                int i=0, j=0, temp=0;
-
-                // printf("\n合并前\n");
-                // for(i=leftStart; i<=rightEnd; i++) {
-                //  printf("%d\t",array[i]);
-                // }
-                // printf("\n");
-
-                int p = leftStart;
-                int q = leftEnd+1;
-                int n = rightEnd-leftStart+1;
-                int *b=malloc(n * sizeof(int));
-                for (i = 0; i < n; i++)
-                {
-                    if (p > leftEnd) {
-                        b[i] = array[q];
-                        q++;
-                    }else if (q > rightEnd){
-                        b[i] = array[p];
-                        p++;
-                    }else{
-                        if(array[p] < array[q]) {
-                            b[i] = array[p];
-                            p++;
-                        }else {
-                            b[i] = array[q];
-                            q++;
-                        }
-                    }
-                }
-                for (j=0; j < n; j++) {
-                    array[leftStart+j] = b[j];
-                }
-                free(b);
-
-                // printf("\n合并后\n");
-                // for(i=leftStart; i<=rightEnd; i++) {
-                //  printf("%d\t",array[i]);
-                // }
-                // printf("\n");
-        }
+        return arr;
+    }
 ```
 
 #### 快速排序
-> - 分解：将一个数组分为三部分，首先以最后一个元素为基准，比它大的放在右边，比它小的放在左边，然后将最后一个元素放在中间，采取原址排序的方法，最后返回基准元素的下标
-> - 解决：通过递归调用快速排序，分别为array\[p...q-1\] array\[p...q+1\]，至于为什么没有array\[q\]元素，原因在于原址排序它的位置就是正确的位置，所以不需要动
-> - 合并：由于是原址排序，所以没有必要合并
-
-```c
-        /* ***************************************************************
-        *      Filename: QuickSort.c
-        *   Description:
-        *       Version: 1.0
-        *       Created: 2018/06/24 
-        *      Revision: none
-        *      Compiler: gcc
-        *        Author: Lv Hongbin
-        *       Company: Shanghai JiaoTong Univerity
-        * **************************************************************/
-
-        #include<stdio.h>
-        #include<time.h>
-        #include<sys/time.h>
-        #include <stdlib.h>
-
-        int Divide(int array[], int Start, int end);
-        void DividedSort(int array[],int start, int end);
-
-        int main()
-        {
-            int array[] = { 1,3,5,7,9,2,4,6,8};
-            int i;
-            struct timeval StartTime, EndTime;
-            double cost;
-            gettimeofday(&StartTime,NULL);
-            
-            DividedSort(array,0 ,8);
-            for(i=0; i<9; i++) {
-                printf("%d\t",array[i]);
-                if(i%10 == 9) {
-                    printf("\n");
-                }
-            }
-            gettimeofday(&EndTime,NULL);
-            cost=(EndTime.tv_sec-StartTime.tv_sec)*1000000+(EndTime.tv_usec-StartTime.tv_usec);
-            printf("\n采用快速排序法 The time cost is %.f\n",cost);
-            return 0;
+```js
+    function quick(arr) {
+        if (arr.length < 2) return arr;
+        const left = [], right = [];
+        for (let i = 1; i < arr.length; i++) {
+            if (arr[i] <= arr[0]) left.push(arr[i]);
+            else right.push(arr[i]);
         }
+        return [...quick(left), arr[0], ...quick(right)];
+    }
+```
 
+#### 归并排序
 
-
-        // 分治法
-        void DividedSort(int array[],int start, int end) {
-            if(start < end) {
-                // 分解
-                int DividePoint = Divide(array, start, end);
-
-                int leftStart=start;
-                int leftEnd=DividePoint-1;
-                int rightStart=DividePoint + 1;
-                int rightEnd=end;
-                // 左侧
-                DividedSort(array, leftStart, leftEnd);
-
-                // 右侧
-                DividedSort(array, rightStart, rightEnd);
-            }
+```js
+    function guibing(arr) {
+        if (arr.length < 2) return arr;
+        const middle = arr.length >> 1, result = [];
+        const left = guibing(arr.slice(0, middle)), right = guibing(arr.slice(middle));
+        let i = 0, j = 0;
+        while (i < left.length || j < right.length) {
+            i >= left.length || left[i] >= right[j] ? result.push(right[j++]) : result.push(left[i++]);
         }
-
-
-        // Divide function
-        // 以最后一个元素为基准进行原址排序
-        int Divide(int array[], int start, int end) {
-
-            int DividePoint = start-1;
-            int i = start;
-            int tem = 0;
-
-            // printf("\n合并前\n");
-            // for(i=start; i<=end; i++) {
-            //  printf("%d\t",array[i]);
-            // }
-            // printf("\n");
-
-            for(i = start; i<end; i++) {
-                if (array[i] < array[end]) {
-                    DividePoint++;
-                    tem = array[i];
-                    array[i] = array[DividePoint];
-                    array[DividePoint] = tem;
-                }
-            }
-            DividePoint++;
-            tem = array[end];
-            array[end] = array[DividePoint];
-            array[DividePoint] = tem;
-
-            // printf("\n合并后\n");
-            // for(i=start; i<=end; i++) {
-            //  prin                    tf("%d\t",array[i]);
-            // }
-            // printf("\n");
-            // printf("DividePoint = %d\n", DividePoint);
-            return DividePoint;
-        }
-
-``` 
+        return result;
+    }
+```
 
 ### 1.2 题目
 #### 1.3 子数组和为定值
