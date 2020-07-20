@@ -55,6 +55,7 @@
       - [80. 删除排序数组中的重复项 II](#80-删除排序数组中的重复项-ii)
       - [448. 找到所有数组中消失的数字](#448-找到所有数组中消失的数字)
       - [442. 数组中重复的数据](#442-数组中重复的数据)
+      - [35.搜索插入位置](#35搜索插入位置)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -73,6 +74,7 @@
       - [242. 有效的字母异位词](#242-有效的字母异位词)
       - [567. 字符串的排列](#567-字符串的排列)
       - [680. 验证回文字符串 Ⅱ](#680-验证回文字符串-ⅱ)
+      - [461.汉明距离](#461汉明距离)
   - [五、哈希表](#五哈希表)
     - [5.1 基本模板](#51-基本模板)
       - [1) 统计频率](#1-统计频率)
@@ -118,6 +120,7 @@
       - [230. 二叉搜索树中第K小的元素](#230-二叉搜索树中第k小的元素)
       - [662. 二叉树最大宽度](#662-二叉树最大宽度)
       - [332. 重新安排行程](#332-重新安排行程)
+      - [437.路径总和-iii](#437路径总和-iii)
   - [九、DFS深度优先搜索](#九dfs深度优先搜索)
     - [9.1 基本模板](#91-基本模板)
       - [1) 递归法](#1-递归法-2)
@@ -1006,6 +1009,38 @@ var missingNumber = function(nums) {
         };
 ```
 
+
+#### [35.搜索插入位置](https://leetcode-cn.com/problems/search-insert-position/)
+
+![image.png](https://pic.leetcode-cn.com/7040bad11f507b09c1ec2ab675a38d5a6cfb94a627142371bd622571fbeadfe7-image.png)
+
+
+```js
+        /*
+        * @lc app=leetcode.cn id=35 lang=javascript
+        *
+        * [35] 搜索插入位置
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} nums
+         * @param {number} target
+         * @return {number}
+         */
+        var searchInsert = function(nums, target) {
+            let left = 0, right = nums.length - 1, middle;
+            while(left <= right) {
+                middle = (left + right) >> 1;
+                if (nums[middle] === target) return middle;
+                if (nums[middle] > target) right = middle - 1;
+                else left = middle + 1;
+            }
+            return left;
+        };
+```
+
+
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -1363,6 +1398,27 @@ var checkInclusion = function(s1, s2) {
                 return true;
             }
             return true;
+        };
+```
+
+#### [461.汉明距离](https://leetcode-cn.com/problems/valid-palindrome-ii/)
+
+![image.png](https://pic.leetcode-cn.com/ae6c6e91275fac6686913b9f775235b65a0ad8a11c9526170bda4a16e5fbec9d-image.png)
+```js
+        /*
+        * @lc app=leetcode.cn id=461 lang=javascript
+        *
+        * [461] 汉明距离
+        */
+
+        // @lc code=start
+        /**
+         * @param {number} x
+         * @param {number} y
+         * @return {number}
+         */
+        var hammingDistance = function(x, y) {
+            return (x ^ y).toString(2).replace(/0/g, '').length;
         };
 ```
 
@@ -2425,6 +2481,52 @@ var singleNumber = function(nums) {
             return res;
         };
 ```
+
+#### [437.路径总和-iii](https://leetcode-cn.com/problems/path-sum-iii)
+
+![image.png](https://pic.leetcode-cn.com/35697dcfda0c303471fb23eb090ae6358bdc667659af5295a50afc957b09b0d8-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=437 lang=javascript
+        *
+        * [437] 路径总和 III
+        */
+
+        // @lc code=start
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @param {number} sum
+         * @return {number}
+         */
+        var pathSum = function(root, sum) {
+            let res = 0;
+            function checkDFS(root, s) {
+                if (!root) return;
+                s += root.val;
+                if (s === sum) ++res;
+                checkDFS(root.left, s);
+                checkDFS(root.right, s);
+            }
+
+            function DFS(root) {
+                if (!root) return;
+                checkDFS(root, 0);
+                DFS(root.left);
+                DFS(root.right);
+            }
+            DFS(root);
+            return res;
+        };
+```
+
 
 ## 九、DFS深度优先搜索
 ### 9.1 基本模板 
