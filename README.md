@@ -56,6 +56,7 @@
       - [448. 找到所有数组中消失的数字](#448-找到所有数组中消失的数字)
       - [442. 数组中重复的数据](#442-数组中重复的数据)
       - [35.搜索插入位置](#35搜索插入位置)
+      - [581. 最短无序连续子数组](#581-最短无序连续子数组)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -121,6 +122,8 @@
       - [662. 二叉树最大宽度](#662-二叉树最大宽度)
       - [332. 重新安排行程](#332-重新安排行程)
       - [437.路径总和-iii](#437路径总和-iii)
+      - [538. 把二叉搜索树转换为累加树](#538-把二叉搜索树转换为累加树)
+      - [617. 合并二叉树](#617-合并二叉树)
   - [九、DFS深度优先搜索](#九dfs深度优先搜索)
     - [9.1 基本模板](#91-基本模板)
       - [1) 递归法](#1-递归法-2)
@@ -1040,6 +1043,32 @@ var missingNumber = function(nums) {
         };
 ```
 
+#### [581. 最短无序连续子数组](https://leetcode-cn.com/problems/shortest-unsorted-continuous-subarray)
+
+![image.png](https://pic.leetcode-cn.com/eb6e554bff45ca7a6ec27448c3eea857a15b23c025254478e5c6ce33e64dcbcb-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=581 lang=javascript
+        *
+        * [581] 最短无序连续子数组
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var findUnsortedSubarray = function(nums) {
+            const copy = [...nums];
+            copy.sort((a, b) => a - b);
+            let i = 0, j = nums.length - 1;
+            while (i < nums.length && nums[i] === copy[i]) i++;
+            if (i === nums.length) return 0;
+            while (j >= 0 && nums[j] === copy[j]) j--;
+            return j - i + 1;
+        };
+```
 
 ## 四、字符串问题
 ### 4.1 基本模板 
@@ -2527,6 +2556,78 @@ var singleNumber = function(nums) {
         };
 ```
 
+
+#### [538. 把二叉搜索树转换为累加树](https://leetcode-cn.com/problems/convert-bst-to-greater-tree)
+![image.png](https://pic.leetcode-cn.com/8991a0833028ff61a8112f9714466bc1c5c43e074d9031cb485dcc92ffa25a30-image.png)
+
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {TreeNode}
+         */
+        var convertBST = function(root) {
+            let sum = 0;
+            function inorderDFS(root) {
+                if (!root) return;
+                inorderDFS(root.right);
+                sum += root.val; 
+                root.val = sum;
+                inorderDFS(root.left);
+            }
+            inorderDFS(root);
+            return root;
+        };
+```
+
+#### [617. 合并二叉树](https://leetcode-cn.com/problems/merge-two-binary-trees)
+
+![image.png](https://pic.leetcode-cn.com/4f87f30b810c285dd8af2a16efe2760d38ff286a7d09f120a835d97d3e59c468-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=617 lang=javascript
+        *
+        * [617] 合并二叉树
+        */
+
+        // @lc code=start
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} t1
+         * @param {TreeNode} t2
+         * @return {TreeNode}
+         */
+        var mergeTrees = function(t1, t2) {
+            if (!t1 || !t2) return t1 || t2;
+            function DFS(root1, root2) {
+                if (!root1 || !root2) return;
+                root1.val = root1.val + (root2 ? root2.val : 0);
+                if (!root1.left && root2.left) {
+                    root1.left = new TreeNode(0);
+                }
+                if (!root1.right && root2.right) {
+                    root1.right = new TreeNode(0);
+                }
+                DFS(root1.left, root2.left);
+                DFS(root1.right, root2.right);
+            }
+            DFS(t1, t2);
+            return t1;
+        };
+```
 
 ## 九、DFS深度优先搜索
 ### 9.1 基本模板 
