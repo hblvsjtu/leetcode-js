@@ -76,6 +76,7 @@
       - [567. 字符串的排列](#567-字符串的排列)
       - [680. 验证回文字符串 Ⅱ](#680-验证回文字符串-ⅱ)
       - [461.汉明距离](#461汉明距离)
+      - [443 压缩字符串](#443-压缩字符串)
   - [五、哈希表](#五哈希表)
     - [5.1 基本模板](#51-基本模板)
       - [1) 统计频率](#1-统计频率)
@@ -189,6 +190,8 @@
       - [面试题63. 股票的最大利润](#面试题63-股票的最大利润)
       - [714. 买卖股票的最佳时机含手续费](#714-买卖股票的最佳时机含手续费)
       - [343. 整数拆分](#343-整数拆分)
+      - [198. 打家劫舍](#198-打家劫舍)
+      - [70. 爬楼梯](#70-爬楼梯)
   - [十四、图论](#十四图论)
     - [14.1 基本模板](#141-基本模板)
       - [1) 图的遍历](#1-图的遍历)
@@ -1448,6 +1451,35 @@ var checkInclusion = function(s1, s2) {
          */
         var hammingDistance = function(x, y) {
             return (x ^ y).toString(2).replace(/0/g, '').length;
+        };
+```
+
+#### [443 压缩字符串](https://leetcode-cn.com/problems/string-compression/solution/)
+
+70/70 cases passed (92 ms)
+Your runtime beats 31.61 % of javascript submissions
+Your memory usage beats 100 % of javascript submissions (39.4 MB)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=443 lang=javascript
+        *
+        * [443] 压缩字符串
+        */
+
+        // @lc code=start
+        /**
+         * @param {character[]} chars
+         * @return {number}
+         */
+        var compress = function(chars) {
+            let res = '', j = 0, k = 0;
+            for (let i = 0; i < chars.length; i = j) {
+                while (chars[++j] === chars[i]);
+                res += chars[i] + (j - i > 1 ? j - i : '');
+            }
+            for (let s of res) chars[k++] = s;
+            return res.length;
         };
 ```
 
@@ -4136,6 +4168,64 @@ var integerBreak = function(n) {
     }
     return dp[n];
 };
+```
+
+#### [198. 打家劫舍](https://leetcode-cn.com/problems/house-robber)
+
+Accepted
+69/69 cases passed (88 ms)
+Your runtime beats 10.51 % of javascript submissions
+Your memory usage beats 50 % of javascript submissions (37.8 MB)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=198 lang=javascript
+        *
+        * [198] 打家劫舍
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var rob = function(nums) {
+            let hold = nums[0] || 0, unhold = 0;
+            for(let i = 1; i < nums.length; i++) {
+                [hold, unhold]  = [
+                    Math.max(unhold + nums[i], hold),
+                    Math.max(unhold, hold)
+                ];
+            }
+            return Math.max(hold, unhold);
+        };
+```
+
+#### [70. 爬楼梯](https://leetcode-cn.com/problems/house-robber)
+
+45/45 cases passed (84 ms)
+Your runtime beats 14.94 % of javascript submissions
+Your memory usage beats 24.05 % of javascript submissions (37.7 MB)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=70 lang=javascript
+        *
+        * [70] 爬楼梯
+        */
+
+        // @lc code=start
+        /**
+         * @param {number} n
+         * @return {number}
+         */
+        var climbStairs = function(n) {
+            let dp = [1, 2];
+            for (let i = 2; i < n; i++) {
+                dp[i] = dp[i - 1] + dp[i - 2];
+            }
+            return dp[n - 1];
+        };
 ```
 
 ## 十四、图论
