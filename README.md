@@ -57,6 +57,8 @@
       - [442. 数组中重复的数据](#442-数组中重复的数据)
       - [35.搜索插入位置](#35搜索插入位置)
       - [581. 最短无序连续子数组](#581-最短无序连续子数组)
+      - [509 斐波那契数](#509-斐波那契数)
+      - [剑指 Offer 14- I. 剪绳子](#剑指-offer-14--i-剪绳子)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -125,6 +127,8 @@
       - [437.路径总和-iii](#437路径总和-iii)
       - [538. 把二叉搜索树转换为累加树](#538-把二叉搜索树转换为累加树)
       - [617. 合并二叉树](#617-合并二叉树)
+      - [剑指 Offer 07. 重建二叉树](#剑指-offer-07-重建二叉树)
+      - [106. 从中序与后序遍历序列构造二叉树](#106-从中序与后序遍历序列构造二叉树)
   - [九、DFS深度优先搜索](#九dfs深度优先搜索)
     - [9.1 基本模板](#91-基本模板)
       - [1) 递归法](#1-递归法-2)
@@ -147,6 +151,7 @@
       - [面试题33. 二叉搜索树的后序遍历序列](#面试题33-二叉搜索树的后序遍历序列)
       - [542. 01 矩阵](#542-01-矩阵)
       - [1091. 二进制矩阵中的最短路径](#1091-二进制矩阵中的最短路径)
+      - [剑指 Offer 55 - I. 二叉树的深度](#剑指-offer-55---i-二叉树的深度)
   - [十一、贪心](#十一贪心)
     - [11.1 基本模板](#111-基本模板)
       - [1) 递归法](#1-递归法-4)
@@ -1072,6 +1077,51 @@ var missingNumber = function(nums) {
             return j - i + 1;
         };
 ```
+
+#### [509 斐波那契数](https://leetcode-cn.com/problems/fibonacci-number)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=509 lang=javascript
+        *
+        * [509] 斐波那契数
+        */
+
+        // @lc code=start
+        /**
+         * @param {number} n
+         * @return {number}
+         */
+        var fib = function(n) {
+            let slow = 0, fast = n ? 1 : 0;
+            for (let i = 2; i <= n; i++) {
+                [slow, fast] = [fast, (slow + fast) % 1000000007];
+            }
+            return fast;
+        };
+```
+
+#### [剑指 Offer 14- I. 剪绳子](https://leetcode-cn.com/problems/jian-sheng-zi-lcof/)
+
+```js
+        /**
+         * @param {number} n
+         * @return {number}
+         */
+        var cuttingRope = function(n) {
+            if (n === 2) return 1;
+            if (n === 3) return 2;
+            const dp = [1, 1, 2, 3];
+            for (let i = 4; i <= n; i++) {
+                dp[i] = 0;
+                for (let j = 1; j < i; j++) {
+                    dp[i] = Math.max(dp[i], dp[i - j] * dp[j]);
+                }
+            }
+            return dp[n];
+        };
+```
+
 
 ## 四、字符串问题
 ### 4.1 基本模板 
@@ -2661,6 +2711,67 @@ var singleNumber = function(nums) {
         };
 ```
 
+#### [剑指 Offer 07. 重建二叉树](https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof/)
+
+![image.png](https://pic.leetcode-cn.com/e0615f7b6e39fbe69bde34bfe2bbc34db21db63465998dd52b62065329c139c4-image.png)
+
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {number[]} preorder
+         * @param {number[]} inorder
+         * @return {TreeNode}
+         */
+        var buildTree = function(preorder, inorder) {
+            if (!preorder.length) return null;
+            const top = preorder.shift();
+            const root = new TreeNode(top);
+            const topIndex = inorder.indexOf(top);
+            root.left = buildTree(preorder.slice(0, topIndex), inorder.slice(0, topIndex));
+            root.right = buildTree(preorder.slice(topIndex), inorder.slice(topIndex + 1));
+            return root;
+        };
+```
+
+#### [106. 从中序与后序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=106 lang=javascript
+        *
+        * [106] 从中序与后序遍历序列构造二叉树
+        */
+
+        // @lc code=start
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {number[]} inorder
+         * @param {number[]} postorder
+         * @return {TreeNode}
+         */
+        var buildTree = function(inorder, postorder) {
+            if (!postorder.length) return null;
+            const top = postorder.pop();
+            const root = new TreeNode(top);
+            const topIndex = inorder.indexOf(top);
+            root.left = buildTree(inorder.slice(0, topIndex), postorder.slice(0, topIndex));
+            root.right = buildTree(inorder.slice(topIndex + 1), postorder.slice(topIndex));
+            return root;
+        };
+```
+
 ## 九、DFS深度优先搜索
 ### 9.1 基本模板 
 #### 1) 递归法
@@ -3153,6 +3264,7 @@ var singleNumber = function(nums) {
 ```
 
 #### [1091. 二进制矩阵中的最短路径](https://leetcode-cn.com/problems/shortest-path-in-binary-matrix)
+
 ![image.png](https://pic.leetcode-cn.com/929aca2c178eab32e82a1547d932ad089160643cc4cff6e8f8225c4baa471b91-image.png)
 
 ```js
@@ -3181,6 +3293,45 @@ var shortestPathBinaryMatrix = function(grid) {
     }
     return -1;
 };
+```
+
+#### [剑指 Offer 55 - I. 二叉树的深度](https://leetcode-cn.com/problems/er-cha-shu-de-shen-du-lcof/)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=104 lang=javascript
+        *
+        * [104] 二叉树的最大深度
+        */
+
+        // @lc code=start
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {number}
+         */
+        var maxDepth = function(root) {
+            if (!root) return 0;
+            const queue = [root];
+            let len = queue.length;
+            let result = 0;
+            while (len) {
+                while(len--) {
+                    const front = queue.shift();
+                    front.left && queue.push(front.left);
+                    front.right && queue.push(front.right);
+                }
+                result++;
+                len = queue.length;
+            }
+            return result;
+        };
 ```
 
 ## 十一、贪心
