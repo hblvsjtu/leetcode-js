@@ -59,6 +59,9 @@
       - [581. 最短无序连续子数组](#581-最短无序连续子数组)
       - [509 斐波那契数](#509-斐波那契数)
       - [剑指 Offer 14- I. 剪绳子](#剑指-offer-14--i-剪绳子)
+      - [剑指 Offer 29. 顺时针打印矩阵](#剑指-offer-29-顺时针打印矩阵)
+      - [剑指 Offer 39. 数组中出现次数超过一半的数字](#剑指-offer-39-数组中出现次数超过一半的数字)
+      - [剑指 Offer 61. 扑克牌中的顺子](#剑指-offer-61-扑克牌中的顺子)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -93,10 +96,13 @@
       - [49. 字母异位词分组](#49-字母异位词分组)
   - [六、栈和队列](#六栈和队列)
     - [6.1 基本模板](#61-基本模板)
-      - [1) 递归法](#1-递归法-1)
+      - [1) 单调](#1-单调)
     - [6.2 题目](#62-题目)
       - [946. 验证栈序列](#946-验证栈序列)
       - [678. 有效的括号字符串](#678-有效的括号字符串)
+      - [剑指 Offer 59 - I. 滑动窗口的最大值](#剑指-offer-59---i-滑动窗口的最大值)
+      - [155. 最小栈](#155-最小栈)
+      - [剑指 Offer 09. 用两个栈实现队列](#剑指-offer-09-用两个栈实现队列)
   - [七、链表](#七链表)
     - [7.1 基本模板](#71-基本模板)
       - [1) 快慢指针](#1-快慢指针)
@@ -129,16 +135,18 @@
       - [617. 合并二叉树](#617-合并二叉树)
       - [剑指 Offer 07. 重建二叉树](#剑指-offer-07-重建二叉树)
       - [106. 从中序与后序遍历序列构造二叉树](#106-从中序与后序遍历序列构造二叉树)
+      - [114. 二叉树展开为链表](#114-二叉树展开为链表)
+      - [剑指 Offer 55 - II. 平衡二叉树](#剑指-offer-55---ii-平衡二叉树)
   - [九、DFS深度优先搜索](#九dfs深度优先搜索)
     - [9.1 基本模板](#91-基本模板)
-      - [1) 递归法](#1-递归法-2)
+      - [1) 递归法](#1-递归法-1)
       - [2) 迭代法](#2-迭代法)
     - [9.2 题目](#92-题目)
       - [54. 螺旋矩阵](#54-螺旋矩阵)
       - [59. 螺旋矩阵 II](#59-螺旋矩阵-ii)
   - [十、BFS广度优先搜索](#十bfs广度优先搜索)
     - [10.1 基本模板](#101-基本模板)
-      - [1) 递归法](#1-递归法-3)
+      - [1) 递归法](#1-递归法-2)
       - [2) 迭代法](#2-迭代法-1)
     - [10.2 题目](#102-题目)
       - [103 二叉树的锯齿形层次遍历](#103-二叉树的锯齿形层次遍历)
@@ -154,7 +162,7 @@
       - [剑指 Offer 55 - I. 二叉树的深度](#剑指-offer-55---i-二叉树的深度)
   - [十一、贪心](#十一贪心)
     - [11.1 基本模板](#111-基本模板)
-      - [1) 递归法](#1-递归法-4)
+      - [1) 递归法](#1-递归法-3)
       - [2) 迭代法](#2-迭代法-2)
       - [55. 跳跃游戏](#55-跳跃游戏)
       - [面试题 08.11. 硬币](#面试题-0811-硬币)
@@ -459,6 +467,19 @@ void Sum(int x[], int a[], int size, int i, int sum, int res, int targer) {
                 nums[target] = - nums[target];
         })
     };
+```
+
+> - 摩尔投票法
+
+```js
+        var majorityElement = function(nums) {
+            let vote = 0, target;
+            for (let i = 0, len = nums.length; i < len; i++) {
+                if (!vote) target = nums[i];
+                vote = nums[i] === target ? vote + 1 : vote - 1;
+            }
+            return target;
+        };
 ```
 
 ### 3.2 题目
@@ -1123,6 +1144,84 @@ var missingNumber = function(nums) {
 ```
 
 
+#### [剑指 Offer 29. 顺时针打印矩阵](https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof)
+
+![截屏2020-08-03 上午1.12.42.png](https://pic.leetcode-cn.com/c4776711f59585bada69ff04b5cce6be83bd5a0fe0ea275df3c06a0c0fac8848-%E6%88%AA%E5%B1%8F2020-08-03%20%E4%B8%8A%E5%8D%881.12.42.png)
+
+```js
+        /**
+         * @param {number[][]} matrix
+         * @return {number[]}
+         */
+        var spiralOrder = function(matrix) {
+            const result = [];
+            if (!matrix.length) return result;
+            const col = matrix[0].length;
+            const dir = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+            let i = 0, j = 0, k = 0, tol = matrix.length * col;
+            while(result.length < tol) {
+                if (i >= 0 && i < matrix.length && j >= 0 && j < col && matrix[i][j] !== '*') {
+                    result.push(matrix[i][j]);
+                    matrix[i][j] = '*';
+                }
+                else {
+                    i -= dir[k][0];
+                    j -= dir[k][1];
+                    k++;
+                    if (k === dir.length) k = 0;
+                }
+                i += dir[k][0];
+                j += dir[k][1];
+            } 
+            return result;
+        };
+```
+
+
+#### [剑指 Offer 39. 数组中出现次数超过一半的数字](https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/)
+
+![image.png](https://pic.leetcode-cn.com/2853aa09967c7ddd572c0370509d28946802ed4ca9796379989715afe8eff415-image.png)
+
+```js
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var majorityElement = function(nums) {
+            let vote = 0, target;
+            for (let i = 0, len = nums.length; i < len; i++) {
+                if (!vote) target = nums[i];
+                vote = nums[i] === target ? vote + 1 : vote - 1;
+            }
+            return target;
+        };
+```
+
+#### [剑指 Offer 61. 扑克牌中的顺子](https://leetcode-cn.com/problems/bu-ke-pai-zhong-de-shun-zi-lcof/solution/js-pai-xu-bao-li-fa-by-hblvsjtu/)
+
+![image.png](https://pic.leetcode-cn.com/712942fd0712e8f2c0d7acec254eb6f6bee534f453e751e8c6b96a2aa2472bf4-image.png)
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var isStraight = function(nums) {
+    nums.sort((a, b) => a - b);
+    let kingNum = 0;
+    for (let i = 0, len = nums.length; i < len; i++) {
+        if (!nums[i]) kingNum++;
+        else if (i > kingNum && nums[i] - nums[i - 1] !== 1) {
+            if (!kingNum) return false;
+            kingNum--;
+            nums[--i]++;
+        }
+    }
+    return true;
+};
+```
+
+
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -1717,8 +1816,30 @@ var singleNumber = function(nums) {
 ## 六、栈和队列
 ### 6.1 基本模板 
         
-#### 1) 递归法
-> - 先序遍历()
+#### 1) 单调
+> - 单调栈 特点：原始数组是一个栈，先进后出
+
+```js
+        // x: 要添加的数据
+        // y: 要删除的数据
+        // 单调递减
+        const stack = [...];
+        if (x >= this.stack[0] || !this.stack.length) this.stack.unshift(x);
+        if (y === queue[0]) queue.shift();
+```
+
+> - 单调队列（双端队列） 特点：原始数组是一个队列，先进先出
+```js
+        // x: 要添加的数据
+        // y: 要删除的数据
+        // 单调递减
+        const queue = [...];
+        while (x >= queue[queue.length - 1]) queue.pop();
+        queue.push(x);
+        if (y === queue[0]) queue.shift();
+```
+
+
 ### 6.2 题目
 #### [946. 验证栈序列](https://leetcode-cn.com/problems/validate-stack-sequences/submissions/)
 
@@ -1745,7 +1866,7 @@ var singleNumber = function(nums) {
         };
 ```
 
-#### [678. 有效的括号字符串](https://leetcode-cn.com/problems/valid-parenthesis-string/submissions/)
+#### [678. 有效的括号字符串](https://leetcode-cn.com/problems/valid-parenthesis-string/)
 ![image.png](https://pic.leetcode-cn.com/69a4097222293c9e4672c83a9d65f430126f1cc9e6114b41147abd223cd1c174-image.png)
 
 ```js
@@ -1784,17 +1905,113 @@ var singleNumber = function(nums) {
         };
 ```
 
-给定一个只包含三种字符的字符串：（ ，） 和 *，写一个函数来检验这个字符串是否为有效字符串。有效字符串具有如下规则：
+#### [剑指 Offer 59 - I. 滑动窗口的最大值](https://leetcode-cn.com/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/)
 
-任何左括号 ( 必须有相应的右括号 )。
-任何右括号 ) 必须有相应的左括号 ( 。
-左括号 ( 必须在对应的右括号之前 )。
-* 可以被视为单个右括号 ) ，或单个左括号 ( ，或一个空字符串。
-一个空字符串也被视为有效字符串。
+![image.png](https://pic.leetcode-cn.com/a35d7c2119276e602d41aaaa26ea987415dbaaeb1b0face494ba2404208d974e-image.png)
 
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/valid-parenthesis-string
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```js
+        var maxSlidingWindow = function(nums, k) {
+            const res = [], queue = [];   // 优先队列（单调不增）
+            for (let i = 0, K = k - 1; i < nums.length; i++){ // 遍历nums[]
+                while (nums[i] > queue[queue.length - 1]) queue.pop();
+                queue.push(nums[i]);
+                if (queue[0] === nums[i - k]) queue.shift();
+                if (i >= K) res.push(queue[0]);
+            }
+            return res;
+        }
+```
+
+#### [155. 最小栈](https://leetcode-cn.com/problems/min-stack/)
+
+![image.png](https://pic.leetcode-cn.com/0e162fd319f6823b213e8932dc14c5be69033f5d75eee581ab123cbac4148732-image.png)
+
+```js
+        /**
+         * initialize your data structure here.
+         */
+        var MinStack = function() {
+            this.record = [];
+            this.queue = [];
+        };
+
+        /** 
+         * @param {number} x
+         * @return {void}
+         */
+        MinStack.prototype.push = function(x) {
+            this.record.push(x);
+            if (!this.queue.length) this.queue.push(x);
+            else if (x <= this.queue[0]) this.queue.unshift(x);
+        };
+
+        /**
+         * @return {void}
+         */
+        MinStack.prototype.pop = function() {
+            if (this.record.pop() === this.queue[0]) this.queue.shift();
+        };
+
+        /**
+         * @return {number}
+         */
+        MinStack.prototype.top = function() {
+            return this.record[this.record.length - 1];
+        };
+
+        /**
+         * @return {number}
+         */
+        MinStack.prototype.getMin = function() {
+            return this.queue[0];
+        };
+
+        /**
+         * Your MinStack object will be instantiated and called as such:
+         * var obj = new MinStack()
+         * obj.push(x)
+         * obj.pop()
+         * var param_3 = obj.top()
+         * var param_4 = obj.getMin()
+         */
+```
+
+#### [剑指 Offer 09. 用两个栈实现队列](https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof)
+
+![image.png](https://pic.leetcode-cn.com/b06a3ba735bd1de8f8729848f322e163e2ec3b8a27f2f16909383358c72e560b-image.png)
+
+```js
+        var CQueue = function() {
+            this.addStack = [];
+            this.deleteStack = [];
+        };
+
+        /** 
+         * @param {number} value
+         * @return {void}
+         */
+        CQueue.prototype.appendTail = function(value) {
+            this.addStack.push(value);
+        };
+
+        /**
+         * @return {number}
+         */
+        CQueue.prototype.deleteHead = function() {
+            if (this.deleteStack.length) return this.deleteStack.pop();
+            if (!this.addStack.length) return -1;
+            while (this.addStack.length) this.deleteStack.push(this.addStack.pop());
+            return this.deleteStack.pop();
+        };
+
+        /**
+         * Your CQueue object will be instantiated and called as such:
+         * var obj = new CQueue()
+         * obj.appendTail(value)
+         * var param_2 = obj.deleteHead()
+         */
+```
+
 
 ## 七、链表
 ### 7.1 基本模板 
@@ -2769,6 +2986,61 @@ var singleNumber = function(nums) {
             root.left = buildTree(inorder.slice(0, topIndex), postorder.slice(0, topIndex));
             root.right = buildTree(inorder.slice(topIndex + 1), postorder.slice(topIndex));
             return root;
+        };
+```
+
+#### [114. 二叉树展开为链表](https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list)
+
+![截屏2020-08-02 下午10.18.09.png](https://pic.leetcode-cn.com/ad81d4b2c3f5ee4dac81f5725dfdf7fb1c08a378505f5a92c436dbee65ac9043-%E6%88%AA%E5%B1%8F2020-08-02%20%E4%B8%8B%E5%8D%8810.18.09.png)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {void} Do not return anything, modify root in-place instead.
+ */
+var flatten = function(root) {
+    if (!root) return null;
+    flatten(root.left);
+    flatten(root.right);
+    let head = root.left;
+    if (head) {
+        while (head.right) head = head.right;
+        head.right = root.right;
+        root.right = root.left;
+        root.left = null;
+    }
+};
+```
+
+#### [剑指 Offer 55 - II. 平衡二叉树](https://leetcode-cn.com/problems/ping-heng-er-cha-shu-lcof)
+![image.png](https://pic.leetcode-cn.com/30f9670b00c0f2a498072a752bcb6e2c999ae3aff795a67bb8b2ad9afb3d495e-image.png)
+
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {boolean}
+         */
+        var isBalanced = function(root) {
+            if (!root) return true;
+            if (!isBalanced(root.left) || !isBalanced(root.right)) return false;
+            let leftLevel = root.left ? root.left.level : 0;
+            let rightLevel = root.right ? root.right.level : 0;
+            root.level = Math.max(leftLevel, rightLevel) + 1;
+            return Math.abs(leftLevel - rightLevel) < 2;
         };
 ```
 
