@@ -113,8 +113,10 @@
       - [445. 两数相加 II](#445-两数相加-ii)
       - [141. 环形链表](#141-环形链表)
       - [142. 环形链表 II](#142-环形链表-ii)
+      - [剑指 Offer 52. 两个链表的第一个公共节点](#剑指-offer-52-两个链表的第一个公共节点)
       - [61. 旋转链表](#61-旋转链表)
       - [23. 合并K个排序链表](#23-合并k个排序链表)
+      - [剑指 Offer 18. 删除链表的节点](#剑指-offer-18-删除链表的节点)
   - [八、树](#八树)
     - [8.1 基本模板](#81-基本模板)
     - [8.2 题目](#82-题目)
@@ -137,6 +139,8 @@
       - [106. 从中序与后序遍历序列构造二叉树](#106-从中序与后序遍历序列构造二叉树)
       - [114. 二叉树展开为链表](#114-二叉树展开为链表)
       - [剑指 Offer 55 - II. 平衡二叉树](#剑指-offer-55---ii-平衡二叉树)
+      - [剑指 Offer 55 - II. 平衡二叉树](#剑指-offer-55---ii-平衡二叉树-1)
+      - [剑指 Offer 54. 二叉搜索树的第k大节点](#剑指-offer-54-二叉搜索树的第k大节点)
   - [九、DFS深度优先搜索](#九dfs深度优先搜索)
     - [9.1 基本模板](#91-基本模板)
       - [1) 递归法](#1-递归法-1)
@@ -160,6 +164,8 @@
       - [542. 01 矩阵](#542-01-矩阵)
       - [1091. 二进制矩阵中的最短路径](#1091-二进制矩阵中的最短路径)
       - [剑指 Offer 55 - I. 二叉树的深度](#剑指-offer-55---i-二叉树的深度)
+      - [297. 二叉树的序列化与反序列化](#297-二叉树的序列化与反序列化)
+      - [剑指 Offer 32 - II. 从上到下打印二叉树 II](#剑指-offer-32---ii-从上到下打印二叉树-ii)
   - [十一、贪心](#十一贪心)
     - [11.1 基本模板](#111-基本模板)
       - [1) 递归法](#1-递归法-3)
@@ -231,6 +237,8 @@
       - [69. x 的平方根](#69-x-的平方根)
       - [1262. 可被三整除的最大和](#1262-可被三整除的最大和)
       - [950. 按递增顺序显示卡牌](#950-按递增顺序显示卡牌)
+      - [剑指 Offer 45. 把数组排成最小的数](#剑指-offer-45-把数组排成最小的数)
+      - [172. 阶乘后的零](#172-阶乘后的零)
   - [十六、设计问题](#十六设计问题)
     - [16.1 基本模板](#161-基本模板)
     - [16.2 题目](#162-题目)
@@ -2229,6 +2237,37 @@ var singleNumber = function(nums) {
         };
 ```
 
+#### [剑指 Offer 52. 两个链表的第一个公共节点](https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof)
+
+![image.png](https://pic.leetcode-cn.com/e1c3d912f9db009837bb27f9fb21115be8b00c2138adfb6bdfb7b17df87e9ea0-image.png)
+
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+
+        /**
+         * @param {ListNode} headA
+         * @param {ListNode} headB
+         * @return {ListNode}
+         */
+        var getIntersectionNode = function(headA, headB) {
+            while (headA) {
+                headA.isVisited = true;
+                headA = headA.next;
+            }
+            while (headB) {
+                if (headB.isVisited) return headB;
+                headB = headB.next;
+            }
+            return null;
+        };
+```
+
 #### [61. 旋转链表](https://leetcode-cn.com/problems/rotate-list/)
 
 ```js
@@ -2293,6 +2332,39 @@ var singleNumber = function(nums) {
                 front = front.next;
             }
             return res.next;
+        };
+```
+
+
+#### [剑指 Offer 18. 删除链表的节点](https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof/)
+
+![image.png](https://pic.leetcode-cn.com/412cdcd124aa160fdfc0a37cec77ed3206684c9e773b29464f4102b7d0123a35-image.png)
+
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param {ListNode} head
+         * @param {number} val
+         * @return {ListNode}
+         */
+        var deleteNode = function(head, val) {
+            if (!head) return head;
+            let h = head;
+            if (h.val === val) return h.next;
+            while (h && h.next) {
+                if (h.next.val === val) {
+                    h.next = h.next.next;
+                    return head;
+                }
+                h = h.next;
+            }
+            return head;
         };
 ```
 
@@ -3044,6 +3116,70 @@ var flatten = function(root) {
         };
 ```
 
+#### [剑指 Offer 55 - II. 平衡二叉树](https://leetcode-cn.com/problems/ping-heng-er-cha-shu-lcof)
+
+![image.png](https://pic.leetcode-cn.com/e2a83a65c9dd19babbaeb53c61fc9964e98c6ffefa2e4bf4e8cc26423231c1e9-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=226 lang=javascript
+        *
+        * [226] 翻转二叉树
+        */
+
+        // @lc code=start
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {TreeNode}
+         */
+        var invertTree = function(root) {
+            if (!root) return null;
+            invertTree(root.left);
+            invertTree(root.right);
+            let temp = root.left;
+            root.left = root.right;
+            root.right = temp;
+            return root;
+        };
+```
+
+#### [剑指 Offer 54. 二叉搜索树的第k大节点](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/)
+
+![image.png](https://pic.leetcode-cn.com/090057344f0a4a436f24fee76cc13ef43c536ebe6ab12808464efe27f1aa1e65-image.png)
+
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @param {number} k
+         * @return {number}
+         */
+        var kthLargest = function(root, k) {
+            const record = [];
+            function inorder(root) {
+                if (!root) return;
+                inorder(root.left);
+                record.push(root.val);
+                inorder(root.right);
+            }
+            inorder(root);
+            return record[record.length - k];
+        };
+```
+
 ## 九、DFS深度优先搜索
 ### 9.1 基本模板 
 #### 1) 递归法
@@ -3606,6 +3742,109 @@ var shortestPathBinaryMatrix = function(grid) {
         };
 ```
 
+#### [297. 二叉树的序列化与反序列化](https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/)
+```js
+        /*
+        * @lc app=leetcode.cn id=297 lang=javascript
+        *
+        * [297] 二叉树的序列化与反序列化
+        */
+
+        // @lc code=start
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+
+        /**
+         * Encodes a tree to a single string.
+         *
+         * @param {TreeNode} root
+         * @return {string}
+         */
+        var serialize = function(root) {
+            if (!root) return [];
+            const queue = [root];
+            let len = queue.length;
+            const res = [];
+            while (len) {
+                while (len--) {
+                    const front = queue.shift();
+                    if (!front) {
+                        res.push(null);
+                        continue;
+                    }
+                    res.push(front.val);
+                    queue.push(front.left, front.right);
+                }
+                len = queue.length;
+            }
+            console.log(res);
+            return res;
+        };
+
+        /**
+         * Decodes your encoded data to tree.
+         *
+         * @param {string} data
+         * @return {TreeNode}
+         */
+        var deserialize = function(data) {
+            if (!data.length) return null;
+            const root = new TreeNode(data.shift());
+            const queue = [root];
+            let len = queue.length;
+            while (len) {
+                while (len--) {
+                    const front = queue.shift();
+                    if (!front) continue;
+                    const left = data.shift();
+                    if (typeof left === 'number') front.left = new TreeNode(left);
+                    const right = data.shift();
+                    if (typeof right === 'number') front.right = new TreeNode(right);
+                    queue.push(front.left, front.right);
+                }
+                len = queue.length;
+            }
+            return root;
+        };
+```
+
+#### [剑指 Offer 32 - II. 从上到下打印二叉树 II](https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function(root) {
+    if (!root) return [];
+    const queue = [root], res = [];
+    let len = queue.length, temp;
+    while (len) {
+        temp = [];
+        while (len--) {
+            const front = queue.shift();
+            if (!front) continue;
+            temp.push(front.val)
+            queue.push(front.left, front.right);
+        }
+        len = queue.length;
+        temp.length && res.push(temp);
+    }
+    return res;
+};
+```
 ## 十一、贪心
 ### 11.1 基本模板 
         
@@ -5374,6 +5613,47 @@ var deckRevealedIncreasing = function(deck) {
     }
     return res;
 };
+```
+
+#### [剑指 Offer 45. 把数组排成最小的数](https://leetcode-cn.com/problems/ba-shu-zu-pai-cheng-zui-xiao-de-shu-lcof)
+
+![image.png](https://pic.leetcode-cn.com/5c55c3bb048f56f6b7bf93c733b09f0141b6f80b599e709eb84a685769a729a0-image.png)
+
+```js
+        /**
+         * @param {number[]} nums
+         * @return {string}
+         */
+        var minNumber = function(nums) {
+            return nums.sort((i, j) => +('' + i + j) - +('' + j + i)).join('');
+        };
+```
+
+#### [172. 阶乘后的零](https://leetcode-cn.com/problems/factorial-trailing-zeroes)
+
+![image.png](https://pic.leetcode-cn.com/fc524b7b0c5c037543277b2e6a270b4d50c8e4f0bd737d45de8b0c151b29c070-image.png)
+
+
+```js
+        /*
+        * @lc app=leetcode.cn id=172 lang=javascript
+        *
+        * [172] 阶乘后的零
+        */
+
+        // @lc code=start
+        /**
+         * @param {number} n
+         * @return {number}
+         */
+        var trailingZeroes = function(n) {
+            let sum = 0;
+            while (n >= 5) {
+                sum += n / 5 | 0;
+                n /= 5;
+            }
+            return sum;
+        };
 ```
 
 ## 十六、设计问题
