@@ -62,6 +62,7 @@
       - [剑指 Offer 29. 顺时针打印矩阵](#剑指-offer-29-顺时针打印矩阵)
       - [剑指 Offer 39. 数组中出现次数超过一半的数字](#剑指-offer-39-数组中出现次数超过一半的数字)
       - [剑指 Offer 61. 扑克牌中的顺子](#剑指-offer-61-扑克牌中的顺子)
+      - [238. 除自身以外数组的乘积](#238-除自身以外数组的乘积)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -94,6 +95,8 @@
       - [面试题51. 数组中的逆序对](#面试题51-数组中的逆序对)
       - [146. LRU缓存机制](#146-lru缓存机制)
       - [49. 字母异位词分组](#49-字母异位词分组)
+      - [219. 存在重复元素 II](#219-存在重复元素-ii)
+      - [220. 存在重复元素 III](#220-存在重复元素-iii)
   - [六、栈和队列](#六栈和队列)
     - [6.1 基本模板](#61-基本模板)
       - [1) 单调](#1-单调)
@@ -141,6 +144,7 @@
       - [剑指 Offer 55 - II. 平衡二叉树](#剑指-offer-55---ii-平衡二叉树)
       - [剑指 Offer 55 - II. 平衡二叉树](#剑指-offer-55---ii-平衡二叉树-1)
       - [剑指 Offer 54. 二叉搜索树的第k大节点](#剑指-offer-54-二叉搜索树的第k大节点)
+      - [208. 实现 Trie (前缀树)](#208-实现-trie-前缀树)
   - [九、DFS深度优先搜索](#九dfs深度优先搜索)
     - [9.1 基本模板](#91-基本模板)
       - [1) 递归法](#1-递归法-1)
@@ -239,6 +243,7 @@
       - [950. 按递增顺序显示卡牌](#950-按递增顺序显示卡牌)
       - [剑指 Offer 45. 把数组排成最小的数](#剑指-offer-45-把数组排成最小的数)
       - [172. 阶乘后的零](#172-阶乘后的零)
+      - [剑指 Offer 15. 二进制中1的个数](#剑指-offer-15-二进制中1的个数)
   - [十六、设计问题](#十六设计问题)
     - [16.1 基本模板](#161-基本模板)
     - [16.2 题目](#162-题目)
@@ -1229,6 +1234,41 @@ var isStraight = function(nums) {
 };
 ```
 
+#### [238. 除自身以外数组的乘积](https://leetcode-cn.com/problems/product-of-array-except-self)
+
+![image.png](https://pic.leetcode-cn.com/a1bc84700e45adbd086bd3d0bc25265861bbd1303105ef18bee02c2ad96d9cac-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=238 lang=javascript
+        *
+        * [238] 除自身以外数组的乘积
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} nums
+         * @return {number[]}
+         * [0,1,2,3,4,9]\n[0]\n[]\n[1,2,0,0,1]
+         */
+        var productExceptSelf = function(nums) {
+            const left = {'-1': 1, [nums.length]: 1},
+                right = {'-1': 1, [nums.length]: 1};
+            let p = 1;
+            nums.forEach((num, index) => {
+                p *= num;
+                left[index] = p;
+            });
+            let len = nums.length - 1;
+            p = 1;
+            nums.forEach((num, index) => {
+                index = len - index;
+                p *= nums[index];
+                right[index] = p;
+            });
+            return nums.map((num, i) => left[i - 1] * right[i + 1]);
+        };
+```
 
 ## 四、字符串问题
 ### 4.1 基本模板 
@@ -1819,6 +1859,52 @@ var singleNumber = function(nums) {
             }
             return res;
         };
+```
+
+#### [219. 存在重复元素 II](https://leetcode-cn.com/problems/contains-duplicate-ii)
+
+![image.png](https://pic.leetcode-cn.com/c48e25571b556bd522afc9f8c24ade1caa2b764ed1217ddb4dce5ad159260bb9-image.png)
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {boolean}
+ */
+var containsNearbyDuplicate = function(nums, k) {
+    if (!k) return false;
+    const record = new Set([nums[0]]);
+    for (let i = 1, len = nums.length; i < len; i++) {
+        if (record.has(nums[i])) return true;
+        if (record.size === k) record.delete(nums[i - k]);
+        record.add(nums[i]);
+    }
+    return false;
+};
+```
+
+#### [220. 存在重复元素 III](https://leetcode-cn.com/problems/contains-duplicate-iii)
+
+```js
+var containsNearbyAlmostDuplicate = function(nums, k, t) {
+    // 解决js中 -0 === 0 为true的问题
+    function getId(x, w) {
+        return Math.floor(x / w)
+    }
+    if (t < 0) return false
+    const map = new Map()
+    const w = t + 1
+    for (let i = 0; i < nums.length; i++) {
+        const m = getId(nums[i] ,w)
+        if (map.has(m)) return true
+        else if (map.has(+m + 1) && Math.abs(map.get(+m + 1) - nums[i]) < w) return true
+        else if (map.has(+m - 1) && Math.abs(map.get(+m - 1) - nums[i]) < w) return true
+        map.set(m, nums[i])
+        if (i >= k) map.delete(getId(nums[i - k], w))
+    }
+    return false
+};
+
 ```
 
 ## 六、栈和队列
@@ -3178,6 +3264,78 @@ var flatten = function(root) {
             inorder(root);
             return record[record.length - k];
         };
+```
+
+#### [208. 实现 Trie (前缀树)](https://leetcode-cn.com/problems/implement-trie-prefix-tree)
+
+![image.png](https://pic.leetcode-cn.com/ec41d63792adcd67c5f51c470cdb1d9810884a6b76024bf7dd1c20866a6395cc-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=208 lang=javascript
+        *
+        * [208] 实现 Trie (前缀树)
+        */
+
+        // @lc code=start
+        /**
+         * Initialize your data structure here.
+         */
+        var TreeNode = function() {
+            this.next = {};
+            this.isEnd = false;
+        };
+
+        var Trie = function() {
+            this.root = new TreeNode();
+        };
+
+        /**
+         * Inserts a word into the trie. 
+         * @param {string} word
+         * @return {void}
+         */
+        Trie.prototype.insert = function(word) {
+            if (!word) return false;
+            let head = this.root;
+            for (let s of word) {
+                if (!head.next[s]) head.next[s] = new TreeNode();
+                head = head.next[s];
+            }
+            head.isEnd = true;
+            return true;
+        };
+
+        /**
+         * Returns if the word is in the trie. 
+         * @param {string} word
+         * @return {boolean}
+         */
+        Trie.prototype.search = function(word) {
+            if (!word) return false;
+            let head = this.root;
+            for (let s of word) {
+                if (!head.next[s]) return false;
+                head = head.next[s];
+            }
+            return head.isEnd;
+        };
+
+        /**
+         * Returns if there is any word in the trie that starts with the given prefix. 
+         * @param {string} prefix
+         * @return {boolean}
+         */
+        Trie.prototype.startsWith = function(prefix) {
+            if (!prefix) return false;
+            let head = this.root;
+            for (let s of prefix) {
+                if (!head.next[s]) return false;
+                head = head.next[s];
+            }
+            return true;
+        };
+
 ```
 
 ## 九、DFS深度优先搜索
@@ -5655,6 +5813,35 @@ var deckRevealedIncreasing = function(deck) {
             return sum;
         };
 ```
+
+#### [剑指 Offer 15. 二进制中1的个数](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof)
+
+![image.png](https://pic.leetcode-cn.com/fca221790dce3272611e9be7c3a215dbdb8f2f060b95744520efef304ddcbf65-image.png)
+
+```js
+/*
+ * @lc app=leetcode.cn id=191 lang=javascript
+ *
+ * [191] 位1的个数
+ */
+
+// @lc code=start
+/**
+ * @param {number} n - a positive integer
+ * @return {number}
+ */
+var hammingWeight = function(n) {
+    let count = 0;
+    while (n) {
+        n &= (n - 1);
+        while (n > 0 && !(n & 1)) n >>= 1;
+        count++;
+    }
+    return count;
+};
+```
+
+
 
 ## 十六、设计问题
 ### 16.1 基本模板
