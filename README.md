@@ -63,6 +63,7 @@
       - [剑指 Offer 39. 数组中出现次数超过一半的数字](#剑指-offer-39-数组中出现次数超过一半的数字)
       - [剑指 Offer 61. 扑克牌中的顺子](#剑指-offer-61-扑克牌中的顺子)
       - [238. 除自身以外数组的乘积](#238-除自身以外数组的乘积)
+      - [324. 摆动排序 II](#324-摆动排序-ii)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -250,6 +251,7 @@
       - [355. 设计推特](#355-设计推特)
       - [460. LFU缓存](#460-lfu缓存)
       - [146. LRU缓存机制](#146-lru缓存机制-1)
+      - [380. 常数时间插入、删除和获取随机元素](#380-常数时间插入删除和获取随机元素)
 
 
 ## 一、排序问题
@@ -1267,6 +1269,26 @@ var isStraight = function(nums) {
                 right[index] = p;
             });
             return nums.map((num, i) => left[i - 1] * right[i + 1]);
+        };
+```
+
+#### [324. 摆动排序 II](https://leetcode-cn.com/problems/wiggle-sort-ii)
+
+![image.png](https://pic.leetcode-cn.com/7092d1be0d190665d60b99e4c596cd1d7f6c9f6bf3a498d983e980f7ed15972f-image.png)
+
+```js
+        // @lc code=start
+        /**
+         * @param {number[]} nums
+         * @return {void} Do not return anything, modify nums in-place instead.
+         */
+        var wiggleSort = function(nums) {
+            const sort = nums.sort((a, b) => a - b).slice();
+            let j = nums.length - 1, i = j >> 1, k = 0;
+            while (k < sort.length) {
+                nums[k] = (k & 1) ? sort[j--] : sort[i--];
+                k++;
+            }
         };
 ```
 
@@ -6022,3 +6044,67 @@ var hammingWeight = function(n) {
          */
 ```
 
+#### [380. 常数时间插入、删除和获取随机元素](https://leetcode-cn.com/problems/insert-delete-getrandom-o1)
+
+![image.png](https://pic.leetcode-cn.com/8a0a5a0ba1a9355f2cc50ec74936e1fe7d0df75dc5eaa3047e0a36bdf6213fc7-image.png)
+
+
+```js
+/*
+        * @lc app=leetcode.cn id=380 lang=javascript
+        *
+        * [380] 常数时间插入、删除和获取随机元素
+        */
+
+        // @lc code=start
+        /**
+         * Initialize your data structure here.
+         */
+        var RandomizedSet = function() {
+            this.set = new Set();
+        };
+
+        /**
+         * Inserts a value to the set. Returns true if the set did not already contain the specified element. 
+         * @param {number} val
+         * @return {boolean}
+         */
+        RandomizedSet.prototype.insert = function(val) {
+            const isExist = this.set.has(val);
+            this.set.add(val);
+            return !isExist;
+        };
+
+        /**
+         * Removes a value from the set. Returns true if the set contained the specified element. 
+         * @param {number} val
+         * @return {boolean}
+         */
+        RandomizedSet.prototype.remove = function(val) {
+            const isExist = this.set.has(val);
+            this.set.delete(val);
+            return isExist;
+        };
+
+        /**
+         * Get a random element from the set.
+         * @return {number}
+         */
+        RandomizedSet.prototype.getRandom = function() {
+            let index = (this.set.size * Math.random() | 0) + 1;
+            let res = 0;
+            const a = this.set.values();
+            while (index--) {
+                res = a.next().value;
+            }
+            return res;
+        };
+
+        /**
+         * Your RandomizedSet object will be instantiated and called as such:
+         * var obj = new RandomizedSet()
+         * var param_1 = obj.insert(val)
+         * var param_2 = obj.remove(val)
+         * var param_3 = obj.getRandom()
+         */
+```
