@@ -121,6 +121,7 @@
       - [61. 旋转链表](#61-旋转链表)
       - [23. 合并K个排序链表](#23-合并k个排序链表)
       - [剑指 Offer 18. 删除链表的节点](#剑指-offer-18-删除链表的节点)
+      - [剑指 Offer 25. 合并两个排序的链表](#剑指-offer-25-合并两个排序的链表)
   - [八、树](#八树)
     - [8.1 基本模板](#81-基本模板)
     - [8.2 题目](#82-题目)
@@ -245,6 +246,7 @@
       - [剑指 Offer 45. 把数组排成最小的数](#剑指-offer-45-把数组排成最小的数)
       - [172. 阶乘后的零](#172-阶乘后的零)
       - [剑指 Offer 15. 二进制中1的个数](#剑指-offer-15-二进制中1的个数)
+      - [剑指 Offer 43. 1～n整数中1出现的次数](#剑指-offer-43-1n整数中1出现的次数)
   - [十六、设计问题](#十六设计问题)
     - [16.1 基本模板](#161-基本模板)
     - [16.2 题目](#162-题目)
@@ -2473,6 +2475,32 @@ var containsNearbyAlmostDuplicate = function(nums, k, t) {
                 h = h.next;
             }
             return head;
+```
+
+#### [剑指 Offer 25. 合并两个排序的链表](https://leetcode-cn.com/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof/)
+
+![截屏2020-08-11 下午3.41.57.png](https://pic.leetcode-cn.com/7c8504bb8a152b852c31a2702ded2afbc78d38fd4695248f42a7703246ca3718-%E6%88%AA%E5%B1%8F2020-08-11%20%E4%B8%8B%E5%8D%883.41.57.png)
+
+```js
+         * @param {ListNode} l1
+         * @param {ListNode} l2
+         * @return {ListNode}
+         */
+        var mergeTwoLists = function(l1, l2) {
+            const root = new ListNode();
+            let head = root;
+            while (l1 || l2) {
+                if (!l1 || (l2 && l1.val >= l2.val)) {
+                    head.next = l2;
+                    l2 = l2.next;
+                }
+                else {
+                    head.next = l1;
+                    l1 = l1.next;
+                }
+                head = head.next;
+            }
+            return root.next;
         };
 ```
 
@@ -5864,6 +5892,30 @@ var hammingWeight = function(n) {
 ```
 
 
+
+#### [剑指 Offer 43. 1～n整数中1出现的次数](https://leetcode-cn.com/problems/1nzheng-shu-zhong-1chu-xian-de-ci-shu-lcof)
+
+![截屏2020-08-11 下午10.09.48.png](https://pic.leetcode-cn.com/7be6023112fdb427c290a1abbc5cd9cdad96015e834ce2c8d277deebba82fc36-%E6%88%AA%E5%B1%8F2020-08-11%20%E4%B8%8B%E5%8D%8810.09.48.png)
+
+```js
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var countDigitOne = function(n) {
+   let res = 0, high = parseInt(n / 10), cur = n % 10, low = 0, digist = 1;
+   while (high || cur) {
+       if (!cur) res += high * digist;
+       if (cur === 1) res += high * digist + low + 1;
+       if (cur > 1) res += (high + 1) * digist;
+       low += cur * digist;
+       cur = high % 10;
+       high = parseInt(high / 10);
+       digist *= 10;
+   }
+   return res;
+};
+```
 
 ## 十六、设计问题
 ### 16.1 基本模板
