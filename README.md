@@ -67,6 +67,8 @@
       - [153. 寻找旋转排序数组中的最小值](#153-寻找旋转排序数组中的最小值)
       - [154. 寻找旋转排序数组中的最小值 II](#154-寻找旋转排序数组中的最小值-ii)
       - [74. 搜索二维矩阵](#74-搜索二维矩阵)
+      - [334. 递增的三元子序列](#334-递增的三元子序列)
+      - [378. 有序矩阵中第K小的元素](#378-有序矩阵中第k小的元素)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -1397,6 +1399,68 @@ var isStraight = function(nums) {
             }
             return false;
         };
+```
+
+#### [334. 递增的三元子序列](https://leetcode-cn.com/problems/search-a-2d-matrix)
+
+![image.png](https://pic.leetcode-cn.com/1598262353-GbiGxM-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=334 lang=javascript
+        *
+        * [334] 递增的三元子序列
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} nums
+         * @return {boolean}
+         */
+        var increasingTriplet = function(nums) {
+            let right = [], i = nums.length, min = nums[0];
+            while (i--) right.unshift(nums[i] < right[0] ? right[0] : nums[i]);
+            for (let i = 1; i < nums.length - 1; i++) {
+                min = min > nums[i - 1] ? nums[i - 1] : min;
+                if (nums[i] > min && nums[i] < right[i + 1]) return true;
+            }
+            return false;
+        };
+```
+
+#### [378. 有序矩阵中第K小的元素](https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix)
+
+![image.png](https://pic.leetcode-cn.com/1598274685-oEgAVT-image.png)
+
+```js
+/*
+ * @lc app=leetcode.cn id=378 lang=javascript
+ *
+ * [378] 有序矩阵中第K小的元素
+ */
+
+// @lc code=start
+/**
+ * @param {number[][]} matrix
+ * @param {number} k
+ * @return {number}
+ */
+var kthSmallest = function(matrix, k) {
+    const indexs = Array(matrix.length).fill(0);
+    let min, len, targetIndex;
+    while (k--) {
+        len = matrix.length;
+        min = Infinity;
+        while (len--) {
+            if (matrix[len][indexs[len]] <= min) {
+                min = matrix[len][indexs[len]];
+                targetIndex = len;
+            }
+        }
+        indexs[targetIndex]++;
+    }
+    return min;
+};
 ```
 
 ## 四、字符串问题
