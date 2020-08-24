@@ -64,6 +64,9 @@
       - [剑指 Offer 61. 扑克牌中的顺子](#剑指-offer-61-扑克牌中的顺子)
       - [238. 除自身以外数组的乘积](#238-除自身以外数组的乘积)
       - [324. 摆动排序 II](#324-摆动排序-ii)
+      - [153. 寻找旋转排序数组中的最小值](#153-寻找旋转排序数组中的最小值)
+      - [154. 寻找旋转排序数组中的最小值 II](#154-寻找旋转排序数组中的最小值-ii)
+      - [74. 搜索二维矩阵](#74-搜索二维矩阵)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -1291,6 +1294,108 @@ var isStraight = function(nums) {
                 nums[k] = (k & 1) ? sort[j--] : sort[i--];
                 k++;
             }
+        };
+```
+
+#### [153. 寻找旋转排序数组中的最小值](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array)
+
+![image.png](https://pic.leetcode-cn.com/1598247976-fFhfZC-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=153 lang=javascript
+        *
+        * [153] 寻找旋转排序数组中的最小值
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var findMin = function(nums) {
+            if (nums[nums.length - 1] >= nums[0]) return nums[0];
+            let left = 0, right = nums.length - 1, mid;
+            while (left <= right) {
+                mid = (left + right) >> 1;
+                if (nums[mid] > nums[mid + 1]) return nums[mid + 1];
+                if (nums[mid] < nums[mid - 1]) return nums[mid];
+                if (nums[mid] > nums[0]) left = mid + 1;
+                else right = mid - 1; 
+            }
+        };
+```
+
+#### [154. 寻找旋转排序数组中的最小值 II](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii)
+
+![image.png](https://pic.leetcode-cn.com/1598253367-eemmVh-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=154 lang=javascript
+        *
+        * [154] 寻找旋转排序数组中的最小值 II
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var findMin = function(nums) {
+            while (nums.length > 1 && nums[0] === nums[nums.length - 1]) nums.pop();
+            let left = 0, right = nums.length - 1, mid, leftMid, rightMid;
+            if (nums[right] >= nums[0]) return nums[0];
+            while (left <= right) {
+                mid = (left + right) >> 1;
+                leftMid = mid;
+                while (nums[leftMid] === nums[leftMid - 1]) leftMid--;
+                rightMid = mid;
+                while (nums[rightMid] === nums[rightMid+ 1]) rightMid++;
+                if (nums[leftMid - 1] > nums[leftMid]) return nums[leftMid];
+                if (nums[rightMid] > nums[rightMid + 1]) return nums[rightMid + 1];
+                if (nums[mid] >= nums[0]) left = rightMid + 1;
+                else right = leftMid - 1;
+            }
+        };
+```
+
+#### [74. 搜索二维矩阵](https://leetcode-cn.com/problems/search-a-2d-matrix)
+
+![image.png](https://pic.leetcode-cn.com/1598255172-SjktMi-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=74 lang=javascript
+        *
+        * [74] 搜索二维矩阵
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[][]} matrix
+         * @param {number} target
+         * @return {boolean}
+         */
+        var searchMatrix = function(matrix, target) {
+            if (!matrix.length) return false;
+            let left = 0, right = matrix.length - 1, col, len = matrix[0].length - 1;
+            while (left <= right) {
+                mid = (left + right) >> 1;
+                if (matrix[mid][0] <= target && target <= matrix[mid][len]) {
+                    col = mid, left = 0, right = len;
+                    while (left <= right) {
+                        mid = (left + right) >> 1;
+                        if (matrix[col][mid] === target) return true;
+                        if (matrix[col][mid] > target) right = mid - 1;
+                        else left = mid + 1;
+                    }
+                    return false;
+                }
+                if (matrix[mid][0] > target) right = mid - 1;
+                else left = mid + 1;
+            }
+            return false;
         };
 ```
 
