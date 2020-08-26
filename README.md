@@ -69,6 +69,7 @@
       - [74. 搜索二维矩阵](#74-搜索二维矩阵)
       - [334. 递增的三元子序列](#334-递增的三元子序列)
       - [378. 有序矩阵中第K小的元素](#378-有序矩阵中第k小的元素)
+      - [167 两数之和 II - 输入有序数组](#167-两数之和-ii---输入有序数组)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -89,6 +90,7 @@
       - [680. 验证回文字符串 Ⅱ](#680-验证回文字符串-ⅱ)
       - [461.汉明距离](#461汉明距离)
       - [443 压缩字符串](#443-压缩字符串)
+      - [395. 至少有K个重复字符的最长子串](#395-至少有k个重复字符的最长子串)
   - [五、哈希表](#五哈希表)
     - [5.1 基本模板](#51-基本模板)
       - [1) 统计频率](#1-统计频率)
@@ -177,6 +179,7 @@
       - [剑指 Offer 55 - I. 二叉树的深度](#剑指-offer-55---i-二叉树的深度)
       - [297. 二叉树的序列化与反序列化](#297-二叉树的序列化与反序列化)
       - [剑指 Offer 32 - II. 从上到下打印二叉树 II](#剑指-offer-32---ii-从上到下打印二叉树-ii)
+      - [397. 整数替换](#397-整数替换)
   - [十一、贪心](#十一贪心)
     - [11.1 基本模板](#111-基本模板)
       - [1) 递归法](#1-递归法-3)
@@ -1463,6 +1466,34 @@ var kthSmallest = function(matrix, k) {
 };
 ```
 
+#### [167 两数之和 II - 输入有序数组](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted)
+
+![image.png](https://pic.leetcode-cn.com/1598361918-ZKyhXw-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=167 lang=javascript
+        *
+        * [167] 两数之和 II - 输入有序数组
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} numbers
+         * @param {number} target
+         * @return {number[]}
+         */
+        var twoSum = function(numbers, target) {
+            let left = 0, right = numbers.length - 1, sum;
+            while (left <= right) {
+                sum = numbers[left] + numbers[right];
+                if (sum === target) return [left + 1, right + 1];
+                if (sum > target) right--;
+                else left++;
+            }
+        }
+```
+
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -1870,6 +1901,39 @@ Your memory usage beats 100 % of javascript submissions (39.4 MB)
             }
             for (let s of res) chars[k++] = s;
             return res.length;
+        };
+```
+
+#### [395. 至少有K个重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters)
+
+![image.png](https://pic.leetcode-cn.com/1598350679-sMQkjq-image.png)
+
+```js
+        /**
+         * @param {string} s
+         * @param {number} k
+         * @return {number}
+         */
+        var longestSubstring = function(s, k) {
+            if (!s) return 0;
+            const record = {};
+            for (let i of s) {
+                if (record[i]) record[i]++;
+                else record[i] = 1;
+            }
+            const fail = Object.keys(record).filter(key => record[key] < k);
+            if (!fail.length) return s.length;
+            let j = 0, max = 0, sum = 0;
+            for (let i = 0; i < s.length; i++) {
+                if (fail.indexOf(s[i]) >= 0) {
+                    sum = longestSubstring(s.slice(j, i), k);
+                    if (sum > max) max = sum;
+                    j = i + 1;
+                }
+            }
+            sum = longestSubstring(s.slice(j), k);
+            if (sum > max) max = sum;
+            return max;
         };
 ```
 
@@ -4222,6 +4286,36 @@ var levelOrder = function(root) {
     return res;
 };
 ```
+
+#### [397. 整数替换](https://leetcode-cn.com/problems/integer-replacement)
+
+![image.png](https://pic.leetcode-cn.com/1598359442-QsYSvH-image.png)
+
+```js
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var integerReplacement = function(n) {
+    if (n === 2147483647) return 32;
+    const queue = [n];
+    let i = queue.length;
+    let res = 0;
+    while (i) {
+        while (i--) {
+            const front = queue.shift();
+            if (!front) continue;
+            if (front === 1) return res;
+            if (front & 1) queue.push(front - 1, front + 1);
+            else queue.push(front >> 1);
+        }
+        i = queue.length;
+        res++;
+    }
+};
+```
+
+
 ## 十一、贪心
 ### 11.1 基本模板 
         
