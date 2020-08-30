@@ -71,6 +71,11 @@
       - [378. 有序矩阵中第K小的元素](#378-有序矩阵中第k小的元素)
       - [167 两数之和 II - 输入有序数组](#167-两数之和-ii---输入有序数组)
       - [554. 砖墙](#554-砖墙)
+      - [229. 求众数 II](#229-求众数-ii)
+      - [384. 打乱数组](#384-打乱数组)
+      - [315. 计算右侧小于当前元素的个数](#315-计算右侧小于当前元素的个数)
+      - [274. H 指数](#274-h-指数)
+      - [275. H 指数 II](#275-h-指数-ii)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -162,6 +167,7 @@
     - [9.2 题目](#92-题目)
       - [54. 螺旋矩阵](#54-螺旋矩阵)
       - [59. 螺旋矩阵 II](#59-螺旋矩阵-ii)
+      - [124. 二叉树中的最大路径和](#124-二叉树中的最大路径和)
   - [十、BFS广度优先搜索](#十bfs广度优先搜索)
     - [10.1 基本模板](#101-基本模板)
       - [1) 递归法](#1-递归法-2)
@@ -499,13 +505,44 @@ void Sum(int x[], int a[], int size, int i, int sum, int res, int targer) {
 > - 摩尔投票法
 
 ```js
+        /**
+         * @param {number[]} nums
+         * @return {number[]}
+         */
         var majorityElement = function(nums) {
-            let vote = 0, target;
-            for (let i = 0, len = nums.length; i < len; i++) {
-                if (!vote) target = nums[i];
-                vote = nums[i] === target ? vote + 1 : vote - 1;
+            // 最终候选人筛选过程
+            let a, b, i = 0, j = 0;
+            for (let k = 0; k < nums.length; k++) {
+                // 候选人拉选票
+                if (nums[k] === a) i++;
+                else if (nums[k] === b) j++;
+
+                // 候选人重置
+                else if (!i) {
+                    a = nums[k];
+                    i = 1;
+                }
+                else if (!j) {
+                    b = nums[k];
+                    j = 1;
+                }
+                // 候选人削减选票
+                else {
+                    i--;
+                    j--;
+                }
             }
-            return target;
+            const res = [];
+
+            // 最终候选人确认过程
+            i = 0, j = 0;
+            nums.forEach(num => {
+                if (num === a) i++;
+                if (num === b) j++;
+            })
+            if (i > nums.length / 3) res.push(a);
+            if (j > nums.length / 3) res.push(b);
+            return res;
         };
 ```
 
@@ -1519,6 +1556,157 @@ var kthSmallest = function(matrix, k) {
             })
             return wall.length - count;
         };
+```
+
+#### [229. 求众数 II](https://leetcode-cn.com/problems/majority-element-ii/)
+
+![image.png](https://pic.leetcode-cn.com/1598762076-pwqFhH-image.png)
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var majorityElement = function(nums) {
+    let a, b, i = 0, j = 0;
+    for (let k = 0; k < nums.length; k++) {
+        if (nums[k] === a) i++;
+        else if (nums[k] === b) j++;
+        else if (!i) {
+            a = nums[k];
+            i = 1;
+        }
+        else if (!j) {
+            b = nums[k];
+            j = 1;
+        }
+        else {
+            i--;
+            j--;
+        }
+    }
+    const res = [];
+    i = 0, j = 0;
+    nums.forEach(num => {
+        if (num === a) i++;
+        if (num === b) j++;
+    })
+    if (i > nums.length / 3) res.push(a);
+    if (j > nums.length / 3) res.push(b);
+    return res;
+};
+```
+
+
+#### [384. 打乱数组](https://leetcode-cn.com/problems/shuffle-an-array)
+
+![image.png](https://pic.leetcode-cn.com/1598773612-ABnnyh-image.png)
+
+```js
+        /**
+         * @param {number[]} nums
+         */
+        var Solution = function(nums) {
+            this.origin = nums;
+            this.nums = this.origin.slice(0);
+        };
+
+        /**
+         * Resets the array to its original configuration and return it.
+         * @return {number[]}
+         */
+        Solution.prototype.reset = function() {
+            return this.origin;
+        };
+
+        /**
+         * Returns a random shuffling of the array.
+         * @return {number[]}
+         */
+        Solution.prototype.shuffle = function() {
+            // return this.nums.sort((a, b) => Math.random() > 0.5 ? 1 : -1);
+            let targetIndex, nums = this.nums, len = nums.length;
+            nums.forEach((temp, i) => {
+                targetIndex = Math.random() * len >> 0;
+                nums[i] = nums[targetIndex];
+                nums[targetIndex] = temp;
+            });
+            return nums;
+        };
+
+        /**
+         * Your Solution object will be instantiated and called as such:
+         * var obj = new Solution(nums)
+         * var param_1 = obj.reset()
+         * var param_2 = obj.shuffle()
+         */
+```
+
+#### [315. 计算右侧小于当前元素的个数](https://leetcode-cn.com/problems/count-of-smaller-numbers-after-self/)
+
+![image.png](https://pic.leetcode-cn.com/1598779247-lDYVkG-image.png)
+
+```js
+        /**
+         * @param {number[]} nums
+         * @return {number[]}
+         */
+        var countSmaller = function(nums) {
+            if (!nums.length) return [];
+            const res = Array(nums.length - 1);
+            let i = nums.length, temp;
+            while (i--) {
+                temp = 0;
+                let j = i + 1;
+                for (; j < nums.length; j++) {
+                    if (nums[j] === nums[i]) {
+                        res[i] = res[j] + temp;
+                        break;
+                    }
+                    if (nums[j] < nums[i]) temp++;
+                }
+                res[i] = res[i] || temp;
+            }
+            return res;
+        };
+```
+
+#### [274. H 指数](https://leetcode-cn.com/problems/h-index)
+
+![image.png](https://pic.leetcode-cn.com/1598791232-vqHehY-image.png)
+
+```js
+/**
+ * @param {number[]} citations
+ * @return {number}
+ */
+var hIndex = function(citations) {
+    citations.sort((a, b) => b - a);
+    let res = 0;
+    for (let i = 0, len = citations.length; i < len;) {
+        if (++i <= citations[i - 1]) res = Math.max(res, i);
+    }
+    return res;
+};
+```
+
+#### [275. H 指数 II](https://leetcode-cn.com/problems/h-index)
+
+![image.png](https://pic.leetcode-cn.com/1598791652-nnfXfK-image.png)
+
+```js
+/**
+ * @param {number[]} citations
+ * @return {number}
+ */
+var hIndex = function(citations) {
+    let res = 0, i = citations.length, j = 0;
+    while (i--) {
+        j++;
+        if (j <= citations[i]) res = Math.max(res, j);
+    }
+    return res;
+};
 ```
 
 ## 四、字符串问题
@@ -3850,6 +4038,44 @@ var flatten = function(root) {
                 })
             }
             getNextItemDFS(0, 0, 0, '01');
+            return res;
+        };
+```
+
+#### [124. 二叉树中的最大路径和](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
+
+![image.png](https://pic.leetcode-cn.com/1598777436-kWBOiR-image.png)
+
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {number}
+         */
+        var maxPathSum = function(root) {
+            let res = -Infinity;
+            function dfs(root) {
+                if (!root) return;
+                const comp = [];
+                let left = dfs(root.left);
+                let right = dfs(root.right);
+                left === null && comp.push(left);
+                right === null &&  comp.push(right);
+                left = left || 0;
+                right = right || 0;
+                const leftRoot = left + root.val;
+                const rightRoot = right + root.val;
+                const next = Math.max(leftRoot, rightRoot, root.val);
+                res = Math.max(res, ...comp, leftRoot + right, next);
+                return next;
+            }
+            dfs(root);
             return res;
         };
 ```
