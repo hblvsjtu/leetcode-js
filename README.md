@@ -70,6 +70,7 @@
       - [334. 递增的三元子序列](#334-递增的三元子序列)
       - [378. 有序矩阵中第K小的元素](#378-有序矩阵中第k小的元素)
       - [167 两数之和 II - 输入有序数组](#167-两数之和-ii---输入有序数组)
+      - [554. 砖墙](#554-砖墙)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 递归法](#1-递归法)
@@ -254,6 +255,7 @@
       - [剑指 Offer 45. 把数组排成最小的数](#剑指-offer-45-把数组排成最小的数)
       - [172. 阶乘后的零](#172-阶乘后的零)
       - [剑指 Offer 15. 二进制中1的个数](#剑指-offer-15-二进制中1的个数)
+      - [338. 比特位计数](#338-比特位计数)
       - [剑指 Offer 43. 1～n整数中1出现的次数](#剑指-offer-43-1n整数中1出现的次数)
   - [十六、设计问题](#十六设计问题)
     - [16.1 基本模板](#161-基本模板)
@@ -1492,6 +1494,31 @@ var kthSmallest = function(matrix, k) {
                 else left++;
             }
         }
+```
+
+#### [554. 砖墙](https://leetcode-cn.com/problems/brick-wall)
+
+![image.png](https://pic.leetcode-cn.com/d134a37e41a23d94a1466b2c643e20449f2773fc31240db0ec13749ef1e10d95-image.png)
+
+```js
+        /**
+         * @param {number[][]} wall
+         * @return {number}
+         */
+        var leastBricks = function(wall) {
+            const record = {}, total = wall[0].reduce((t, i) => t + i, 0);
+            let count = 0, temp;
+            wall.forEach(i => {
+                temp = 0;
+                i.forEach(j => {
+                    temp += j;
+                    if (record[temp]) record[temp]++;
+                    else record[temp] = 1;
+                    count = ((temp < total) && (record[temp] > count)) ? record[temp] : count;
+                })
+            })
+            return wall.length - count;
+        };
 ```
 
 ## 四、字符串问题
@@ -6152,6 +6179,29 @@ var hammingWeight = function(n) {
     }
     return count;
 };
+```
+
+#### [338. 比特位计数](https://leetcode-cn.com/problems/counting-bits/)
+
+![image.png](https://pic.leetcode-cn.com/be5e4f01e1a163e7ed949defcfc9e3426511be72aca53d1dbeaaf5c945dd3448-image.png)
+
+```js
+        /**
+         * @param {number} num
+         * @return {number[]}
+         */
+        var countBits = function(num) {
+            const res = [];
+            for (let i = 0; i <= num; i++) {
+                let j = i, temp = 0;
+                while (j) {
+                    j = j & (j - 1);
+                    temp++;
+                }
+                res.push(temp);
+            }
+            return res;
+        };
 ```
 
 
