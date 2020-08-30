@@ -270,6 +270,9 @@
       - [460. LFU缓存](#460-lfu缓存)
       - [146. LRU缓存机制](#146-lru缓存机制-1)
       - [380. 常数时间插入、删除和获取随机元素](#380-常数时间插入删除和获取随机元素)
+      - [173. 二叉搜索树迭代器](#173-二叉搜索树迭代器)
+      - [304. 二维区域和检索 - 矩阵不可变](#304-二维区域和检索---矩阵不可变)
+      - [382. 链表随机节点](#382-链表随机节点)
 
 
 ## 一、排序问题
@@ -6697,5 +6700,185 @@ var countDigitOne = function(n) {
          * var param_1 = obj.insert(val)
          * var param_2 = obj.remove(val)
          * var param_3 = obj.getRandom()
+         */
+```
+
+#### [173. 二叉搜索树迭代器](https://leetcode-cn.com/problems/binary-search-tree-iterator)
+
+![image.png](https://pic.leetcode-cn.com/1598794985-mArrLN-image.png)
+
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         */
+        var BSTIterator = function(root) {
+            const arr = [];
+            function dfs(root) {
+                if (!root) return;
+                dfs(root.left);
+                arr.push(root.val);
+                dfs(root.right);
+            }
+            dfs(root);
+            this.arr = arr;
+            this.nextIndex = 0;
+        };
+
+        /**
+         * @return the next smallest number
+         * @return {number}
+         */
+        BSTIterator.prototype.next = function() {
+        return this.arr[this.nextIndex++];
+        };
+
+        /**
+         * @return whether we have a next smallest number
+         * @return {boolean}
+         */
+        BSTIterator.prototype.hasNext = function() {
+            return this.nextIndex < this.arr.length;
+        };
+
+        /**
+         * Your BSTIterator object will be instantiated and called as such:
+         * var obj = new BSTIterator(root)
+         * var param_1 = obj.next()
+         * var param_2 = obj.hasNext()
+         */
+```
+
+#### [304. 二维区域和检索 - 矩阵不可变](https://leetcode-cn.com/problems/range-sum-query-2d-immutable)
+
+![image.png](https://pic.leetcode-cn.com/1598797479-oJsvqK-image.png)
+
+        ```js
+        /**
+         * @param {number[][]} matrix
+         */
+        var NumMatrix = function(matrix) {
+            this.sum = [];
+            for (let i = 0; i < matrix.length; i++) {
+                this.sum[i] = [matrix[i][0]];
+                for (let j = 1; j < matrix[0].length; j++) {
+                    this.sum[i][j] = this.sum[i][j - 1] + matrix[i][j];
+                }
+            }
+        };
+
+        /** 
+         * @param {number} row1 
+         * @param {number} col1 
+         * @param {number} row2 
+         * @param {number} col2
+         * @return {number}
+         */
+        NumMatrix.prototype.sumRegion = function(row1, col1, row2, col2) {
+            let res = 0;
+            for (let i = row1; i <= row2; i++) {
+                res += this.sum[i][col2] - (col1 - 1 < 0 ? 0 : this.sum[i][col1 - 1]);
+            }
+            return res;
+        };
+
+        /**
+         * Your NumMatrix object will be instantiated and called as such:
+         * var obj = new NumMatrix(matrix)
+         * var param_1 = obj.sumRegion(row1,col1,row2,col2)
+         */
+```
+
+#### [307. 区域和检索 - 数组可修改](https://leetcode-cn.com/problems/range-sum-query-mutable/)
+
+![image.png](https://pic.leetcode-cn.com/1598798987-ZpsGvT-image.png)
+
+```js
+        /** 
+         * @param {number[]} nums
+         */
+        var NumArray = function(nums) {
+            this.nums = nums;
+            let temp = 0;
+            this.sum = nums.map(i => temp += i);
+        };
+
+        /** 
+         * @param {number} i 
+         * @param {number} val
+         * @return {void}
+         */
+        NumArray.prototype.update = function(i, val) {
+            const temp = val - this.nums[i];
+            this.nums[i] = val;
+            for (let j = i; j < this.nums.length; j++) {
+                this.sum[j] += temp;
+            }
+        };
+
+        /** 
+         * @param {number} i 
+         * @param {number} j
+         * @return {number}
+         */
+        NumArray.prototype.sumRange = function(i, j) {
+            return this.sum[j] - (i - 1 < 0 ? 0 : this.sum[i - 1]);
+        };
+
+        /**
+         * Your NumArray object will be instantiated and called as such:
+         * var obj = new NumArray(nums)
+         * obj.update(i,val)
+         * var param_2 = obj.sumRange(i,j)
+         */
+```
+
+#### [382. 链表随机节点](https://leetcode-cn.com/problems/linked-list-random-node/)
+
+![image.png](https://pic.leetcode-cn.com/1598799893-roZEbB-image.png)
+
+        ```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param head The linked list's head.
+                Note that the head is guaranteed to be not null, so it contains at least one node.
+        * @param {ListNode} head
+        */
+        var Solution = function(head) {
+            this.head = head;
+            this.len = 1;
+            while (head.next) {
+                head = head.next;
+                this.len++;
+            }
+            head.next = this.head;
+        };
+
+        /**
+         * Returns a random node's value.
+         * @return {number}
+         */
+        Solution.prototype.getRandom = function() {
+            let i = (Math.random() * this.len) >> 0;
+            while(i--) this.head = this.head.next;
+            return this.head.val;
+        };
+
+        /**
+         * Your Solution object will be instantiated and called as such:
+         * var obj = new Solution(head)
+         * var param_1 = obj.getRandom()
          */
 ```
