@@ -74,6 +74,7 @@
       - [229. 求众数 II](#229-求众数-ii)
       - [384. 打乱数组](#384-打乱数组)
       - [315. 计算右侧小于当前元素的个数](#315-计算右侧小于当前元素的个数)
+      - [228 汇总区间](#228-汇总区间)
       - [274. H 指数](#274-h-指数)
       - [275. H 指数 II](#275-h-指数-ii)
   - [四、字符串问题](#四字符串问题)
@@ -272,7 +273,9 @@
       - [380. 常数时间插入、删除和获取随机元素](#380-常数时间插入删除和获取随机元素)
       - [173. 二叉搜索树迭代器](#173-二叉搜索树迭代器)
       - [304. 二维区域和检索 - 矩阵不可变](#304-二维区域和检索---矩阵不可变)
+      - [307. 区域和检索 - 数组可修改](#307-区域和检索---数组可修改)
       - [382. 链表随机节点](#382-链表随机节点)
+      - [211. 添加与搜索单词 - 数据结构设计](#211-添加与搜索单词---数据结构设计)
 
 
 ## 一、排序问题
@@ -1669,6 +1672,36 @@ var majorityElement = function(nums) {
                     if (nums[j] < nums[i]) temp++;
                 }
                 res[i] = res[i] || temp;
+            }
+            return res;
+        };
+```
+
+#### [228 汇总区间](https://leetcode-cn.com/problems/summary-ranges)
+
+![image.png](https://pic.leetcode-cn.com/1598584319-uBoKYS-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=228 lang=javascript
+        *
+        * [228] 汇总区间
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} nums
+         * @return {string[]}
+         */
+        var summaryRanges = function(nums) {
+            const res = [];
+            nums.push(-1);
+            let j = 0;
+            for (let i = 1; i < nums.length; i++) {
+                if (nums[i] - 1 !== nums[i - 1]) {
+                    res.push(j === i - 1 ? '' + nums[j] : `${nums[j]}->${nums[i - 1]}`);
+                    j = i;
+                }
             }
             return res;
         };
@@ -6759,7 +6792,7 @@ var countDigitOne = function(n) {
 
 ![image.png](https://pic.leetcode-cn.com/1598797479-oJsvqK-image.png)
 
-        ```js
+```js
         /**
          * @param {number[][]} matrix
          */
@@ -6843,7 +6876,7 @@ var countDigitOne = function(n) {
 
 ![image.png](https://pic.leetcode-cn.com/1598799893-roZEbB-image.png)
 
-        ```js
+```js
         /**
          * Definition for singly-linked list.
          * function ListNode(val) {
@@ -6881,4 +6914,75 @@ var countDigitOne = function(n) {
          * var obj = new Solution(head)
          * var param_1 = obj.getRandom()
          */
+```
+
+#### [211. 添加与搜索单词 - 数据结构设计](https://leetcode-cn.com/problems/design-add-and-search-words-data-structure)
+
+![image.png](https://pic.leetcode-cn.com/1598583583-SkkLJJ-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=211 lang=javascript
+        *
+        * [211] 添加与搜索单词 - 数据结构设计
+        */
+
+        // @lc code=start
+        /**
+         * Initialize your data structure here.
+         */
+        function Tree() {
+            this.next = {};
+            this.isEnd = false;
+        }
+
+        var WordDictionary = function() {
+            this.root = new Tree();
+        };
+
+        /**
+         * Adds a word into the data structure. 
+         * @param {string} word
+         * @return {void}
+         */
+        WordDictionary.prototype.addWord = function(word) {
+            if (!word) return null;
+            let head = this.root;
+            for (let s of word) {
+                if (!head.next[s]) head.next[s] = new Tree();
+                head = head.next[s];
+            }
+            head.isEnd = true;
+            return null;
+        };
+
+        /**
+         * Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. 
+         * @param {string} word
+         * @return {boolean}
+         */
+        WordDictionary.prototype.search = function(word) {
+            let res = false;
+            const last = word.length - 1;
+            function dfs(i, root) {
+                if (res) return;
+                const s = word[i];
+                if (!s || !root || (s !== '.' && !root.next[s])) return;
+                if (s === '.')  {
+                    const children = Object.keys(root.next);
+                    if (children.find(child => i === last && root.next[child].isEnd)) {
+                        res = true;
+                        return;
+                    }
+                    children.forEach(str => dfs(i + 1, root.next[str]));
+                }
+                else if (i === last && root.next[s].isEnd) {
+                    res = true;
+                    return;
+                }
+                dfs(i + 1, root.next[s]);
+            }
+            dfs(0, this.root);
+            return res;
+        };
 ```
