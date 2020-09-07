@@ -77,6 +77,8 @@
       - [228 汇总区间](#228-汇总区间)
       - [274. H 指数](#274-h-指数)
       - [275. H 指数 II](#275-h-指数-ii)
+      - [376. 摆动序列](#376-摆动序列)
+      - [373. 查找和最小的K对数字](#373-查找和最小的k对数字)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 判断两个字符串是否存在公共字符](#1-判断两个字符串是否存在公共字符)
@@ -99,6 +101,7 @@
       - [443 压缩字符串](#443-压缩字符串)
       - [395. 至少有K个重复字符的最长子串](#395-至少有k个重复字符的最长子串)
       - [318. 最大单词长度乘积](#318-最大单词长度乘积)
+      - [306. 累加数](#306-累加数)
   - [五、哈希表](#五哈希表)
     - [5.1 基本模板](#51-基本模板)
       - [1) 统计频率](#1-统计频率)
@@ -265,6 +268,7 @@
       - [剑指 Offer 15. 二进制中1的个数](#剑指-offer-15-二进制中1的个数)
       - [338. 比特位计数](#338-比特位计数)
       - [剑指 Offer 43. 1～n整数中1出现的次数](#剑指-offer-43-1n整数中1出现的次数)
+      - [400. 第N个数字](#400-第n个数字)
   - [十六、设计问题](#十六设计问题)
     - [16.1 基本模板](#161-基本模板)
     - [16.2 题目](#162-题目)
@@ -1746,6 +1750,68 @@ var hIndex = function(citations) {
 };
 ```
 
+#### [376. 摆动序列](https://leetcode-cn.com/problems/wiggle-subsequence)
+
+![image.png](https://pic.leetcode-cn.com/1599452318-mPCjnS-image.png)
+
+```js
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var wiggleMaxLength = function(nums) {
+            if (!nums.length) return 0;
+            let res = 1;
+            for (let i = 1; i < nums.length;) {
+                if (nums[i - 1] === nums[i]) {
+                    i++;
+                    continue;
+                }
+                if (nums[i - 1] < nums[i]) {
+                    let j = i;
+                    while (nums[j] <= nums[++j]);
+                    i = j;
+                }
+                else {
+                    let j = i;
+                    while (nums[j] >= nums[++j]);
+                    i = j;
+                }
+                res++;
+            }
+            return res;
+        };
+```
+
+#### [373. 查找和最小的K对数字](https://leetcode-cn.com/problems/find-k-pairs-with-smallest-sums/)
+
+![image.png](https://pic.leetcode-cn.com/1599461888-gMgaUd-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=373 lang=javascript
+        *
+        * [373] 查找和最小的K对数字
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} nums1
+         * @param {number[]} nums2
+         * @param {number} k
+         * @return {number[][]}
+         */
+        var kSmallestPairs = function(nums1, nums2, k) {
+            const record = [];
+            for (let i = 0; i < nums1.length; i++) {
+                for (let j = 0; j < nums2.length; j++) {
+                    record.push([nums1[i], nums2[j]]);
+                }
+            }
+            return record.sort((a, b) => a[0] + a[1] - b[0] - b[1]).slice(0, k);
+        };
+```
+
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -1782,8 +1848,6 @@ var hIndex = function(citations) {
             return res;
         };
 ```
-
-
 
 ### 4.2 题目
 #### [面试题48. 最长不含重复字符的子字符串](https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/solution/jsdong-tai-gui-hua-by-heronwan-3/)
@@ -2258,6 +2322,39 @@ Your memory usage beats 100 % of javascript submissions (39.4 MB)
             return res;
         };
 ```
+
+#### [306. 累加数](https://leetcode-cn.com/problems/additive-number)
+
+![image.png](https://pic.leetcode-cn.com/1599450208-nwqQPB-image.png)
+
+```js
+        /**
+         * @param {string} num
+         * @return {boolean}
+         */
+        var isAdditiveNumber = function(num) {
+            let sum;
+            for (let i = 1; i < num.length / 2; i++) {
+                if (i > 1 && num[0] === '0') continue;
+                for (let j = i + 1; j < num.length; j++) {
+                    if (j > i + 1 && num[i] === '0') continue;
+                    sum = '' + (+num.slice(0, i) + +num.slice(i, j));
+                    if (sum === num.slice(j, j + sum.length)) {
+                        a = +num.slice(i, j), b = +sum, k = j + sum.length;
+                        while (k < num.length) {
+                            sum = a + b;
+                            [a, b] = [b, sum];
+                            if ('' + b !== num.slice(k, k + ('' + sum).length)) break;
+                            k += ('' + b).length;
+                        }
+                        if (k === num.length) return true;
+                    }
+                }
+            }
+            return false;
+        };
+```
+
 
 ## 五、哈希表
 ### 5.1 基本模板 
@@ -6561,6 +6658,32 @@ var countDigitOne = function(n) {
    }
    return res;
 };
+```
+
+#### [400. 第N个数字](https://leetcode-cn.com/problems/nth-digit)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=400 lang=javascript
+        *
+        * [400] 第N个数字
+        */
+
+        // @lc code=start
+        /**
+         * @param {number} n
+         * @return {number}
+         */
+        var findNthDigit = function(n) {
+            const record = [0, 10, 190, 2890, 38890, 488890, 5888890, 68888890, 788888890, 8888888890, 98888888890, 1088888888890];
+            let i = -1;
+            while(record[i + 1] <= n) i++;
+            if (!i) return n;
+            const left = n - record[i];
+            const weishu = i + 1;
+            const target = Math.pow(10, i) + parseInt(left / weishu, 10);
+            return +(('' + target)[left % weishu]);
+        };
 ```
 
 ## 十六、设计问题
