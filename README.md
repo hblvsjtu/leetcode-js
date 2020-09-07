@@ -79,6 +79,7 @@
       - [275. H 指数 II](#275-h-指数-ii)
       - [376. 摆动序列](#376-摆动序列)
       - [373. 查找和最小的K对数字](#373-查找和最小的k对数字)
+      - [413. 等差数列划分](#413-等差数列划分)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 判断两个字符串是否存在公共字符](#1-判断两个字符串是否存在公共字符)
@@ -102,6 +103,7 @@
       - [395. 至少有K个重复字符的最长子串](#395-至少有k个重复字符的最长子串)
       - [318. 最大单词长度乘积](#318-最大单词长度乘积)
       - [306. 累加数](#306-累加数)
+      - [423. 从英文中重建数字](#423-从英文中重建数字)
   - [五、哈希表](#五哈希表)
     - [5.1 基本模板](#51-基本模板)
       - [1) 统计频率](#1-统计频率)
@@ -1812,6 +1814,35 @@ var hIndex = function(citations) {
         };
 ```
 
+#### [413. 等差数列划分](https://leetcode-cn.com/problems/arithmetic-slices)
+
+![image.png](https://pic.leetcode-cn.com/1599482393-dHMkkd-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=413 lang=javascript
+        *
+        * [413] 等差数列划分
+        */
+
+        // @lc code=start
+        /**
+         * @param {number[]} A
+         * @return {number}
+         */
+        var numberOfArithmeticSlices = function(A) {
+            let cha, j, res = 0;
+            for (let i = 0, len = A.length - 2; i < len;) {
+                cha = A[i + 1] - A[i];
+                j = i + 1;
+                while (A[j + 1] - A[j] === cha) j++;
+                if (j - i > 1) res += (j - i) * (j - i - 1) / 2;
+                i = j;
+            }
+            return res;
+        };
+```
+
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -2355,6 +2386,96 @@ Your memory usage beats 100 % of javascript submissions (39.4 MB)
         };
 ```
 
+
+#### [423. 从英文中重建数字](https://leetcode-cn.com/problems/reconstruct-original-digits-from-english/)
+
+
+![image.png](https://pic.leetcode-cn.com/1599488106-dXPMAe-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=423 lang=javascript
+        *
+        * [423] 从英文中重建数字
+        */
+
+        // @lc code=start
+        /**
+         * @param {string} s
+         * @return {string}
+         */
+        var originalDigits = function(s) {
+            let record = {};
+            for (let i = 0; i < s.length; i++) {
+                if (record[s[i]]) record[s[i]]++;
+                else record[s[i]] = 1;
+            }
+            const res = [];
+            temp = record.z;
+            if (temp) {
+                res.push(...Array(temp).fill(0));
+                record.e -= temp;
+                record.o -= temp;
+                record.r -= temp;
+            }
+            temp = record.u;
+            if (temp) {
+                res.push(...Array(temp).fill(4));
+                record.f -= temp;
+                record.o -= temp;
+                record.r -= temp;
+            }
+            temp = record.f;
+            if (temp) {
+                res.push(...Array(temp).fill(5));
+                record.i -= temp;
+                record.v -= temp;
+                record.e -= temp;
+            }
+            temp = record.v
+            if (temp) {
+                res.push(...Array(temp).fill(7));
+                record.e -= 2 * temp;
+                record.n -= temp;
+                record.s -= temp;
+            }
+            temp = record.s
+            if (temp) {
+                res.push(...Array(temp).fill(6));
+                record.i -= temp;
+                record.x -= temp;
+            }
+            temp = record.g
+            if (temp) {
+                res.push(...Array(temp).fill(8));
+                record.e -= temp;
+                record.i -= temp;
+                record.h -= temp;
+                record.t -= temp;
+            }
+            temp = record.w
+            if (temp) {
+                res.push(...Array(temp).fill(2));
+                record.o -= temp;
+                record.t -= temp;
+            }
+            temp = record.o
+            if (temp) {
+                res.push(...Array(temp).fill(1));
+                record.n -= temp;
+                record.e -= temp;
+            }
+            temp = record.t
+            if (temp) {
+            res.push(...Array(temp).fill(3));
+            }
+            temp = record.i
+            if (temp) {
+                res.push(...Array(temp).fill(9));
+            }
+            return res.sort().join('');
+        };
+```
 
 ## 五、哈希表
 ### 5.1 基本模板 
@@ -6662,6 +6783,7 @@ var countDigitOne = function(n) {
 
 #### [400. 第N个数字](https://leetcode-cn.com/problems/nth-digit)
 
+![image.png](https://pic.leetcode-cn.com/1599481056-pPWqNv-image.png)
 ```js
         /*
         * @lc app=leetcode.cn id=400 lang=javascript
@@ -6674,14 +6796,17 @@ var countDigitOne = function(n) {
          * @param {number} n
          * @return {number}
          */
+        /**
+         * @param {number} n
+         * @return {number}
+         */
         var findNthDigit = function(n) {
             const record = [0, 10, 190, 2890, 38890, 488890, 5888890, 68888890, 788888890, 8888888890, 98888888890, 1088888888890];
-            let i = -1;
-            while(record[i + 1] <= n) i++;
-            if (!i) return n;
-            const left = n - record[i];
-            const weishu = i + 1;
-            const target = Math.pow(10, i) + parseInt(left / weishu, 10);
+            let weishu = 0;
+            while(record[weishu] <= n) weishu++;
+            if (weishu === 1) return n;
+            const left = n - record[weishu - 1];
+            const target = Math.pow(10, weishu - 1) + parseInt(left / weishu, 10);
             return +(('' + target)[left % weishu]);
         };
 ```
