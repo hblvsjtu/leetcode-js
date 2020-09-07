@@ -79,7 +79,7 @@
       - [275. H 指数 II](#275-h-指数-ii)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
-      - [1) 递归法](#1-递归法)
+      - [1) 判断两个字符串是否存在公共字符](#1-判断两个字符串是否存在公共字符)
     - [4.2 题目](#42-题目)
       - [面试题48. 最长不含重复字符的子字符串](#面试题48-最长不含重复字符的子字符串)
       - [面试题67. 把字符串转换成整数](#面试题67-把字符串转换成整数)
@@ -98,6 +98,7 @@
       - [461.汉明距离](#461汉明距离)
       - [443 压缩字符串](#443-压缩字符串)
       - [395. 至少有K个重复字符的最长子串](#395-至少有k个重复字符的最长子串)
+      - [318. 最大单词长度乘积](#318-最大单词长度乘积)
   - [五、哈希表](#五哈希表)
     - [5.1 基本模板](#51-基本模板)
       - [1) 统计频率](#1-统计频率)
@@ -163,7 +164,7 @@
       - [208. 实现 Trie (前缀树)](#208-实现-trie-前缀树)
   - [九、DFS深度优先搜索](#九dfs深度优先搜索)
     - [9.1 基本模板](#91-基本模板)
-      - [1) 递归法](#1-递归法-1)
+      - [1) 递归法](#1-递归法)
       - [2) 迭代法](#2-迭代法)
     - [9.2 题目](#92-题目)
       - [54. 螺旋矩阵](#54-螺旋矩阵)
@@ -171,7 +172,7 @@
       - [124. 二叉树中的最大路径和](#124-二叉树中的最大路径和)
   - [十、BFS广度优先搜索](#十bfs广度优先搜索)
     - [10.1 基本模板](#101-基本模板)
-      - [1) 递归法](#1-递归法-2)
+      - [1) 递归法](#1-递归法-1)
       - [2) 迭代法](#2-迭代法-1)
     - [10.2 题目](#102-题目)
       - [103 二叉树的锯齿形层次遍历](#103-二叉树的锯齿形层次遍历)
@@ -190,7 +191,7 @@
       - [397. 整数替换](#397-整数替换)
   - [十一、贪心](#十一贪心)
     - [11.1 基本模板](#111-基本模板)
-      - [1) 递归法](#1-递归法-3)
+      - [1) 递归法](#1-递归法-2)
       - [2) 迭代法](#2-迭代法-2)
       - [55. 跳跃游戏](#55-跳跃游戏)
       - [面试题 08.11. 硬币](#面试题-0811-硬币)
@@ -1748,8 +1749,42 @@ var hIndex = function(citations) {
 ## 四、字符串问题
 ### 4.1 基本模板 
         
-#### 1) 递归法
-> - 先序遍历()
+#### 1) 判断两个字符串是否存在公共字符
+> - 使用位运算
+```js
+        /*
+        * @lc app=leetcode.cn id=318 lang=javascript
+        *
+        * [318] 最大单词长度乘积
+        */
+
+        // @lc code=start
+        /**
+         * @param {string[]} words
+         * @return {number}
+         */
+        var maxProduct = function(words) {
+            let temp, acharCodeAt = 'a'.charCodeAt(0);
+            const record = words.map(word => {
+                temp = 0;
+                for (let i = 0; i < word.length; i++) {
+                    temp |= 1 << word[i].charCodeAt(0) - acharCodeAt;
+                }
+                return temp;
+            })
+            let res = 0;
+            for (let i = 0; i < words.length; i++) {
+                for (let j = i + 1; j < words.length; j++) {
+                    if (!(record[i] & record[j])) // 判断
+                        ...
+                }
+            }
+            return res;
+        };
+```
+
+
+
 ### 4.2 题目
 #### [面试题48. 最长不含重复字符的子字符串](https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/solution/jsdong-tai-gui-hua-by-heronwan-3/)
 
@@ -2185,6 +2220,42 @@ Your memory usage beats 100 % of javascript submissions (39.4 MB)
             sum = longestSubstring(s.slice(j), k);
             if (sum > max) max = sum;
             return max;
+        };
+```
+
+#### [318. 最大单词长度乘积](https://leetcode-cn.com/problems/maximum-product-of-word-lengths)
+
+![image.png](https://pic.leetcode-cn.com/1598841344-EZbySM-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=318 lang=javascript
+        *
+        * [318] 最大单词长度乘积
+        */
+
+        // @lc code=start
+        /**
+         * @param {string[]} words
+         * @return {number}
+         */
+        var maxProduct = function(words) {
+            let temp, acharCodeAt = 'a'.charCodeAt(0);
+            const record = words.map(word => {
+                temp = 0;
+                for (let i = 0; i < word.length; i++) {
+                    temp |= 1 << word[i].charCodeAt(0) - acharCodeAt;
+                }
+                return temp;
+            })
+            let res = 0;
+            for (let i = 0; i < words.length; i++) {
+                for (let j = i + 1; j < words.length; j++) {
+                    if (!(record[i] & record[j]))
+                        res = Math.max(res, words[i].length * words[j].length);
+                }
+            }
+            return res;
         };
 ```
 
