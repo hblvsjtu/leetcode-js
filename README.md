@@ -80,6 +80,7 @@
       - [376. 摆动序列](#376-摆动序列)
       - [373. 查找和最小的K对数字](#373-查找和最小的k对数字)
       - [413. 等差数列划分](#413-等差数列划分)
+      - [面试题 01.08. 零矩阵](#面试题-0108-零矩阵)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 判断两个字符串是否存在公共字符](#1-判断两个字符串是否存在公共字符)
@@ -142,6 +143,8 @@
       - [23. 合并K个排序链表](#23-合并k个排序链表)
       - [剑指 Offer 18. 删除链表的节点](#剑指-offer-18-删除链表的节点)
       - [剑指 Offer 25. 合并两个排序的链表](#剑指-offer-25-合并两个排序的链表)
+      - [面试题 02.08. 环路检测](#面试题-0208-环路检测)
+      - [面试题 02.05. 链表求和](#面试题-0205-链表求和)
   - [八、树](#八树)
     - [8.1 基本模板](#81-基本模板)
     - [8.2 题目](#82-题目)
@@ -167,6 +170,8 @@
       - [剑指 Offer 55 - II. 平衡二叉树](#剑指-offer-55---ii-平衡二叉树-1)
       - [剑指 Offer 54. 二叉搜索树的第k大节点](#剑指-offer-54-二叉搜索树的第k大节点)
       - [208. 实现 Trie (前缀树)](#208-实现-trie-前缀树)
+      - [面试题 04.05. 合法二叉搜索树](#面试题-0405-合法二叉搜索树)
+      - [面试题 04.06. 后继者](#面试题-0406-后继者)
   - [九、DFS深度优先搜索](#九dfs深度优先搜索)
     - [9.1 基本模板](#91-基本模板)
       - [1) 递归法](#1-递归法)
@@ -194,6 +199,7 @@
       - [297. 二叉树的序列化与反序列化](#297-二叉树的序列化与反序列化)
       - [剑指 Offer 32 - II. 从上到下打印二叉树 II](#剑指-offer-32---ii-从上到下打印二叉树-ii)
       - [397. 整数替换](#397-整数替换)
+      - [面试题 04.03. 特定深度节点链表](#面试题-0403-特定深度节点链表)
   - [十一、贪心](#十一贪心)
     - [11.1 基本模板](#111-基本模板)
       - [1) 递归法](#1-递归法-2)
@@ -220,6 +226,7 @@
       - [40. 组合总和 II](#40-组合总和-ii)
       - [77. 组合](#77-组合)
       - [131. 分割回文串](#131-分割回文串)
+      - [面试题 08.04. 幂集](#面试题-0804-幂集)
   - [十三、动态规划](#十三动态规划)
     - [13.1 与分治思想的异同](#131-与分治思想的异同)
       - [1) 相同之处](#1-相同之处)
@@ -249,6 +256,7 @@
       - [207. 课程表](#207-课程表)
       - [310. 最小高度树](#310-最小高度树)
       - [547. 朋友圈](#547-朋友圈)
+      - [面试题 04.01. 节点间通路](#面试题-0401-节点间通路)
   - [十五、数学问题](#十五数学问题)
     - [15.1 基本模板](#151-基本模板)
       - [1) 最大公约数](#1-最大公约数)
@@ -271,6 +279,7 @@
       - [338. 比特位计数](#338-比特位计数)
       - [剑指 Offer 43. 1～n整数中1出现的次数](#剑指-offer-43-1n整数中1出现的次数)
       - [400. 第N个数字](#400-第n个数字)
+      - [面试题 08.05. 递归乘法](#面试题-0805-递归乘法)
   - [十六、设计问题](#十六设计问题)
     - [16.1 基本模板](#161-基本模板)
     - [16.2 题目](#162-题目)
@@ -283,6 +292,8 @@
       - [307. 区域和检索 - 数组可修改](#307-区域和检索---数组可修改)
       - [382. 链表随机节点](#382-链表随机节点)
       - [211. 添加与搜索单词 - 数据结构设计](#211-添加与搜索单词---数据结构设计)
+      - [341. 扁平化嵌套列表迭代器](#341-扁平化嵌套列表迭代器)
+      - [面试题 03.05. 栈排序](#面试题-0305-栈排序)
 
 
 ## 一、排序问题
@@ -1843,6 +1854,24 @@ var hIndex = function(citations) {
         };
 ```
 
+#### [面试题 01.08. 零矩阵](https://leetcode-cn.com/problems/zero-matrix-lcci)
+
+![image.png](https://pic.leetcode-cn.com/1599996214-ipVuem-image.png)
+
+```js
+        /**
+         * @param {number[][]} matrix
+         * @return {void} Do not return anything, modify matrix in-place instead.
+         */
+        var setZeroes = function(matrix) {
+            const row = new Set(), col = new Set();
+            matrix.forEach((list, i) => list.forEach((item, j) => !item && row.add(i) && col.add(j)));
+            matrix.forEach((list, i) => list.forEach((item, j) => {
+                if (row.has(i) || col.has(j)) matrix[i][j] = 0;
+            }));
+        };
+```
+
 ## 四、字符串问题
 ### 4.1 基本模板 
         
@@ -3277,6 +3306,77 @@ var containsNearbyAlmostDuplicate = function(nums, k, t) {
         };
 ```
 
+#### [面试题 02.08. 环路检测](https://leetcode-cn.com/problems/linked-list-cycle-lcci)
+
+![image.png](https://pic.leetcode-cn.com/1599965882-MuDcuF-image.png)
+
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+
+        /**
+         * @param {ListNode} head
+         * @return {ListNode}
+         */
+        var detectCycle = function(head) {
+            let slow = head, fast = head;
+            while (fast && fast.next) {
+                slow = slow.next;
+                fast = fast.next.next;
+                if (slow === fast) {
+                    slow = head;
+                    while (slow !== fast) {
+                        slow = slow.next;
+                        fast = fast.next;
+                    }
+                    return slow;
+                };
+            }
+            return null;
+        };
+```
+
+
+#### [面试题 02.05. 链表求和](https://leetcode-cn.com/problems/sum-lists-lcci)
+
+![image.png](https://pic.leetcode-cn.com/1599996883-XKHMZe-image.png)
+
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param {ListNode} l1
+         * @param {ListNode} l2
+         * @return {ListNode}
+         */
+        var addTwoNumbers = function(l1, l2) {
+            const root = new ListNode();
+            let head = root, h1 = l1, h2 = l2, a1, a2, sum, yushu = 0;
+            while (h1 || h2) {
+                a1 = h1 ? h1.val : 0;
+                a2 = h2 ? h2.val : 0;
+                sum = a1 + a2 + yushu;
+                yushu = sum > 9 ? 1 : 0;
+                head.next = new ListNode(sum % 10);
+                head = head.next;
+                h1 = h1 && h1.next;
+                h2 = h2 && h2.next;
+            }
+            if (yushu) head.next = new ListNode(1);
+            return root.next;
+        };
+```
+
 ## 八、树
 ### 8.1 基本模板 
         
@@ -4161,6 +4261,68 @@ var flatten = function(root) {
 
 ```
 
+#### [面试题 04.05. 合法二叉搜索树](https://leetcode-cn.com/problems/legal-binary-search-tree-lcci)
+
+![image.png](https://pic.leetcode-cn.com/1599990596-hiRpWq-image.png)
+
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @return {boolean}
+         */
+        var isValidBST = function(root) {
+            let result = true, preVal = -Infinity;
+            function inorderDFS(root) {
+                if (!result || !root) return;
+                inorderDFS(root.left, root.val);
+                if (root.val <= preVal) result = false;
+                preVal = root.val;
+                inorderDFS(root.right, root.val);
+            }
+            inorderDFS(root);
+            return result;
+        };
+```
+
+
+#### [面试题 04.06. 后继者](https://leetcode-cn.com/problems/successor-lcci)
+
+![image.png](https://pic.leetcode-cn.com/1599991373-xTdWjI-image.png)
+
+```js
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {TreeNode} root
+         * @param {TreeNode} p
+         * @return {TreeNode}
+         */
+        var inorderSuccessor = function(root, p) {
+            let next = null, preNode;
+            function midOrder(root) {
+                if (!root || next) return;
+                midOrder(root.left);
+                if (preNode === p) next = root;
+                preNode = root;
+                midOrder(root.right);
+            }
+            midOrder(root);
+            return next;
+        };
+```
+
 ## 九、DFS深度优先搜索
 ### 9.1 基本模板 
 #### 1) 递归法
@@ -4894,6 +5056,49 @@ var integerReplacement = function(n) {
 ```
 
 
+#### [面试题 04.03. 特定深度节点链表](https://leetcode-cn.com/problems/list-of-depth-lcci)
+
+![image.png](https://pic.leetcode-cn.com/1599989983-qzDuyx-image.png)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {TreeNode} tree
+ * @return {ListNode[]}
+ */
+var listOfDepth = function(tree) {
+    const result = [], queue = [tree];
+    let i = queue.length;
+    while (i) {
+        const root = new ListNode();
+        let head = root;
+        while (i--) {
+            const front = queue.shift();
+            if (!front) continue;
+            head.next = new ListNode(front.val);
+            head = head.next;
+            queue.push(front.left, front.right);
+        }
+        i = queue.length;
+        root.next && result.push(root.next);
+    }
+    return result;
+};
+```
+
 ## 十一、贪心
 ### 11.1 基本模板 
         
@@ -5542,6 +5747,27 @@ var combinationSum2 = function(candidates, target) {
             }
             backTrace(0, []);
             return res;
+        };
+```
+
+#### [面试题 08.04. 幂集](https://leetcode-cn.com/problems/power-set-lcci)
+
+![image.png](https://pic.leetcode-cn.com/1600001256-lclWOa-image.png)
+
+```js
+        /**
+         * @param {number[]} nums
+         * @return {number[][]}
+         */
+        var subsets = function(nums) {
+            const result = [];
+            function dfs(i, arr) {
+                if (i > nums.length) return;
+                result.push(arr);
+                for (let j = i; j < nums.length; j++) dfs(j + 1, arr.concat([nums[j]]));
+            }
+            dfs(0, []);
+            return result;
         };
 ```
 
@@ -6416,6 +6642,41 @@ Your memory usage beats 24.05 % of javascript submissions (37.7 MB)
         }
 ```
 
+#### [面试题 04.01. 节点间通路](https://leetcode-cn.com/problems/route-between-nodes-lcci)
+
+![image.png](https://pic.leetcode-cn.com/1599967253-UgwKyV-image.png)
+
+```js
+/**
+ * @param {number} n
+ * @param {number[][]} graph
+ * @param {number} start
+ * @param {number} target
+ * @return {boolean}
+ */
+var findWhetherExistsPath = function(n, graph, start, target) {
+    const record = {};
+    graph.forEach(([start, end]) => {
+        if (record[start]) record[start].add(end);
+        else record[start] = new Set([end]);
+    });
+    const isVisited = {};
+    const queue = [start];
+    let i = queue.length, front;
+    while(i) {
+        while(i--) {
+            front = queue.pop();
+            if (front === target) return true;
+            if (isVisited[front]) continue;
+            isVisited[front] = true;
+            if (record[front]) for (let i of record[front]) queue.unshift(i);
+        }
+        i = queue.length;
+    }
+    return false;
+};
+```
+
 ## 十五、数学问题
 ### 15.1 基本模板
         
@@ -6808,6 +7069,27 @@ var countDigitOne = function(n) {
             const left = n - record[weishu - 1];
             const target = Math.pow(10, weishu - 1) + parseInt(left / weishu, 10);
             return +(('' + target)[left % weishu]);
+        };
+```
+
+#### [面试题 08.05. 递归乘法](https://leetcode-cn.com/problems/recursive-mulitply-lcci)
+
+![image.png](https://pic.leetcode-cn.com/1600009311-IOwolN-image.png)
+
+```js
+        /**
+         * @param {number} A
+         * @param {number} B
+         * @return {number}
+         */
+        var multiply = function(A, B) {
+            let sum = 0, temp = A;
+            while (B) {
+                if (B & 1) sum += temp;
+                temp += temp;
+                B >>= 1;
+            }
+            return sum;
         };
 ```
 
@@ -7304,4 +7586,127 @@ var countDigitOne = function(n) {
             dfs(0, this.root);
             return res;
         };
+```
+
+#### [341. 扁平化嵌套列表迭代器](https://leetcode-cn.com/problems/flatten-nested-list-iterator/)
+
+![image.png](https://pic.leetcode-cn.com/1599364396-EbRILf-image.png)
+
+```js
+        /**
+         * // This is the interface that allows for creating nested lists.
+         * // You should not implement it, or speculate about its implementation
+         * function NestedInteger() {
+         *
+         *     Return true if this NestedInteger holds a single integer, rather than a nested list.
+         *     @return {boolean}
+         *     this.isInteger = function() {
+         *         ...
+         *     };
+         *
+         *     Return the single integer that this NestedInteger holds, if it holds a single integer
+         *     Return null if this NestedInteger holds a nested list
+         *     @return {integer}
+         *     this.getInteger = function() {
+         *         ...
+         *     };
+         *
+         *     Return the nested list that this NestedInteger holds, if it holds a nested list
+         *     Return null if this NestedInteger holds a single integer
+         *     @return {NestedInteger[]}
+         *     this.getList = function() {
+         *         ...
+         *     };
+         * };
+         */
+        /**
+         * @constructor
+         * @param {NestedInteger[]} nestedList
+         */
+
+        var NestedIterator = function(nestedList) {
+            function dfsFlattern(nestedList) {
+                return nestedList.reduce((t, i) => {
+                    if (i.isInteger()) {
+                        t.push(i.getInteger());
+                        return t;
+                    }
+                    return [...t, ...dfsFlattern(i.getList())];
+                }, []);
+            }
+            this.arr = dfsFlattern(nestedList);
+        };
+
+        /**
+         * @this NestedIterator
+         * @returns {boolean}
+         */
+        NestedIterator.prototype.hasNext = function() {
+            return !!this.arr.length;
+        };
+
+        /**
+         * @this NestedIterator
+         * @returns {integer}
+         */
+        NestedIterator.prototype.next = function() {
+            return this.arr.shift();
+        };
+
+        /**
+         * Your NestedIterator will be called like this:
+         * var i = new NestedIterator(nestedList), a = [];
+         * while (i.hasNext()) a.push(i.next());
+        */
+```
+
+
+#### [面试题 03.05. 栈排序](https://leetcode-cn.com/problems/sort-of-stacks-lcci)
+
+![image.png](https://pic.leetcode-cn.com/1599989141-sJYDhF-image.png)
+
+```js
+        var SortedStack = function() {
+            this.sortStask = [];
+        };
+
+        /** 
+         * @param {number} val
+         * @return {void}
+         */
+        SortedStack.prototype.push = function(val) {
+            let i = this.sortStask.length;
+            while(this.sortStask[i - 1] < val) i--;
+            this.sortStask.splice(i, 0, val);
+        };
+
+        /**
+         * @return {void}
+         */
+        SortedStack.prototype.pop = function() {
+            return this.sortStask.pop();
+        };
+
+        /**
+         * @return {number}
+         */
+        SortedStack.prototype.peek = function() {
+            return this.sortStask.length ? this.sortStask[this.sortStask.length - 1] : -1;
+        };
+
+        /**
+         * @return {boolean}
+         */
+        SortedStack.prototype.isEmpty = function() {
+            return !this.sortStask.length;
+        };
+
+        /**
+         * Your SortedStack object will be instantiated and called as such:
+         * var obj = new SortedStack()
+         * obj.push(val)
+         * obj.pop()
+         * var param_3 = obj.peek()
+         * var param_4 = obj.isEmpty()
+         */
 ```
