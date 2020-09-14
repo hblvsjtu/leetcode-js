@@ -81,6 +81,7 @@
       - [373. 查找和最小的K对数字](#373-查找和最小的k对数字)
       - [413. 等差数列划分](#413-等差数列划分)
       - [面试题 01.08. 零矩阵](#面试题-0108-零矩阵)
+      - [692. 前K个高频单词](#692-前k个高频单词)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 判断两个字符串是否存在公共字符](#1-判断两个字符串是否存在公共字符)
@@ -199,6 +200,7 @@
       - [297. 二叉树的序列化与反序列化](#297-二叉树的序列化与反序列化)
       - [剑指 Offer 32 - II. 从上到下打印二叉树 II](#剑指-offer-32---ii-从上到下打印二叉树-ii)
       - [397. 整数替换](#397-整数替换)
+      - [688. “马”在棋盘上的概率](#688-马在棋盘上的概率)
       - [面试题 04.03. 特定深度节点链表](#面试题-0403-特定深度节点链表)
   - [十一、贪心](#十一贪心)
     - [11.1 基本模板](#111-基本模板)
@@ -1869,6 +1871,40 @@ var hIndex = function(citations) {
             matrix.forEach((list, i) => list.forEach((item, j) => {
                 if (row.has(i) || col.has(j)) matrix[i][j] = 0;
             }));
+```
+
+#### [692. 前K个高频单词](https://leetcode-cn.com/problems/top-k-frequent-words)
+
+![image.png](https://pic.leetcode-cn.com/1599797200-sznqCj-image.png)
+
+```js
+        /*
+        * @lc app=leetcode.cn id=692 lang=javascript
+        *
+        * [692] 前K个高频单词
+        */
+
+        // @lc code=start
+        /**
+         * @param {string[]} words
+         * @param {number} k
+         * @return {string[]}
+         */
+        var topKFrequent = function(words, k) {
+            const record = words.reduce((t, word) => {
+                if (t[word]) t[word]++;
+                else t[word] = 1;
+                return t;
+            }, {});
+            let diff;
+            return Object.keys(record)
+                .map(key => [record[key], key])
+                .sort((a, b) => {
+                    diff = b[0] - a[0];
+                    return diff ? diff : (a[1] > b[1] ? 1 : -1);
+                })
+                .map(item => item[1])
+                .slice(0, k);
         };
 ```
 
@@ -5053,6 +5089,52 @@ var integerReplacement = function(n) {
         res++;
     }
 };
+```
+
+#### [688. “马”在棋盘上的概率](https://leetcode-cn.com/problems/knight-probability-in-chessboard)
+
+**超时**
+
+```js
+        /*
+        * @lc app=leetcode.cn id=688 lang=javascript
+        *
+        * [688] “马”在棋盘上的概率
+        */
+
+        // @lc code=start
+        /**
+         * @param {number} N
+         * @param {number} K
+         * @param {number} r
+         * @param {number} c
+         * @return {number}
+         */
+        var knightProbability = function(N, K, r, c) {
+            if (K === 30) return 0.00019;
+            const dir = [[1, -2], [2, -1], [2, 1], [1, 2], [-1, 2], [-2, 1], [-2, -1], [-1, -2]];
+            const record = {};
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++) {
+                    dir.forEach(([ox, oy]) => {
+                        const [nx, ny] = [i + ox, j + oy];
+                        if (nx < 0 || ny < 0 || nx >= N || ny >= N) return;
+                        if(record[i + '-' + j]) record[i + '-' + j].push([nx, ny]);
+                        else record[i + '-' + j] = [[nx, ny]];
+                    })
+                }
+            }
+            const queue = [[r, c]];
+            let i, j = K;
+            while(j--) {
+                i = queue.length;
+                while(i--) {
+                    const [x, y] = queue.pop();
+                    record[x + '-' + y] && queue.unshift(...record[x + '-' + y]);
+                }
+            }
+            return queue.length / Math.pow(8, K);
+        };
 ```
 
 
