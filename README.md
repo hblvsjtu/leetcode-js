@@ -82,6 +82,10 @@
       - [413. 等差数列划分](#413-等差数列划分)
       - [面试题 01.08. 零矩阵](#面试题-0108-零矩阵)
       - [692. 前K个高频单词](#692-前k个高频单词)
+      - [面试题 10.03. 搜索旋转数组](#面试题-1003-搜索旋转数组)
+      - [面试题 16.06. 最小差](#面试题-1606-最小差)
+      - [面试题 16.10. 生存人数](#面试题-1610-生存人数)
+      - [面试题 16.16. 部分排序](#面试题-1616-部分排序)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 判断两个字符串是否存在公共字符](#1-判断两个字符串是否存在公共字符)
@@ -181,6 +185,8 @@
       - [54. 螺旋矩阵](#54-螺旋矩阵)
       - [59. 螺旋矩阵 II](#59-螺旋矩阵-ii)
       - [124. 二叉树中的最大路径和](#124-二叉树中的最大路径和)
+      - [面试题 08.09. 括号](#面试题-0809-括号)
+      - [面试题 04.10. 检查子树](#面试题-0410-检查子树)
   - [十、BFS广度优先搜索](#十bfs广度优先搜索)
     - [10.1 基本模板](#101-基本模板)
       - [1) 递归法](#1-递归法-1)
@@ -224,6 +230,7 @@
       - [351. 安卓系统手势解锁](#351-安卓系统手势解锁)
       - [216. 组合总和 III](#216-组合总和-iii)
       - [46. 全排列](#46-全排列)
+      - [47. 全排列 II](#47-全排列-ii)
       - [39. 组合总和](#39-组合总和-1)
       - [40. 组合总和 II](#40-组合总和-ii)
       - [77. 组合](#77-组合)
@@ -1907,6 +1914,121 @@ var hIndex = function(citations) {
                 .slice(0, k);
         };
 ```
+
+#### [面试题 10.03. 搜索旋转数组](https://leetcode-cn.com/problems/search-rotate-array-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1600535800-rqMRZW-image.png)
+
+```js
+    /**
+    * @param {number[]} arr
+    * @param {number} target
+    * @return {number}
+    */
+    var search = function(arr, target) {
+        if (target === arr[0]) return 0;
+        let left = findBound(0), right = findBound(arr.length - 1, true), mid;
+        const isLeft = target > arr[left];
+        while (left <= right) {
+            if (arr[right] === target) return right;
+            mid = findBound((left + right) >> 1, true);
+            if (arr[mid] === target) return mid;
+                if ((isLeft && arr[mid] > arr[0] && arr[mid] <= target)
+                    || (!isLeft && (arr[mid] > arr[0] || arr[mid] <= target))) {
+                    left = findBound(mid + 1);
+                }
+                else right = findBound(mid - 1, true);
+            }
+            function findBound(i, isLeft) {
+                if (i < 0 || i >= arr.length) return i;
+                let j = i;
+                if (isLeft) while (arr[j - 1] === arr[i]) j--;
+                else while (arr[j + 1] === arr[i]) j++;
+                return j;
+            }
+            return -1;
+        };
+```
+
+#### [面试题 16.06. 最小差](https://leetcode-cn.com/problems/smallest-difference-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1600595665-eSsGWP-image.png)
+
+```js
+        /**
+        * @param {number[]} a
+        * @param {number[]} b
+        * @return {number}
+        */
+        var smallestDifference = function(a, b) {
+            a.sort((i, j) => i - j);
+            b.sort((i, j) => i - j);
+            let left = 0, Right = 0, res = Infinity;
+            while(left < a.length && Right < b.length){
+                res = Math.min(res, Math.abs(a[left] - b[Right]))
+                if (a[left] > b[Right]) Right++;
+                else left++;
+            }
+            return res;
+        };
+```
+
+#### [面试题 16.10. 生存人数](https://leetcode-cn.com/problems/living-people-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1600603239-QXHjAv-image.png)
+
+```js
+        /**
+        * @param {number[]} birth
+        * @param {number[]} death
+        * @return {number}
+        */
+        var maxAliveYear = function(birth, death) {
+            let i = 2001, max = 0, result;
+            while (i-- && i >= 1900) {
+                count = 0;
+                for (let j = 0; j < birth.length; j++) {
+                    if (i >= birth[j] && i <= death[j]) count++;
+                }
+                if (count >= max) {
+                    result = i;
+                    max = count;
+                }
+            }
+            return result;
+        };
+```
+
+#### [面试题 16.16. 部分排序](https://leetcode-cn.com/problems/sub-sort-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1600605442-sFPFCO-image.png)
+
+```js
+        /**
+        * @param {number[]} array
+        * @return {number[]}
+        */
+
+        // 左右遍历
+        var subSort = function(array) {
+            let left = -1, right = -1, max = -Infinity, min = Infinity, j = array.length;;
+            for (let i = 0; i < array.length; i++) array[i] < max ? (right = i) : (max = array[i]);
+            while (j--) array[j] > min ? (left = j) : (min = array[j]);
+            return [left, right];
+        };
+
+        // 排序数组
+        var subSort = function(array) {
+            if (!array.length) return [-1, -1];
+            const record = [...array].sort((a, b) => a - b);
+            let i = 0, j = array.length;
+            while (i < array.length && array[i] === record[i]) i++;
+            while (j >= i - 1 && array[j] === record[j]) j--;
+            return i > j ? [-1, -1] : [i, j];
+        };
+```
+
+![image.png](https://pic.leetcode-cn.com/1600604996-pQyzZW-image.png)
 
 ## 四、字符串问题
 ### 4.1 基本模板 
@@ -4603,6 +4725,70 @@ var flatten = function(root) {
         };
 ```
 
+#### [面试题 08.09. 括号](https://leetcode-cn.com/problems/bracket-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1600528439-zIfegD-image.png)
+
+```js
+        /**
+        * @param {number} n
+        * @return {string[]}
+        */
+        var generateParenthesis = function(n) {
+            const record = new Set();
+            function dfs(i, j, str) {
+                if (i < 0 || j < 0) return;
+                if (!i && !j) {
+                    !record.has(str) && record.add(str);
+                    return;
+                }
+                dfs(i - 1, j, str + '(');
+                if (i < j) dfs(i, j - 1, str + ')');
+            }
+            dfs(n, n, '');
+            const result = [];
+            record.forEach(i => result.push(i));
+            return result;
+        };
+```
+
+#### [面试题 04.10. 检查子树](https://leetcode-cn.com/problems/check-subtree-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1600530068-NxWiNJ-image.png)
+
+```js
+        /**
+        * Definition for a binary tree node.
+        * function TreeNode(val) {
+        *     this.val = val;
+        *     this.left = this.right = null;
+        * }
+        */
+        /**
+        * @param {TreeNode} t1
+        * @param {TreeNode} t2
+        * @return {boolean}
+        */
+        var checkSubTree = function(t1, t2) {
+            if (!t2) return true;
+            if (!t1) return false;
+            function isSame(r1, r2) {
+                if (!r1 && !r2) return true;
+                if (!r1 || !r2 || r1.val !== r2.val) return false;
+                return isSame(r1.left, r2.left) && isSame(r1.right, r2.right);
+            }
+            let result = false;
+            function dfs(r1) {
+                if (!r1 || result) return;
+                if (r1.val === t2.val) result = isSame(r1, t2);
+                dfs(r1.left);
+                dfs(r1.right);
+            }
+            dfs(t1);
+            return result;
+        };
+```
+
 ## 十、BFS广度优先搜索
 ### 10.1 基本模板 
         
@@ -5722,6 +5908,33 @@ var permute = function(nums) {
     dfs(nums, 0, len - 1);
     return result;
 };
+```
+
+#### [47. 全排列 II](https://leetcode-cn.com/problems/permutations-ii/)
+
+![image.png](https://pic.leetcode-cn.com/1600593750-jhcFuh-image.png)
+
+```js
+        /**
+        * @param {number[]} nums
+        * @return {number[][]}
+        */
+        var permuteUnique = function(nums) {
+            const result = [];
+            function backTrace(i) {
+                if (i === nums.length) result.push(nums.slice(0));
+                const isUsed = {};
+                for (let j = i; j < nums.length; j++) {
+                    if (isUsed[nums[j]]) continue;
+                    [nums[i], nums[j]] = [nums[j], nums[i]];
+                    backTrace(i + 1);
+                    [nums[i], nums[j]] = [nums[j], nums[i]];
+                    isUsed[nums[j]] = true;
+                }
+            }
+            backTrace(0);
+            return result;
+        };
 ```
 
 #### [39. 组合总和](https://leetcode-cn.com/problems/combination-sum/)
