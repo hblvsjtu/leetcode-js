@@ -113,6 +113,7 @@
       - [306. 累加数](#306-累加数)
       - [423. 从英文中重建数字](#423-从英文中重建数字)
       - [面试题 01.09. 字符串轮转](#面试题-0109-字符串轮转)
+      - [925. 长按键入](#925-长按键入)
   - [五、哈希表](#五哈希表)
     - [5.1 基本模板](#51-基本模板)
       - [1) 统计频率](#1-统计频率)
@@ -2742,6 +2743,30 @@ Your memory usage beats 100 % of javascript submissions (39.4 MB)
         var isFlipedString = function(s1, s2) {
             if (s1.length !== s2.length) return false;
             return (s1 + s1).indexOf(s2) > -1;
+        };
+```
+
+#### [925. 长按键入](https://leetcode-cn.com/problems/long-pressed-name/)
+
+![image.png](https://pic.leetcode-cn.com/1603639005-YeoUgI-image.png)
+
+```js
+        /**
+         * @param {string} name
+         * @param {string} typed
+         * @return {boolean}
+         */
+        var isLongPressedName = function(name, typed) {
+            let j, k = 0, l;
+            for (let i = 0; i < name.length; i = j + 1, k = l + 1) {
+                if (name[i] !== typed[k]) return false;
+                j = i;
+                while (name[j] === name[j + 1]) j++;
+                l = k;
+                while (typed[l] === typed[l + 1]) l++;
+                if (l - k < j - i) return false;
+            }
+            return k === typed.length;
         };
 ```
 
