@@ -86,6 +86,8 @@
       - [面试题 16.06. 最小差](#面试题-1606-最小差)
       - [面试题 16.10. 生存人数](#面试题-1610-生存人数)
       - [面试题 16.16. 部分排序](#面试题-1616-部分排序)
+      - [845. 数组中的最长山脉](#845-数组中的最长山脉)
+      - [1024. 视频拼接](#1024-视频拼接)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 判断两个字符串是否存在公共字符](#1-判断两个字符串是否存在公共字符)
@@ -110,6 +112,7 @@
       - [318. 最大单词长度乘积](#318-最大单词长度乘积)
       - [306. 累加数](#306-累加数)
       - [423. 从英文中重建数字](#423-从英文中重建数字)
+      - [面试题 01.09. 字符串轮转](#面试题-0109-字符串轮转)
   - [五、哈希表](#五哈希表)
     - [5.1 基本模板](#51-基本模板)
       - [1) 统计频率](#1-统计频率)
@@ -150,6 +153,9 @@
       - [剑指 Offer 25. 合并两个排序的链表](#剑指-offer-25-合并两个排序的链表)
       - [面试题 02.08. 环路检测](#面试题-0208-环路检测)
       - [面试题 02.05. 链表求和](#面试题-0205-链表求和)
+      - [面试题 02.01. 移除重复节点](#面试题-0201-移除重复节点)
+      - [面试题 02.06. 回文链表](#面试题-0206-回文链表)
+      - [面试题 02.07. 链表相交](#面试题-0207-链表相交)
   - [八、树](#八树)
     - [8.1 基本模板](#81-基本模板)
     - [8.2 题目](#82-题目)
@@ -2028,6 +2034,65 @@ var hIndex = function(citations) {
         };
 ```
 
+#### [845. 数组中的最长山脉](https://leetcode-cn.com/problems/longest-mountain-in-array/)
+
+![image.png](https://pic.leetcode-cn.com/1603612876-OPFhdY-image.png)
+
+```js
+        /**
+         * @param {number[]} A
+         * @return {number}
+         */
+        var longestMountain = function(A) {
+            let left = 0, max = 0, j, k;
+            for (let i = 0; i < A.length;) {
+                j = i;
+                while (A[j] < A[j + 1]) j++;
+                if (j > i) {
+                    k = j;
+                    while (A[k] > A[k + 1]) k++;
+                    if (k > j) {
+                        max = Math.max(max, k - i + 1);
+                        i = k;
+                        continue;
+                    }
+                }
+                i = j + 1;
+            }
+            return max;
+        };
+```
+
+#### [1024. 视频拼接](https://leetcode-cn.com/problems/video-stitching/)
+
+![image.png](https://pic.leetcode-cn.com/1603627552-yhFnMt-image.png)
+
+```js
+        /**
+         * @param {number[][]} clips
+         * @param {number} T
+         * @return {number}
+         */
+        var videoStitching = function(clips, T) {
+            clips.sort((a, b) => a[0] === b[0] ? a[1] - b[1] : a[0] - b[0]);
+            let curEnd = null, i0 = 0;
+            for(i0 = 0; i0 < clips.length && clips[i0][0] === 0; i0++) curEnd = curEnd < clips[i0][1] ? clips[i0][1] : curEnd;
+            if (!curEnd) return -1;
+            let result = 1, tempMaxEnd;
+            for (let i = i0; i < clips.length && curEnd < T;) {
+                tempMaxEnd = curEnd;
+                while(i < clips.length && curEnd >= clips[i][0]) {
+                    tempMaxEnd = Math.max(tempMaxEnd, clips[i][1]);
+                    i++;
+                }
+                if (tempMaxEnd === curEnd) return -1;
+                curEnd = tempMaxEnd;
+                result++;
+            }
+            return curEnd >= T ? result : -1;
+        };
+```
+
 ![image.png](https://pic.leetcode-cn.com/1600604996-pQyzZW-image.png)
 
 ## 四、字符串问题
@@ -2661,6 +2726,22 @@ Your memory usage beats 100 % of javascript submissions (39.4 MB)
                 res.push(...Array(temp).fill(9));
             }
             return res.sort().join('');
+        };
+```
+
+#### [面试题 01.09. 字符串轮转](https://leetcode-cn.com/problems/string-rotation-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1603594612-bdqyhn-image.png)
+
+```js
+        /**
+         * @param {string} s1
+         * @param {string} s2
+         * @return {boolean}
+         */
+        var isFlipedString = function(s1, s2) {
+            if (s1.length !== s2.length) return false;
+            return (s1 + s1).indexOf(s2) > -1;
         };
 ```
 
@@ -3532,6 +3613,132 @@ var containsNearbyAlmostDuplicate = function(nums, k, t) {
             }
             if (yushu) head.next = new ListNode(1);
             return root.next;
+        };
+```
+
+#### [面试题 02.01. 移除重复节点](https://leetcode-cn.com/problems/remove-duplicate-node-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1603596417-WzHwiY-image.png)
+
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param {ListNode} head
+         * @return {ListNode}
+         */
+        var removeDuplicateNodes = function(head) {
+            if (!head) return null;
+            let last = head, front = head.next;
+            const record = {[head.val]: true};
+            while (front) {
+                if(!record[front.val]) {
+                    record[front.val] = true;
+                    last = front;
+                }
+                else last.next = front.next;
+                front = last.next;
+            }
+            return head;
+        };
+```
+
+#### [面试题 02.06. 回文链表](https://leetcode-cn.com/problems/palindrome-linked-list-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1603629610-umvtJk-image.png)
+
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param {ListNode} head
+         * @return {boolean}
+         */
+        var isPalindrome = function(head) {
+            const record = [];
+            while(head) {
+                record.push(head.val);
+                head = head.next;
+            }
+            let left = 0, right = record.length - 1;
+            while (left <= right) {
+                if (record[left] !== record[right]) return false;
+                left++;
+                right--;
+            }
+            return true;
+        };
+
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param {ListNode} head
+         * @return {boolean}
+         */
+        var isPalindrome = function(head) {
+            let slow = head, fast = head;
+            while (fast && fast.next) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            // 从slow开始反转链表
+            slow = fast ? slow.next : slow;
+            let root = slow;
+            while (slow && slow.next) {
+                let temp = slow.next;
+                slow.next = slow.next.next;
+                temp.next = root;
+                root = temp;
+            }
+            while(root) {
+                if (head.val !== root.val) return false;
+                root = root.next;
+                head = head.next;
+            }
+            return true;
+        };
+
+```
+
+#### [面试题 02.07. 链表相交](https://leetcode-cn.com/problems/intersection-of-two-linked-lists-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1603635619-ZqDHAZ-image.png)
+```js
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+
+        /**
+         * @param {ListNode} headA
+         * @param {ListNode} headB
+         * @return {ListNode}
+         */
+        var getIntersectionNode = function(headA, headB) {
+            let frontA = headA, frontB = headB;
+            while(frontA !== frontB) {
+                frontA = frontA ? frontA.next : headB;
+                frontB = frontB ? frontB.next : headA;
+            }
+            return frontA;
         };
 ```
 
