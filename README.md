@@ -88,6 +88,7 @@
       - [面试题 16.16. 部分排序](#面试题-1616-部分排序)
       - [845. 数组中的最长山脉](#845-数组中的最长山脉)
       - [1024. 视频拼接](#1024-视频拼接)
+      - [面试题 10.11. 峰与谷](#面试题-1011-峰与谷)
   - [四、字符串问题](#四字符串问题)
     - [4.1 基本模板](#41-基本模板)
       - [1) 判断两个字符串是否存在公共字符](#1-判断两个字符串是否存在公共字符)
@@ -2094,7 +2095,29 @@ var hIndex = function(citations) {
         };
 ```
 
-![image.png](https://pic.leetcode-cn.com/1600604996-pQyzZW-image.png)
+#### [面试题 10.11. 峰与谷](https://leetcode-cn.com/problems/peaks-and-valleys-lcci/)
+
+![image.png](https://pic.leetcode-cn.com/1603727287-rROilX-image.png)
+
+```js
+        /**
+         * @param {number[]} nums
+         * @return {void} Do not return anything, modify nums in-place instead.
+         */
+        var wiggleSort = function(nums) {
+            nums.sort((a, b) => a > b ? 1 : -1);
+            const result = [];
+            let left = 0, right = nums.length - 1;
+            while (left < right) {
+                result.push(nums[right]);
+                result.push(nums[left]);
+                right--;
+                left++;
+            }
+            if (left === right) result.push(nums[left]);
+            nums.forEach((num, index) => nums[index] = result[index]);
+        };
+```
 
 ## 四、字符串问题
 ### 4.1 基本模板 
@@ -4792,14 +4815,14 @@ var flatten = function(root) {
             while(i) {
                 while(i--) {
                     const front = stack.pop();
+                    if (!front) continue;
                     if (front.isVisited) {
                         // 输入你要处理的逻辑
                         ...
                     }
                     else {
-                        front.right && stack.push(front.right);
-                        front.left && stack.push(front.left);
-                        front.isVisited = true && stack.push(front);
+                        front.isVisit = true;
+                        stack.push(front.right, front.left, front);
                     }
                 }
                 i = stack.length;
@@ -4819,14 +4842,14 @@ var flatten = function(root) {
             while(i) {
                 while(i--) {
                     const front = stack.pop();
+                    if (!front) continue;
                     if (front.isVisited) {
                         // 输入你要处理的逻辑
                         res.push(front.val);
                     }
                     else {
-                        front.right && stack.push(front.right);
-                        front.isVisited = true && stack.push(front);
-                        front.left && stack.push(front.left);
+                        front.isVisit = true;
+                        stack.push(front.right, front, front.left);
                     }
                 }
                 i = stack.length;
@@ -4843,14 +4866,14 @@ var flatten = function(root) {
             while(i) {
                 while(i--) {
                     const front = stack.pop();
+                    if (!front) continue;
                     if (front.isVisited) {
                         // 输入你要处理的逻辑
                         ...
                     }
                     else {
-                        front.isVisited = true && stack.push(front);
-                        front.right && stack.push(front.right);
-                        front.left && stack.push(front.left);
+                        front.isVisit = true;
+                        stack.push(front, front.right, front.left);
                     }
                 }
                 i = stack.length;
